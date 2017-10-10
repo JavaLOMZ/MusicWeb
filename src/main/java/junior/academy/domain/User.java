@@ -1,12 +1,30 @@
-package domain;
+package junior.academy.domain;
 
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+
+@Entity
+@Table(name = "users")
 public class User {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "userId")
     private int userId;
+
+    @Column(name = "admin")
+    @NotNull
     private boolean isAdmin;
+
+    @Column(name = "nick")
+    @NotNull
     private String nickname;
+
+    @Column(name = "email")
     private String email;
-    private int accountStatus;
+
+    @Column(name = "banned")
+    private boolean isBanned;
 
 
     public boolean isAdmin() {
@@ -33,11 +51,11 @@ public class User {
         this.email = email;
     }
 
-    public int getAccountStatus() {
-        return accountStatus;
+    public boolean isBanned() {
+        return isBanned;
     }
 
-    public void setAccountStatus(int accountStatus) {
-        this.accountStatus = accountStatus;
+    public void setBanned(boolean banned) {
+        isBanned = banned;
     }
 }
