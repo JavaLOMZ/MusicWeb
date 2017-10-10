@@ -1,4 +1,4 @@
-package domain;
+package junior.academy.domain;
 
 public class Rate {
 

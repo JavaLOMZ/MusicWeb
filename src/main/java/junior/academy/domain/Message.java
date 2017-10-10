@@ -1,4 +1,4 @@
-package domain;
+package junior.academy.domain;
 
 import java.util.List;
 
