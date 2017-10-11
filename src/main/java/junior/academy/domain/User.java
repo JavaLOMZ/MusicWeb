@@ -2,15 +2,16 @@ package junior.academy.domain;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @Entity
-@Table(name = "users")
+@Table(name = "user")
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "userId")
-    private int userId;
+    private long userId;
 
     @Column(name = "admin")
     @NotNull
@@ -26,6 +27,19 @@ public class User {
     @Column(name = "banned")
     private boolean isBanned;
 
+    @OneToMany(mappedBy = "user")
+    private List<Comment> comments;
+
+    @OneToMany(mappedBy = "user")
+    private List<Rate> rates;
+
+    public long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(long userId) {
+        this.userId = userId;
+    }
 
     public boolean isAdmin() {
         return isAdmin;

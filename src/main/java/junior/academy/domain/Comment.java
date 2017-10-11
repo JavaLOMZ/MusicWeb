@@ -1,11 +1,31 @@
 package junior.academy.domain;
 
+import org.springframework.context.annotation.Configuration;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+
+@Entity
+@Table(name = "comment")
 public class Comment {
 
-    private int commentId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "commentId")
+    private long commentId;
+
+    @Column(name = "commentText")
+    @NotNull
     private String commentText;
-    private Song song;
+
+    @ManyToOne
+    @JoinColumn(name="userId")
     private User user;
+
+    @ManyToOne
+    @JoinColumn(name = "songId")
+    private Song song;
+
 
     public String getCommentText() {
         return commentText;

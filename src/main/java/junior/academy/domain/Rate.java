@@ -1,12 +1,30 @@
 package junior.academy.domain;
 
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+
+@Entity
+@Table(name = "rate")
 public class Rate {
 
-    private int rateId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "rateId")
+    private long rateId;
 
+    @Column(name = "rateValue")
+    @NotNull
     private int rateValue; //min 1 max 10
+
+    @ManyToOne
+    @JoinColumn(name="userId")
     private User user;
+
+    @ManyToOne
+    @JoinColumn(name = "songId")
     private Song song;
+
+
 
     public int getRateValue() {
         return rateValue;
