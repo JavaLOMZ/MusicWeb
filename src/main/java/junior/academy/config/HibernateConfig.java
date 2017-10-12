@@ -59,16 +59,4 @@ public class HibernateConfig {
         txManager.setSessionFactory(s);
         return txManager;
     }
-
-
-//    @Bean
-//    public SessionFactory getSessionFactory() {
-//        return entityManagerFactory.unwrap(SessionFactory.class);
-//    }
-//    @Bean
-//    EntityManagerFactory entityManagerFactory() {
-//        LocalContainerEntityManagerFactoryBean bean = new LocalContainerEntityManagerFactoryBean();
-//        bean.setDataSource(dataSource());
-//        return bean.getObject();
-//    }
 }
