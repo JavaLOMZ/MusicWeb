@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+    <user userId="1" nickname="Test" admin="false" banned="true" email="test@test.com"/>
+</dataset>
