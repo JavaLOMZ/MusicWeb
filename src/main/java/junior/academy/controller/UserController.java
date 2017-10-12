@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("/musicweb")
 public class UserController {
 
     @Autowired
@@ -17,7 +18,6 @@ public class UserController {
     @PostMapping("/createUser")
     public void createUser(){
         User user=new User();
-        user.setUserId(2);
         user.setNickname("Test");
         user.setAdmin(true);
         user.setBanned(false);
