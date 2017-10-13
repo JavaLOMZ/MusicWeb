@@ -9,18 +9,14 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("/user")
 public class UserController {
 
     @Autowired
     UserService userService;
 
-    @PostMapping("/createUser")
-    public void createUser(){
-        User user=new User();
-        user.setNickname("Test");
-        user.setAdmin(true);
-        user.setBanned(false);
-        user.setEmail("test@test.com");
+    @PostMapping()
+    public void createUser(@RequestBody User user){
         userService.createUser(user);
     }
 

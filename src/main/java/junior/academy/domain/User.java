@@ -13,19 +13,19 @@ public class User {
     @Column(name = "userId")
     private long userId;
 
-    @Column(name = "admin")
+    @Column(name = "isAdmin")
     @NotNull
-    private boolean isAdmin;
+    private Boolean isAdmin;
 
-    @Column(name = "nick")
+    @Column(name = "nickname")
     @NotNull
     private String nickname;
 
     @Column(name = "email")
     private String email;
 
-    @Column(name = "banned")
-    private boolean isBanned;
+    @Column(name = "isBanned")
+    private Boolean isBanned;
 
     @OneToMany(mappedBy = "user")
     private List<Comment> comments;
@@ -41,11 +41,11 @@ public class User {
         this.userId = userId;
     }
 
-    public boolean isAdmin() {
+    public Boolean isAdmin() {
         return isAdmin;
     }
 
-    public void setAdmin(boolean admin) {
+    public void setAdmin(Boolean admin) {
         isAdmin = admin;
     }
 
@@ -65,11 +65,11 @@ public class User {
         this.email = email;
     }
 
-    public boolean isBanned() {
+    public Boolean isBanned() {
         return isBanned;
     }
 
-    public void setBanned(boolean banned) {
+    public void setBanned(Boolean banned) {
         isBanned = banned;
     }
 }
