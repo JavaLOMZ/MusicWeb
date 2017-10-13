@@ -35,9 +35,9 @@ public class UserServiceTest {
 
     @Test
     public void createUser(){
-        doNothing().when(userDao).createUser(any(User.class));
-        userService.createUser(any(User.class));
-        verify(userDao, Mockito.atLeastOnce()).createUser(any(User.class));
+        doNothing().when(userDao).createOrUpdateUser((any(User.class)));
+        userService.createOrUpdateUser(any(User.class));
+        verify(userDao, Mockito.atLeastOnce()).createOrUpdateUser(any(User.class));
     }
 
     @Test
