@@ -13,11 +13,19 @@ public class UserService {
     @Autowired
     UserDao userDao;
 
-    public void createUser(User user){
-        userDao.createUser(user);
+    public User getUserById(long userId){
+        return userDao.getUserById(userId);
     }
 
     public List<User> getAllUsers(){
         return userDao.getAllUsers();
+    }
+
+    public void createOrUpdateUser(User user){
+        userDao.createOrUpdateUser(user);
+    }
+
+    public void deleteUserById(long userId){
+        userDao.deleteUser(userId);
     }
 }

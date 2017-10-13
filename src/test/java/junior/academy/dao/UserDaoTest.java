@@ -5,7 +5,7 @@ import org.dbunit.dataset.CompositeDataSet;
 import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.xml.FlatXmlDataSet;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.testng.Assert;
+import static org.testng.Assert.*;
 import org.testng.annotations.Test;
 
 public class UserDaoTest extends EntityDaoTest{
@@ -22,36 +22,38 @@ public class UserDaoTest extends EntityDaoTest{
     }
 
     @Test
-    public void createUser(){
-        userDao.createUser(getUser());
-        Assert.assertEquals(userDao.getAllUsers().size(),2);
-    }
-
-    @Test
     public void getAllusers(){
-        Assert.assertEquals(userDao.getAllUsers().size(),1);
+        assertEquals(userDao.getAllUsers().size(),1);
     }
 
     @Test
     public void getUserById(){
-        Assert.assertNotNull(userDao.getUserById(1));
+        assertNotNull(userDao.getUserById(1));
+        assertEquals(userDao.getUserById(1).getNickname(), "Test");
+    }
+
+    @Test
+    public void createUser(){
+        User user = getUser();
+        userDao.createOrUpdateUser(user);
+        assertEquals(userDao.getAllUsers().size(),2);
+    }
+
+    @Test
+    public void updateUser(){
+        User user = userDao.getUserById(1);
+        user.setNickname("TestingNickname");
+        assertEquals(userDao.getUserById(1).getNickname(),"TestingNickname");
     }
 
     @Test
     public void deleteUser(){
         userDao.deleteUser(1);
-        Assert.assertEquals(userDao.getAllUsers().size(),0);
-    }
-
-    @Test
-    public void updateUser(){
-        userDao.updateUser(getUser());
-        Assert.assertEquals(userDao.getUserById(1).getNickname(),"TestUpdate");
+        assertEquals(userDao.getAllUsers().size(),0);
     }
 
     private User getUser(){
         User user=new User();
-        user.setUserId(1);
         user.setNickname("TestUpdate");
         user.setAdmin(true);
         user.setBanned(false);

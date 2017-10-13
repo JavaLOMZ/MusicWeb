@@ -15,23 +15,19 @@ public class UserDao {
     @Autowired
     private SessionFactory sessionFactory;
 
-    public void createUser(User user){
-        sessionFactory.getCurrentSession().save(user);
-    }
-
-    public void deleteUser(long userId){
-        sessionFactory.getCurrentSession().delete(getUserById(userId));
-    }
-
-    public void updateUser(User user){
-        sessionFactory.getCurrentSession().update(user);
+    public User getUserById(long userId){
+        return sessionFactory.getCurrentSession().get(User.class,userId);
     }
 
     public List<User> getAllUsers(){
         return sessionFactory.getCurrentSession().createQuery("from User").list();
     }
 
-    public User getUserById(long userId){
-        return sessionFactory.getCurrentSession().get(User.class,userId);
+    public void createOrUpdateUser(User user){
+        sessionFactory.getCurrentSession().saveOrUpdate(user);
+    }
+
+    public void deleteUser(long userId){
+        sessionFactory.getCurrentSession().delete(getUserById(userId));
     }
 }

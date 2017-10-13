@@ -3,6 +3,7 @@ package junior.academy.domain;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "user")
@@ -14,7 +15,6 @@ public class User {
     private long userId;
 
     @Column(name = "isAdmin")
-    @NotNull
     private Boolean isAdmin;
 
     @Column(name = "nickname")
@@ -27,11 +27,16 @@ public class User {
     @Column(name = "isBanned")
     private Boolean isBanned;
 
-    @OneToMany(mappedBy = "user")
-    private List<Comment> comments;
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+    private Set<Comment> comments;
 
-    @OneToMany(mappedBy = "user")
-    private List<Rate> rates;
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+    private Set<Rate> rates;
+
+    public User(){
+        this.isAdmin = false;
+        this.isBanned = false;
+    }
 
     public long getUserId() {
         return userId;
@@ -71,5 +76,21 @@ public class User {
 
     public void setBanned(Boolean banned) {
         isBanned = banned;
+    }
+
+    public Set<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(Set<Comment> comments) {
+        this.comments = comments;
+    }
+
+    public Set<Rate> getRates() {
+        return rates;
+    }
+
+    public void setRates(Set<Rate> rates) {
+        this.rates = rates;
     }
 }

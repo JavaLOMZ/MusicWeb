@@ -1,6 +1,5 @@
 package junior.academy.controller;
 
-
 import junior.academy.domain.User;
 import junior.academy.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,13 +14,23 @@ public class UserController {
     @Autowired
     UserService userService;
 
-    @PostMapping()
-    public void createUser(@RequestBody User user){
-        userService.createUser(user);
+    @GetMapping("/{userId}")
+    public User getUserById(@PathVariable long userId){
+        return userService.getUserById(userId);
     }
 
     @GetMapping
     public List<User> getAllUsers(){
         return userService.getAllUsers();
+    }
+
+    @PostMapping()
+    public void createOrUpdateUser(@RequestBody User user){
+        userService.createOrUpdateUser(user);
+    }
+
+    @DeleteMapping()
+    public void deleteUser(long userId){
+        userService.deleteUserById(userId);
     }
 }
