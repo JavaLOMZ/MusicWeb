@@ -17,35 +17,29 @@ public class UserController {
     UserService userService;
 
     @GetMapping("/{userId}")
-    public ResponseEntity<User> getUserById(@PathVariable long userId){
-        if(userService.getUserById(userId).isPresent()) {
+    public ResponseEntity<User> getUserById(@PathVariable long userId) {
+        if (userService.getUserById(userId).isPresent()) {
             return new ResponseEntity<>(userService.getUserById(userId).get(), HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-
-
     }
 
     @GetMapping
-    public ResponseEntity<List<User>> getAllUsers() {
-        if (userService.getAllUsers().isPresent()){
-            return new ResponseEntity<List<User>>(userService.getAllUsers().get(),HttpStatus.OK);
-        }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-
+    public List<User> getAllUsers() {
+        return userService.getAllUsers();
     }
 
     @PostMapping()
-    public void createOrUpdateUser(@RequestBody User user){
+    public void createOrUpdateUser(@RequestBody User user) {
         userService.createOrUpdateUser(user);
     }
 
     @DeleteMapping("/{userId}")
-    public ResponseEntity<User> deleteUser(@PathVariable  long userId){
-        if(userService.getUserById(userId).isPresent()){
+    public ResponseEntity deleteUser(@PathVariable long userId) {
+        if (userService.getUserById(userId).isPresent()) {
             userService.deleteUserById(userId);
-            return new ResponseEntity<>(HttpStatus.OK);
+            return new ResponseEntity(HttpStatus.OK);
         }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return new ResponseEntity(HttpStatus.NOT_FOUND);
     }
 }

@@ -21,8 +21,8 @@ public class UserDao {
 
     }
 
-    public Optional<List<User>> getAllUsers(){
-        return Optional.ofNullable(sessionFactory.getCurrentSession().createQuery("from User").list());
+    public List<User> getAllUsers(){
+        return sessionFactory.getCurrentSession().createQuery("from User").list();
     }
 
     public void createOrUpdateUser(User user){

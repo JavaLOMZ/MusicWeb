@@ -25,7 +25,7 @@ public class UserDaoTest extends EntityDaoTest{
 
     @Test
     public void getAllusers(){
-        assertEquals(userDao.getAllUsers().get().size(),1);
+        assertEquals(userDao.getAllUsers().size(),1);
     }
 
     @Test
@@ -38,21 +38,22 @@ public class UserDaoTest extends EntityDaoTest{
     public void createUser(){
         User user = getUser();
         userDao.createOrUpdateUser(user);
-        assertEquals(userDao.getAllUsers().get().size(),2);
+        assertEquals(userDao.getAllUsers().size(),2);
     }
 
 
-//    @Test
-//    public void updateUser(){
-//        User user = Optional.ofNullable(userDao.getUserById(1));
-//        user.setNickname("TestingNickname");
-//        assertEquals(Optional.of(userDao.getUserById(1).get().getNickname()),"TestingNickname");
-//    }
+    @Test
+    public void updateUser(){
+        User user = userDao.getUserById(1).get();
+        user.setNickname("TestingNickname");
+        userDao.createOrUpdateUser(user);
+        assertEquals(userDao.getUserById(1).get().getNickname(), "TestingNickname");
+    }
 
     @Test
     public void deleteUser(){
         userDao.deleteUser(1);
-        assertEquals(userDao.getAllUsers().get().size(),0);
+        assertEquals(userDao.getAllUsers().size(),0);
     }
 
     private User getUser(){
