@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 @Transactional
@@ -15,12 +16,13 @@ public class UserDao {
     @Autowired
     private SessionFactory sessionFactory;
 
-    public User getUserById(long userId){
-        return sessionFactory.getCurrentSession().get(User.class,userId);
+    public Optional<User> getUserById(long userId){
+        return Optional.ofNullable(sessionFactory.getCurrentSession().get(User.class,userId));
+
     }
 
-    public List<User> getAllUsers(){
-        return sessionFactory.getCurrentSession().createQuery("from User").list();
+    public Optional<List<User>> getAllUsers(){
+        return Optional.ofNullable(sessionFactory.getCurrentSession().createQuery("from User").list());
     }
 
     public void createOrUpdateUser(User user){
@@ -28,6 +30,7 @@ public class UserDao {
     }
 
     public void deleteUser(long userId){
-        sessionFactory.getCurrentSession().delete(getUserById(userId));
+
+        sessionFactory.getCurrentSession().delete(getUserById(userId).get());
     }
 }
