@@ -3,6 +3,8 @@ package junior.academy.controller;
 import junior.academy.domain.User;
 import junior.academy.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,13 +17,22 @@ public class UserController {
     UserService userService;
 
     @GetMapping("/{userId}")
-    public User getUserById(@PathVariable long userId){
-        return userService.getUserById(userId);
+    public ResponseEntity<User> getUserById(@PathVariable long userId){
+        if(userService.getUserById(userId).isPresent()) {
+            return new ResponseEntity<>(userService.getUserById(userId).get(), HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+
     }
 
     @GetMapping
-    public List<User> getAllUsers(){
-        return userService.getAllUsers();
+    public ResponseEntity<List<User>> getAllUsers() {
+        if (userService.getAllUsers().isPresent()){
+            return new ResponseEntity<List<User>>(userService.getAllUsers().get(),HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
     }
 
     @PostMapping()
@@ -29,8 +40,12 @@ public class UserController {
         userService.createOrUpdateUser(user);
     }
 
-    @DeleteMapping()
-    public void deleteUser(long userId){
-        userService.deleteUserById(userId);
+    @DeleteMapping("/{userId}")
+    public ResponseEntity<User> deleteUser(@PathVariable  long userId){
+        if(userService.getUserById(userId).isPresent()){
+            userService.deleteUserById(userId);
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 }

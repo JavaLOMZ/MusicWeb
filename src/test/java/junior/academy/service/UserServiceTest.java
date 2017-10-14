@@ -11,8 +11,10 @@ import org.testng.annotations.Test;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyLong;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -34,7 +36,7 @@ public class UserServiceTest {
     }
 
     @Test
-    public void createUser(){
+    public void createOrUpdateUser(){
         doNothing().when(userDao).createOrUpdateUser((any(User.class)));
         userService.createOrUpdateUser(any(User.class));
         verify(userDao, Mockito.atLeastOnce()).createOrUpdateUser(any(User.class));
@@ -42,8 +44,23 @@ public class UserServiceTest {
 
     @Test
     public void getAllUsers(){
-        when(userDao.getAllUsers()).thenReturn(users);
-        Assert.assertEquals(userService.getAllUsers().size(),2);
+        when(userDao.getAllUsers()).thenReturn(Optional.ofNullable(users));
+        Assert.assertEquals(userService.getAllUsers().get().size(),2);
+    }
+
+    /*OGARNIJ BO SPIERDOLONY TEST WYDAJE MI SIE NIE MA SENSU ALE WRZUCAM*/
+    @Test
+    public void deleteUserById(){
+        when(userDao.getAllUsers()).thenReturn(Optional.ofNullable(users));
+        doNothing().when(userDao).deleteUser(anyLong());
+        Assert.assertEquals(userService.getAllUsers().get().size(),2);
+    }
+
+    @Test
+    public void getUserById(){
+        User user=users.get(1);
+        when(userDao.getUserById(anyLong())).thenReturn(Optional.ofNullable(user));
+        Assert.assertEquals(userService.getUserById(anyLong()),Optional.of(user));
     }
 
 
