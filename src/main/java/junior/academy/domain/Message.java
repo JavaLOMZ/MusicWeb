@@ -1,12 +1,12 @@
 package junior.academy.domain;
 
-import java.util.List;
+import java.util.Set;
 
 public class Message {
 
     private int messageId;
     private String messageText;
-    private List<User> communicatingUsers;
+    private Set<User> communicatingUsers;
 
     public String getMessageText() {
         return messageText;
@@ -16,11 +16,11 @@ public class Message {
         this.messageText = messageText;
     }
 
-    public List<User> getCommunicatingUsers() {
+    public Set<User> getCommunicatingUsers() {
         return communicatingUsers;
     }
 
-    public void setCommunicatingUsers(List<User> communicatingUsers) {
+    public void setCommunicatingUsers(Set<User> communicatingUsers) {
         this.communicatingUsers = communicatingUsers;
     }
 }
