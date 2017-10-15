@@ -51,7 +51,7 @@ public class AuthorDaoTest extends EntityDaoTest {
 
     @Test
     public void deleteAuthor() {
-        authorDao.deleteAuthor(1);
+        authorDao.deleteAuthorById(1);
         assertEquals(authorDao.getAllAuthors().size(), 0);
     }
 

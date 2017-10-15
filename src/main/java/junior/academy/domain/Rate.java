@@ -1,5 +1,7 @@
 package junior.academy.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
@@ -18,10 +20,12 @@ public class Rate {
 
     @ManyToOne
     @JoinColumn(name="userId")
+    @JsonBackReference("b")
     private User user;
 
     @ManyToOne
     @JoinColumn(name = "songId")
+    @JsonBackReference
     private Song song;
 
 

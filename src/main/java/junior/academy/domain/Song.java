@@ -1,8 +1,12 @@
 package junior.academy.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "song")
@@ -12,11 +16,6 @@ public class Song {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "songId")
     private long songId;
-
-    @ManyToOne
-    @JoinColumn(name = "authorId")
-    private Author author;
-
 
     @Column(name = "songName")
     @NotNull
@@ -31,11 +30,18 @@ public class Song {
     @Column(name = "youTubeLink")
     private String youTubeLink;
 
-    @OneToMany(mappedBy = "song")
-    private List<Rate> rate;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "authorId")
+    @JsonBackReference
+    private Author author;
 
-    @OneToMany(mappedBy = "song")
-    private List<Comment> comments;
+    @OneToMany(mappedBy = "song", fetch = FetchType.EAGER)
+    @JsonManagedReference
+    private Set<Rate> rate;
+
+    @OneToMany(mappedBy = "song", fetch = FetchType.EAGER)
+    @JsonManagedReference("c")
+    private Set<Comment> comments;
 
     public Author getAuthor() {
         return author;
@@ -77,19 +83,19 @@ public class Song {
         this.releaseYear = releaseYear;
     }
 
-    public List<Rate> getRate() {
+    public Set<Rate> getRate() {
         return rate;
     }
 
-    public void setRate(List<Rate> rate) {
+    public void setRate(Set<Rate> rate) {
         this.rate = rate;
     }
 
-    public List<Comment> getComments() {
+    public Set<Comment> getComments() {
         return comments;
     }
 
-    public void setComments(List<Comment> comments) {
+    public void setComments(Set<Comment> comments) {
         this.comments = comments;
     }
 

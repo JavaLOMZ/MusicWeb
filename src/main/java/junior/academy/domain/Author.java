@@ -1,8 +1,12 @@
 package junior.academy.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "author")
@@ -23,8 +27,13 @@ public class Author {
     @Column(name = "countryOfOrigin")
     private String countryOfOrigin;
 
-    @OneToMany(mappedBy = "author")
-    private List<Song> songs;
+    @OneToMany(mappedBy = "author", fetch = FetchType.EAGER)
+    @JsonManagedReference
+    private Set<Song> songs;
+
+    public long getAuthorId() {
+        return authorId;
+    }
 
     public String getName() {
         return name;

@@ -8,7 +8,6 @@ import static org.junit.Assert.*;
 
 import org.mockito.*;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.util.ArrayList;
@@ -45,14 +44,14 @@ public class AuthorServiceTest {
     @Test
     public void getAllAuthors() {
         when(authorDao.getAllAuthors()).thenReturn(authors);
-        assertEquals(authorService.getAllAuthors().size(), 1);
+        assertEquals(authorService.getAllAuthors(), authors);
     }
 
     @Test
     public void deleteAuthorById() {
-        doNothing().when(authorDao).deleteAuthor(anyLong());
+        doNothing().when(authorDao).deleteAuthorById(anyLong());
         authorService.deleteAuthorById(anyLong());
-        verify(authorDao, atLeastOnce()).deleteAuthor(anyLong());
+        verify(authorDao, atLeastOnce()).deleteAuthorById(anyLong());
     }
 
     @Test
@@ -62,7 +61,7 @@ public class AuthorServiceTest {
         assertEquals(authorService.getAuthorById(anyLong()), Optional.of(author));
     }
 
-    public List<Author> getAuthorList() {
+    private List<Author> getAuthorList() {
         Author author = new Author();
         author.setName("Justin Bieber");
         author.setCountryOfOrigin("USA");

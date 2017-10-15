@@ -28,7 +28,7 @@ public class AuthorDao {
         sessionFactory.getCurrentSession().saveOrUpdate(author);
     }
 
-    public void deleteAuthor(long authorId) {
+    public void deleteAuthorById(long authorId) {
         sessionFactory.getCurrentSession().delete(getAuthorById(authorId).get());
     }
 }

@@ -1,6 +1,7 @@
 package junior.academy.domain;
 
-import org.springframework.context.annotation.Configuration;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -18,14 +19,15 @@ public class Comment {
     @NotNull
     private String commentText;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="userId")
+    @JsonBackReference("a")
     private User user;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "songId")
+    @JsonBackReference("c")
     private Song song;
-
 
     public String getCommentText() {
         return commentText;
@@ -33,6 +35,10 @@ public class Comment {
 
     public void setCommentText(String commentText) {
         this.commentText = commentText;
+    }
+
+    public long getCommentId() {
+        return commentId;
     }
 
     public Song getSong() {

@@ -1,5 +1,8 @@
 package junior.academy.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.List;
@@ -7,6 +10,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "user")
+@JsonIgnoreProperties({ "comments", "rates" })
 public class User {
 
     @Id
@@ -28,9 +32,11 @@ public class User {
     private Boolean isBanned;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+    @JsonManagedReference("a")
     private Set<Comment> comments;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+    @JsonManagedReference("b")
     private Set<Rate> rates;
 
     public User(){

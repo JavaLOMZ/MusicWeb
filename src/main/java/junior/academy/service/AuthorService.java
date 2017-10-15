@@ -27,7 +27,7 @@ public class AuthorService {
     }
 
     public void deleteAuthorById(long authorId){
-        authorDao.deleteAuthor(authorId);
+        authorDao.deleteAuthorById(authorId);
     }
 
     public boolean isAuthorPresent(long authorId){
