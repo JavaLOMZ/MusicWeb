@@ -1,7 +1,6 @@
 package junior.academy.domain;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -32,15 +31,15 @@ public class Song {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "authorId")
-    @JsonBackReference
+    @JsonUnwrapped
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "authorId")
+    @JsonIgnoreProperties({"name", "yearOfBirth", "countryOfOrigin"})
     private Author author;
 
     @OneToMany(mappedBy = "song", fetch = FetchType.EAGER)
-    @JsonManagedReference
     private Set<Rate> rate;
 
     @OneToMany(mappedBy = "song", fetch = FetchType.EAGER)
-    @JsonManagedReference("c")
     private Set<Comment> comments;
 
     public Author getAuthor() {

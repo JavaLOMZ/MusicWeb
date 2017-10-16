@@ -28,7 +28,6 @@ public class Author {
     private String countryOfOrigin;
 
     @OneToMany(mappedBy = "author", fetch = FetchType.EAGER)
-    @JsonManagedReference
     private Set<Song> songs;
 
     public long getAuthorId() {

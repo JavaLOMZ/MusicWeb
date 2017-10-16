@@ -18,7 +18,7 @@ public class UserController {
 
     @GetMapping("/{userId}")
     public ResponseEntity<User> getUserById(@PathVariable long userId) {
-        if (userService.getUserById(userId).isPresent()) {
+        if (userService.isUserPresent(userId)) {
             return new ResponseEntity<>(userService.getUserById(userId).get(), HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -29,14 +29,14 @@ public class UserController {
         return userService.getAllUsers();
     }
 
-    @PostMapping()
+    @PostMapping
     public void createOrUpdateUser(@RequestBody User user) {
         userService.createOrUpdateUser(user);
     }
 
     @DeleteMapping("/{userId}")
-    public ResponseEntity deleteUser(@PathVariable long userId) {
-        if (userService.getUserById(userId).isPresent()) {
+    public ResponseEntity deleteUserById(@PathVariable long userId) {
+        if (userService.isUserPresent(userId)) {
             userService.deleteUserById(userId);
             return new ResponseEntity(HttpStatus.OK);
         }

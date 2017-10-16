@@ -29,7 +29,7 @@ public class CommentController {
         return commentService.getAllComments();
     }
 
-    @PostMapping()
+    @PostMapping
     public void createOrUpdateComment(@RequestBody Comment comment) {
         commentService.createOrUpdateComment(comment);
     }
