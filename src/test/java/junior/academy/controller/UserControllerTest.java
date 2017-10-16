@@ -18,8 +18,9 @@ import java.util.Optional;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyLong;
-import static org.mockito.Mockito.when;
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
+
 public class UserControllerTest {
     @Mock
     UserService userService;
@@ -28,43 +29,53 @@ public class UserControllerTest {
     UserController userController;
 
     @Spy
-    List<User> users=new ArrayList<>();
+    List<User> users = new ArrayList<>();
 
     @BeforeClass
-    public void setUp(){
+    public void setUp() {
         MockitoAnnotations.initMocks(this);
-        users=getUsersList();
+        users = getUsersList();
     }
 
     @Test
-    public void getUserWhenPresent(){
-        User user=getUsersList().get(0);
-        boolean answer=userService.getUserById(user.getUserId()).isPresent();
-        System.out.println(answer);
-        //when(userService.getUserById(anyLong()).isPresent()).thenReturn(true);
-        //when(userService.getUserById(anyLong())).thenReturn(Optional.ofNullable(user));
-        assertEquals(userController.getUserById(anyLong()),new ResponseEntity<>(user, HttpStatus.OK));
+    public void getUserWhenPresent() {
+        User user = getUsersList().get(0);
+        when(userService.isUserPresent(anyLong())).thenReturn(true);
+        when(userService.getUserById(anyLong())).thenReturn(Optional.ofNullable(user));
+        assertEquals(userController.getUserById(anyLong()), new ResponseEntity<>(user, HttpStatus.OK));
     }
 
     @Test
-    public void getUserWhenNotPresent(){
-        //when(userService.getUserById(anyLong()).isPresent()).thenReturn(false);
-        assertEquals(userController.getUserById(anyLong()),new ResponseEntity<>(any(User.class),HttpStatus.NOT_FOUND));
+    public void getUserWhenNotPresent() {
+        when(userService.isUserPresent(anyLong())).thenReturn(false);
+        assertEquals(userController.getUserById(anyLong()), new ResponseEntity<>(any(User.class), HttpStatus.NOT_FOUND));
     }
 
     @Test
-    public void getAllUsers(){
-
+    public void getAllUsers() {
+        when(userService.getAllUsers()).thenReturn(users);
+        assertEquals(userController.getAllUsers().size(), users.size());
     }
 
     @Test
-    public void createUser(){
-
+    public void createUser() {
+        doNothing().when(userService).createOrUpdateUser(any(User.class));
+        userController.createOrUpdateUser(any(User.class));
+        verify(userService, atLeastOnce()).createOrUpdateUser(any(User.class));
     }
 
     @Test
-    public void deleteUser(){
+    public void deleteUserWhenPresent() {
+        when(userService.isUserPresent(anyLong())).thenReturn(true);
+        doNothing().when(userService).deleteUserById(anyLong());
+        assertEquals(userController.deleteUserById(anyLong()), new ResponseEntity(HttpStatus.OK));
+        verify(userService, atLeastOnce()).deleteUserById(anyLong());
+    }
 
+    @Test
+    public void deleteUserWhenNotPresent() {
+        when(userService.isUserPresent(anyLong())).thenReturn(false);
+        assertEquals(userController.deleteUserById(anyLong()), new ResponseEntity(HttpStatus.NOT_FOUND));
     }
 
     public List<User> getUsersList() {

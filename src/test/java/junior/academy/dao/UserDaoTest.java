@@ -5,45 +5,47 @@ import org.dbunit.dataset.CompositeDataSet;
 import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.xml.FlatXmlDataSet;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import static org.testng.Assert.*;
+
 import org.testng.annotations.Test;
 
 import java.util.Optional;
 
-public class UserDaoTest extends EntityDaoTest{
+public class UserDaoTest extends EntityDaoTest {
 
     @Autowired
     UserDao userDao;
 
     @Override
     protected IDataSet getDataSet() throws Exception {
-        IDataSet[] datasets = new IDataSet[] {
+        IDataSet[] datasets = new IDataSet[]{
                 new FlatXmlDataSet(this.getClass().getClassLoader().getResourceAsStream("User.xml"))
         };
         return new CompositeDataSet(datasets);
     }
 
     @Test
-    public void getAllusers(){
-        assertEquals(userDao.getAllUsers().size(),1);
+    public void getAllusers() {
+        assertEquals(userDao.getAllUsers().size(), 1);
     }
 
     @Test
-    public void getUserById(){
+    public void getUserById() {
         assertNotNull(userDao.getUserById(1));
         assertEquals(userDao.getUserById(1).get().getNickname(), "Test");
     }
 
     @Test
-    public void createUser(){
+    public void createUser() {
         User user = getUser();
         userDao.createOrUpdateUser(user);
-        assertEquals(userDao.getAllUsers().size(),2);
+        assertEquals(userDao.getAllUsers().size(), 2);
     }
 
 
     @Test
-    public void updateUser(){
+    public void updateUser() {
         User user = userDao.getUserById(1).get();
         user.setNickname("TestingNickname");
         userDao.createOrUpdateUser(user);
@@ -51,13 +53,13 @@ public class UserDaoTest extends EntityDaoTest{
     }
 
     @Test
-    public void deleteUser(){
-        userDao.deleteUser(1);
-        assertEquals(userDao.getAllUsers().size(),0);
+    public void deleteUser() {
+        userDao.deleteUserById(1);
+        assertEquals(userDao.getAllUsers().size(), 0);
     }
 
-    private User getUser(){
-        User user=new User();
+    private User getUser() {
+        User user = new User();
         user.setNickname("TestUpdate");
         user.setAdmin(true);
         user.setBanned(false);

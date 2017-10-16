@@ -16,20 +16,20 @@ public class UserDao {
     @Autowired
     private SessionFactory sessionFactory;
 
-    public Optional<User> getUserById(long userId){
-        return Optional.ofNullable(sessionFactory.getCurrentSession().get(User.class,userId));
+    public Optional<User> getUserById(long userId) {
+        return Optional.ofNullable(sessionFactory.getCurrentSession().get(User.class, userId));
 
     }
 
-    public List<User> getAllUsers(){
+    public List<User> getAllUsers() {
         return sessionFactory.getCurrentSession().createQuery("from User").list();
     }
 
-    public void createOrUpdateUser(User user){
+    public void createOrUpdateUser(User user) {
         sessionFactory.getCurrentSession().saveOrUpdate(user);
     }
 
-    public void deleteUser(long userId){
+    public void deleteUserById(long userId) {
 
         sessionFactory.getCurrentSession().delete(getUserById(userId).get());
     }

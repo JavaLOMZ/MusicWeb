@@ -21,12 +21,10 @@ public class Comment {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="userId")
-    @JsonBackReference("a")
     private User user;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "songId")
-    @JsonBackReference("c")
     private Song song;
 
     public String getCommentText() {

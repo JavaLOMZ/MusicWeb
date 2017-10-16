@@ -32,11 +32,9 @@ public class User {
     private Boolean isBanned;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
-    @JsonManagedReference("a")
     private Set<Comment> comments;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
-    @JsonManagedReference("b")
     private Set<Rate> rates;
 
     public User(){

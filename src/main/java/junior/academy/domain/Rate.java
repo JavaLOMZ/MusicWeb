@@ -20,12 +20,10 @@ public class Rate {
 
     @ManyToOne
     @JoinColumn(name="userId")
-    @JsonBackReference("b")
     private User user;
 
     @ManyToOne
     @JoinColumn(name = "songId")
-    @JsonBackReference
     private Song song;
 
 

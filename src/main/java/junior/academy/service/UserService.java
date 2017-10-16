@@ -14,20 +14,24 @@ public class UserService {
     @Autowired
     UserDao userDao;
 
-    public Optional<User> getUserById(long userId){
+    public Optional<User> getUserById(long userId) {
         return userDao.getUserById(userId);
     }
 
-    public List<User> getAllUsers(){
+    public List<User> getAllUsers() {
         return userDao.getAllUsers();
     }
 
-    public void createOrUpdateUser(User user){
+    public void createOrUpdateUser(User user) {
         userDao.createOrUpdateUser(user);
     }
 
-    public void deleteUserById(long userId){
-        userDao.deleteUser(userId);
+    public void deleteUserById(long userId) {
+        userDao.deleteUserById(userId);
+    }
+
+    public boolean isUserPresent(long userId) {
+        return userDao.getUserById(userId).isPresent();
     }
 
 

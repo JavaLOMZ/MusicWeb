@@ -8,7 +8,6 @@ import static org.junit.Assert.*;
 
 import org.mockito.*;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.util.ArrayList;
@@ -50,9 +49,9 @@ public class UserServiceTest {
 
     @Test
     public void deleteUserById() {
-        doNothing().when(userDao).deleteUser(anyLong());
+        doNothing().when(userDao).deleteUserById(anyLong());
         userService.deleteUserById(anyLong());
-        verify(userDao, atLeastOnce()).deleteUser(anyLong());
+        verify(userDao, atLeastOnce()).deleteUserById(anyLong());
     }
 
     @Test
@@ -62,14 +61,19 @@ public class UserServiceTest {
         assertEquals(userService.getUserById(anyLong()), Optional.of(user));
     }
 
+    @Test
+    public void isUserPresent() {
+        User user = users.get(0);
+        when(userDao.getUserById(anyLong())).thenReturn(Optional.ofNullable(user));
+        assertEquals(userService.isUserPresent(user.getUserId()), true);
+    }
+
     public List<User> getUserList() {
         User user = new User();
-        user.setUserId(1);
-        user.setNickname("Test");
+        user.setNickname("test");
         user.setAdmin(true);
         user.setBanned(false);
         user.setEmail("test@test.com");
-
         users.add(user);
         return users;
     }
