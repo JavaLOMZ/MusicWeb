@@ -1,7 +1,9 @@
 package junior.academy.domain;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -11,6 +13,7 @@ import java.util.Set;
 @Entity
 @Table(name = "user")
 @JsonIgnoreProperties({ "comments", "rates" })
+//@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="userId")
 public class User {
 
     @Id
@@ -31,10 +34,10 @@ public class User {
     @Column(name = "isBanned")
     private Boolean isBanned;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private Set<Comment> comments;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private Set<Rate> rates;
 
     public User(){
@@ -97,4 +100,6 @@ public class User {
     public void setRates(Set<Rate> rates) {
         this.rates = rates;
     }
+
+
 }
