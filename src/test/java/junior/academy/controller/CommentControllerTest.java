@@ -1,4 +1,4 @@
-package java.junior.academy.controller;
+package junior.academy.controller;
 
 public class CommentControllerTest {
 }

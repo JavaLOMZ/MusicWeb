@@ -37,7 +37,7 @@ public class Song {
     private Author author;
 
     @OneToMany(mappedBy = "song", fetch = FetchType.EAGER)
-    private Set<Rate> rate;
+    private Set<Rate> rates;
 
     @OneToMany(mappedBy = "song", fetch = FetchType.EAGER)
     private Set<Comment> comments;
@@ -83,11 +83,11 @@ public class Song {
     }
 
     public Set<Rate> getRate() {
-        return rate;
+        return rates;
     }
 
     public void setRate(Set<Rate> rate) {
-        this.rate = rate;
+        this.rates = rate;
     }
 
     public Set<Comment> getComments() {
