@@ -1,13 +1,14 @@
 package junior.academy.domain;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "comment")
+//@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="commentId")
+@JsonIgnoreProperties({"author"})
 public class Comment {
 
     @Id
@@ -21,10 +22,13 @@ public class Comment {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="userId")
+    @JsonUnwrapped
     private User user;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "songId")
+    @JsonUnwrapped
+    @JsonIgnoreProperties("comments")
     private Song song;
 
     public String getCommentText() {

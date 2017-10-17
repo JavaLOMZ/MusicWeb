@@ -18,15 +18,13 @@ public class Rate {
     @NotNull
     private int rateValue; //min 1 max 10
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="userId")
     private User user;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "songId")
     private Song song;
-
-
 
     public int getRateValue() {
         return rateValue;
@@ -50,5 +48,13 @@ public class Rate {
 
     public void setSong(Song song) {
         this.song = song;
+    }
+
+    public long getRateId() {
+        return rateId;
+    }
+
+    public void setRateId(long rateId) {
+        this.rateId = rateId;
     }
 }

@@ -1,7 +1,9 @@
 package junior.academy.domain;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -10,6 +12,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "author")
+//@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="authorId")
 public class Author {
 
     @Id

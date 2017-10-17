@@ -9,6 +9,8 @@ import java.util.Set;
 
 @Entity
 @Table(name = "song")
+//@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="songId")
+//@JsonIgnoreProperties({ "comments"})
 public class Song {
 
     @Id
@@ -32,8 +34,6 @@ public class Song {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "authorId")
     @JsonUnwrapped
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "authorId")
-    @JsonIgnoreProperties({"name", "yearOfBirth", "countryOfOrigin"})
     private Author author;
 
     @OneToMany(mappedBy = "song", fetch = FetchType.EAGER)
@@ -98,5 +98,11 @@ public class Song {
         this.comments = comments;
     }
 
+    public long getSongId() {
+        return songId;
+    }
 
+    public void setSongId(long songId) {
+        this.songId = songId;
+    }
 }
