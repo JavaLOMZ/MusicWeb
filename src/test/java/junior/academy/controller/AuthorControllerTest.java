@@ -1,4 +1,4 @@
-package juniorauthor.academy.controller;
+package junior.academy.controller;
 
 import junior.academy.controller.AuthorController;
 import junior.academy.domain.Author;

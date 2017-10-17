@@ -12,7 +12,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "user")
-@JsonIgnoreProperties({ "comments", "rates" })
+@JsonIgnoreProperties({ "comments", "rates"})
 //@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="userId")
 public class User {
 

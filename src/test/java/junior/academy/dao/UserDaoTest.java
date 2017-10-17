@@ -10,8 +10,6 @@ import static org.testng.Assert.*;
 
 import org.testng.annotations.Test;
 
-import java.util.Optional;
-
 public class UserDaoTest extends EntityDaoTest {
 
     @Autowired

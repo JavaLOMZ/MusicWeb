@@ -1,4 +1,4 @@
-package java.junior.academy.service;
+package junior.academy.service;
 
 public class CommentServiceTest {
 }

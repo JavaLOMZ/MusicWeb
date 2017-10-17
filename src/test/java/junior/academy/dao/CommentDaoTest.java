@@ -1,4 +1,4 @@
-package java.junior.academy.dao;
+package junior.academy.dao;
 
 public class CommentDaoTest {
 }
