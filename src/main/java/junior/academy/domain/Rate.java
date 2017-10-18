@@ -1,6 +1,8 @@
 package junior.academy.domain;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonUnwrapped;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -20,10 +22,14 @@ public class Rate {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="userId")
+    @JsonUnwrapped
+    @JsonIgnoreProperties({ "comments", "rates"})
     private User user;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
     @JoinColumn(name = "songId")
+    @JsonUnwrapped
+    @JsonIgnoreProperties({"comments", "rates", "author"})
     private Song song;
 
     public int getRateValue() {

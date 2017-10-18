@@ -4,13 +4,10 @@ import com.fasterxml.jackson.annotation.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.List;
 import java.util.Set;
 
 @Entity
 @Table(name = "song")
-//@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="songId")
-//@JsonIgnoreProperties({ "comments"})
 public class Song {
 
     @Id
@@ -31,15 +28,18 @@ public class Song {
     @Column(name = "youTubeLink")
     private String youTubeLink;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
     @JoinColumn(name = "authorId")
     @JsonUnwrapped
+    @JsonIgnoreProperties({"songs"})
     private Author author;
 
     @OneToMany(mappedBy = "song", fetch = FetchType.EAGER)
+    @JsonIgnoreProperties({"song", "user"})
     private Set<Rate> rates;
 
-    @OneToMany(mappedBy = "song", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "song", fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
+    @JsonIgnoreProperties({"song", "user"})
     private Set<Comment> comments;
 
     public Author getAuthor() {
@@ -82,12 +82,12 @@ public class Song {
         this.releaseYear = releaseYear;
     }
 
-    public Set<Rate> getRate() {
+    public Set<Rate> getRates() {
         return rates;
     }
 
-    public void setRate(Set<Rate> rate) {
-        this.rates = rate;
+    public void setRates(Set<Rate> rates) {
+        this.rates = rates;
     }
 
     public Set<Comment> getComments() {

@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dataset>
-    <song songId="1" songName="TestSong"  musicGenre="TestGenre" releaseYear="1900" youTubeLink="www.youtube.com/test" authorId="1"/>
+    <song songId="1" songName="TestSong"  musicGenre="TestGenre" releaseYear="1900" youTubeLink="www.youtube.com/test"/>
 </dataset>

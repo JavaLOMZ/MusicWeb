@@ -27,7 +27,7 @@ public class SongService {
     }
 
     public void deleteSongById(long songId) {
-        songDao.deleteSongByIt(songId);
+        songDao.deleteSongById(songId);
     }
 
     public boolean isSongPresent(long songId) {

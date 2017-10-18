@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import static org.testng.Assert.*;
 
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 public class AuthorDaoTest extends EntityDaoTest {
@@ -21,6 +22,11 @@ public class AuthorDaoTest extends EntityDaoTest {
                 new FlatXmlDataSet(this.getClass().getClassLoader().getResourceAsStream("Author.xml"))
         };
         return new CompositeDataSet(datasets);
+    }
+
+    @BeforeClass
+    public void beforeClass(){
+
     }
 
     @Test
