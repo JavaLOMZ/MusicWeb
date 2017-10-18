@@ -58,9 +58,9 @@ public class SongServiceTest {
 
     @Test
     public void deleteSongById(){
-        doNothing().when(songDao).deleteSongByIt(anyLong());
+        doNothing().when(songDao).deleteSongById(anyLong());
         songService.deleteSongById(anyLong());
-        verify(songDao,atLeastOnce()).deleteSongByIt(anyLong());
+        verify(songDao,atLeastOnce()).deleteSongById(anyLong());
     }
 
     @Test

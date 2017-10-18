@@ -7,7 +7,6 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "comment")
-//@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="commentId")
 public class Comment {
 
     @Id
@@ -22,12 +21,13 @@ public class Comment {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="userId")
     @JsonUnwrapped
+    @JsonIgnoreProperties({ "comments", "rates"})
     private User user;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "songId")
     @JsonUnwrapped
-    @JsonIgnoreProperties({"comments", "rate", "author"})
+    @JsonIgnoreProperties({"comments", "rates", "author"})
     private Song song;
 
     public String getCommentText() {

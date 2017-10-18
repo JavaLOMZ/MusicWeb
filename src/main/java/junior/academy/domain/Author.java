@@ -12,7 +12,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "author")
-//@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="authorId")
+
 public class Author {
 
     @Id
@@ -30,7 +30,7 @@ public class Author {
     @Column(name = "countryOfOrigin")
     private String countryOfOrigin;
 
-    @OneToMany(mappedBy = "author", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "author", fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
     private Set<Song> songs;
 
     public long getAuthorId() {
@@ -59,5 +59,21 @@ public class Author {
 
     public void setCountryOfOrigin(String countryOfOrigin) {
         this.countryOfOrigin = countryOfOrigin;
+    }
+
+    public Set<Song> getSongs() {
+        return songs;
+    }
+
+    public void setSongs(Set<Song> songs) {
+        this.songs = songs;
+    }
+
+    public void deleteSongFromList(Song song){
+        songs.remove(song);
+    }
+
+    public void addSongToList(Song song){
+
     }
 }

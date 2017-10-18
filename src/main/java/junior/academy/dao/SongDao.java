@@ -1,6 +1,7 @@
 package junior.academy.dao;
 
 
+import junior.academy.domain.Author;
 import junior.academy.domain.Song;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import java.util.Optional;
 @Repository
 @Transactional
 public class SongDao {
+
     @Autowired
     private SessionFactory sessionFactory;
 
@@ -29,7 +31,7 @@ public class SongDao {
         sessionFactory.getCurrentSession().saveOrUpdate(song);
     }
 
-    public void deleteSongByIt(long songId){
+    public void deleteSongById(long songId){
         sessionFactory.getCurrentSession().delete(getSongById(songId).get());
     }
 }
