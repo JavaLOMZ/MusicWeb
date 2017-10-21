@@ -90,5 +90,11 @@
             <version>1.10.19</version>
             <scope>test</scope>
         </dependency>
+
+        <!--Some dependnecies to use angular-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-freemarker</artifactId>
+        </dependency>
     </dependencies>
 </project>

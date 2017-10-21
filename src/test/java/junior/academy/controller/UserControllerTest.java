@@ -82,8 +82,8 @@ public class UserControllerTest {
         User user = new User();
         user.setUserId(1);
         user.setNickname("Test");
-        user.setAdmin(true);
-        user.setBanned(false);
+        user.setIsAdmin(true);
+        user.setIsBanned(false);
         user.setEmail("test@test.com");
         users.add(user);
         return users;

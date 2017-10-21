@@ -71,8 +71,8 @@ public class UserServiceTest {
     public List<User> getUserList() {
         User user = new User();
         user.setNickname("test");
-        user.setAdmin(true);
-        user.setBanned(false);
+        user.setIsAdmin(true);
+        user.setIsBanned(false);
         user.setEmail("test@test.com");
         users.add(user);
         return users;
