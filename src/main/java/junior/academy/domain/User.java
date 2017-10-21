@@ -53,11 +53,11 @@ public class User {
         this.userId = userId;
     }
 
-    public Boolean isAdmin() {
+    public Boolean getIsAdmin() {
         return isAdmin;
     }
 
-    public void setAdmin(Boolean admin) {
+    public void setIsAdmin(Boolean admin) {
         isAdmin = admin;
     }
 
@@ -77,11 +77,11 @@ public class User {
         this.email = email;
     }
 
-    public Boolean isBanned() {
+    public Boolean getIsBanned() {
         return isBanned;
     }
 
-    public void setBanned(Boolean banned) {
+    public void setIsBanned(Boolean banned) {
         isBanned = banned;
     }
 
@@ -101,5 +101,16 @@ public class User {
         this.rates = rates;
     }
 
-
+    @Override
+    public String toString() {
+        return "User{" +
+                "userId=" + userId +
+                ", isAdmin=" + isAdmin +
+                ", nickname='" + nickname + '\'' +
+                ", email='" + email + '\'' +
+                ", isBanned=" + isBanned +
+                ", comments=" + comments +
+                ", rates=" + rates +
+                '}';
+    }
 }

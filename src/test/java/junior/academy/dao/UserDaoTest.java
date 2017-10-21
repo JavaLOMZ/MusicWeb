@@ -59,8 +59,8 @@ public class UserDaoTest extends EntityDaoTest {
     private User getUser() {
         User user = new User();
         user.setNickname("TestUpdate");
-        user.setAdmin(true);
-        user.setBanned(false);
+        user.setIsAdmin(true);
+        user.setIsBanned(false);
         user.setEmail("test@test.com");
         return user;
     }

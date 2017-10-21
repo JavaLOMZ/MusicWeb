@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/user")
 public class UserController {
@@ -31,6 +32,7 @@ public class UserController {
 
     @PostMapping
     public void createOrUpdateUser(@RequestBody User user) {
+        System.out.println(user);
         userService.createOrUpdateUser(user);
     }
 
