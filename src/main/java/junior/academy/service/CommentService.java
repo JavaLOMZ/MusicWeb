@@ -33,4 +33,8 @@ public class CommentService {
     public boolean isCommentPresent(long commentId){
         return commentDao.getCommentById(commentId).isPresent();
     }
+
+    public List<Comment> getCommentsByUserId(long userId){
+        return commentDao.getCommentsByUserId(userId);
+    }
 }

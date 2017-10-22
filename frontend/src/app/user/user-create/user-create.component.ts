@@ -17,37 +17,78 @@ export class UserCreateComponent implements OnInit {
   user: User;
 
   userForm: FormGroup;
+  private sub:any;
 
   constructor(private route: ActivatedRoute,
               private router: Router,
               private userService: UserService) { }
 
   ngOnInit() {
+    this.sub=this.route.params.subscribe(params=>{
+      this.userId=params['userId'];
+    });
+
     this.userForm=new FormGroup({
       nickname: new FormControl('',Validators.required),
       email: new FormControl('',Validators.required),
       isAdmin: new FormControl('',Validators.required),
       isBanned:new FormControl('', Validators.required)
     })
+
+
+    if(this.userId){
+      this.userService.getUserById(this.userId).subscribe(
+        user=>{
+          this.userId=user.userId;
+          this.userForm.patchValue({
+            nickname: user.nickname,
+            email: user.email,
+            isAdmin: user.isAdmin,
+            isBanned: user.isBanned
+          });
+        }, error=>{
+          console.log(error);
+        }
+      );
+    }
+
+
   }
 
+
   ngOnDeastroy(): void{
+    this.sub.unsubscribe();
   }
+
+
 
   onSubmit(){
     if(this.userForm.valid){
-      let user:User=new User(null,
-        this.userForm.controls['nickname'].value,
-        this.userForm.controls['email'].value,
-        this.userForm.controls['isAdmin'].value,
-        this.userForm.controls['isBanned'].value);
-      this.userService.createOrUpdateUser(user).subscribe();
+      if(this.userId) {
+        let user: User = new User(this.userId,
+          this.userForm.controls['nickname'].value,
+          this.userForm.controls['email'].value,
+          this.userForm.controls['isAdmin'].value,
+          this.userForm.controls['isBanned'].value);
+        this.userService.createOrUpdateUser(user).subscribe();
+      }else {
+        let user: User = new User(null,
+          this.userForm.controls['nickname'].value,
+          this.userForm.controls['email'].value,
+          this.userForm.controls['isAdmin'].value,
+          this.userForm.controls['isBanned'].value);
+        this.userService.createOrUpdateUser(user).subscribe();
+      }
     }
+
+
     this.userForm.reset();
     this.router.navigate(['/user']);
+    window.location.reload();
   }
   redirectUserPage(){
     this.router.navigate(['/user']);
   }
+
 
 }

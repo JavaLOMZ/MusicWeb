@@ -20,7 +20,9 @@ export class UserService {
   }
 
   getUserById(userId: number): Observable<User> {
-    return null;
+    return this.http.get(this.apiUrl+'/'+userId)
+      .map((res:Response)=>res.json())
+      .catch((error:any)=>Observable.throw(error.json().error || 'Server Error'));
   }
 
   createOrUpdateUser(user: User): Observable<User> {
@@ -33,12 +35,4 @@ export class UserService {
       .map((res:Response) => res.json())
       .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
   }
-
-
-  updateUser(user: User): Observable<User> {
-    return null;
-  }
-
-
-
 }

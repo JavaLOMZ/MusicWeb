@@ -32,7 +32,6 @@ public class UserController {
 
     @PostMapping
     public void createOrUpdateUser(@RequestBody User user) {
-        System.out.println(user);
         userService.createOrUpdateUser(user);
     }
 
