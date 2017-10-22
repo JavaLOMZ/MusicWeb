@@ -34,10 +34,11 @@
         <tbody>
         <tr *ngFor="let user of users">
           <th scope="row">{{user.userId}}</th>
-          <td>{{user.nickname}}</td>
+          <td><button type="button" class="btn-primary" (click)="redirectSingeUserPage(user.userId)">{{user.nickname}}</button></td>
           <td>{{user.email}}</td>
           <td>{{user.isAdmin}}</td>
           <td>{{user.isBanned}}</td>
+
           <td>
             <button type="button" class="btn btn-success" (click)="editUserPage(user)">Edit</button>
             <button type="button" class="btn btn-danger" (click)="deleteUser(user.userId)">Delete</button>

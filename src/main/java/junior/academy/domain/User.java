@@ -36,7 +36,7 @@ public class User {
 
     private Set<Comment> comments;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
     @JsonIgnoreProperties({"user"})
     private Set<Rate> rates;
 

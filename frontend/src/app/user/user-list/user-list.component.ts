@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {UserService} from "../user.service";
 import {User} from "../user";
 import {Router} from "@angular/router";
@@ -7,46 +7,58 @@ import {Router} from "@angular/router";
   selector: 'app-user-list',
   templateUrl: './user-list.component.html',
   styleUrls: ['./user-list.component.css'],
-  providers:[UserService]
+  providers: [UserService]
 })
 export class UserListComponent implements OnInit {
 
-  private users:User[];
+  private users: User[];
+  private user: User;
 
-  constructor( private router: Router,
-    private userService: UserService) { }
+  constructor(private router: Router,
+              private userService: UserService) {
+  }
 
   ngOnInit() {
     this.getAllUsers();
   }
 
-  getAllUsers(){
+  getAllUsers() {
     this.userService.getAllUsers().subscribe(
-      users=>{
-        this.users=users;
+      users => {
+        this.users = users;
       },
-      err=>{
+      err => {
         console.log(err);
       }
     );
   }
 
-  redirectNewUserPage(){
+  redirectNewUserPage() {
     this.router.navigate(['/user/create']);
   }
 
-  deleteUser(userId:number){
-    if(userId>0){
+  editUserPage(user: User) {
+    if (user) {
+      this.router.navigate(['/user/create', user])
+    }
+  }
+
+  deleteUser(userId: number) {
+    if (userId > 0) {
       this.userService.deleteUserById(userId).subscribe(
-        res=>{
+        res => {
           this.getAllUsers();
           this.router.navigate(['/user']);
           console.log('done');
         }
       );
+      window.location.reload();
     }
   }
 
+  redirectSingeUserPage(userId: number) {
+    this.router.navigate(['/user/userPage',userId]);
+  }
 
 
 }

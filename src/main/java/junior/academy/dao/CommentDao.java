@@ -1,6 +1,7 @@
 package junior.academy.dao;
 
 import junior.academy.domain.Comment;
+import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -31,4 +32,11 @@ public class CommentDao {
     public void deleteCommentById(long commentId) {
         sessionFactory.getCurrentSession().delete(getCommentById(commentId).get());
     }
+
+    public List<Comment> getCommentsByUserId(long userId) {
+        Query query=sessionFactory.getCurrentSession().createQuery("from Comment where userId=:userId");
+        query.setParameter("userId",userId);
+        return query.list();
+    }
+
 }

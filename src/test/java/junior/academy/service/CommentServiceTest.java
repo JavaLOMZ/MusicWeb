@@ -61,6 +61,12 @@ public class CommentServiceTest {
         assertEquals(commentService.getCommentById(anyLong()), Optional.of(comment));
     }
 
+    @Test
+    public void getCommentsByUserId(){
+        when(commentDao.getCommentsByUserId(anyLong())).thenReturn(comments);
+        assertEquals(commentService.getCommentsByUserId(anyLong()),comments);
+    }
+
     private List<Comment> getCommentList() {
         Comment comment = new Comment();
 
