@@ -3,6 +3,7 @@ package junior.academy.controller;
 import junior.academy.controller.CommentController;
 import junior.academy.domain.Comment;
 import junior.academy.service.CommentService;
+import junior.academy.service.UserService;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -23,6 +24,9 @@ public class CommentControllerTest {
 
     @Mock
     CommentService commentService;
+
+    @Mock
+    UserService userService;
 
     @InjectMocks
     CommentController commentController;
@@ -77,9 +81,22 @@ public class CommentControllerTest {
         assertEquals(commentController.deleteCommentById(anyLong()), new ResponseEntity(HttpStatus.NOT_FOUND));
     }
 
+    @Test
+    public void getCommentsByUserIdWhenPresent(){
+        List<Comment>comments2=getCommentList();
+        when(userService.isUserPresent(anyLong())).thenReturn(true);
+        when(commentService.getCommentsByUserId(anyLong())).thenReturn(comments2);
+        assertEquals(commentController.getCommentsByUserId(anyLong()),new ResponseEntity<>(comments2,HttpStatus.OK));
+    }
+
+    @Test
+    public void getCommentsByUserIdWhenNotPresent(){
+        when(userService.isUserPresent(anyLong())).thenReturn(false);
+        assertEquals(commentController.getCommentsByUserId(anyLong()),new ResponseEntity<>(any(Comment.class),HttpStatus.NOT_FOUND));
+    }
+
     private List<Comment> getCommentList() {
         Comment comment = new Comment();
-
         comments.add(comment);
         return comments;
     }

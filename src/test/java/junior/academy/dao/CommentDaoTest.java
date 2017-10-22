@@ -8,9 +8,14 @@ import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.xml.FlatXmlDataSet;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import static org.mockito.Matchers.anyLong;
 import static org.testng.Assert.*;
 
 import org.testng.annotations.Test;
+
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 public class CommentDaoTest extends EntityDaoTest {
 
@@ -57,10 +62,14 @@ public class CommentDaoTest extends EntityDaoTest {
         assertEquals(commentDao.getAllComments().size(), 0);
     }
 
+    @Test
+    public void getCommentsByUserId(){
+        assertEquals(commentDao.getCommentsByUserId(anyLong()).size(),0);
+    }
+
     private Comment getComment() {
         Comment comment = new Comment();
         comment.setCommentText(" ");
-
         return comment;
     }
 }

@@ -28,14 +28,6 @@ public class CommentController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @GetMapping("user/{userId}")
-    public ResponseEntity<List<Comment>> getCommentsByUserId(@PathVariable long userId){
-        if(userService.getUserById(userId).isPresent()){
-            return new ResponseEntity<List<Comment>>(commentService.getCommentsByUserId(userId),HttpStatus.OK);
-        }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-    }
-
     @GetMapping
     public List<Comment> getAllComments() {
         return commentService.getAllComments();
@@ -53,5 +45,13 @@ public class CommentController {
             return new ResponseEntity(HttpStatus.OK);
         }
         return new ResponseEntity(HttpStatus.NOT_FOUND);
+    }
+
+    @GetMapping("user/{userId}")
+    public ResponseEntity<List<Comment>> getCommentsByUserId(@PathVariable long userId){
+        if(userService.isUserPresent(userId)){
+            return new ResponseEntity<>(commentService.getCommentsByUserId(userId),HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 }
