@@ -51,12 +51,9 @@ export class UserCreateComponent implements OnInit {
         }
       );
     }
-
-
   }
 
-
-  ngOnDeastroy(): void{
+  ngOnDestroy(): void{
     this.sub.unsubscribe();
   }
 

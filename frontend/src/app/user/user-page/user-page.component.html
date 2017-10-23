@@ -1,3 +1,21 @@
 <p>
   user-page works!
 </p>
+
+<table class="table">
+  <thead>
+  <tr>
+    <th>#</th>
+    <th>CommentText</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let comment of comments">
+    <th scope="row">{{comment.commentId}}</th>
+    <td>
+      {{comment.commentText}}
+    </td>
+  </tr>
+
+  </tbody>
+</table>

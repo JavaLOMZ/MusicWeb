@@ -35,4 +35,10 @@ export class UserService {
       .map((res:Response) => res.json())
       .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
   }
+
+  getAllCommentsFromUser(userId: number): Observable<Comment[]>  {
+    return this.http.get(this.apiUrl.slice(22, 26) + 'comment/user' + userId)
+      .map((res:Response) => res.json())
+      .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
+  }
 }
