@@ -51,12 +51,10 @@ export class UserCreateComponent implements OnInit {
         }
       );
     }
-
-
   }
 
 
-  ngOnDeastroy(): void{
+  ngOnDestroy(): void{
     this.sub.unsubscribe();
   }
 
@@ -86,7 +84,7 @@ export class UserCreateComponent implements OnInit {
     this.router.navigate(['/user']);
     window.location.reload();
   }
-  redirectUserPage(){
+  redirectUserListPage(){
     this.router.navigate(['/user']);
   }
 

@@ -14,6 +14,16 @@ export class User{
     this.isAdmin = isAdmin;
     this.isBanned = isBanned;
   }
+}
+
+export class Comment {
+  commentId:number;
+  commentText: string;
 
 
+  constructor(commentId: number, commentText: string) {
+    this.commentText = commentText;
+    this.commentId = commentId;
+
+  }
 }

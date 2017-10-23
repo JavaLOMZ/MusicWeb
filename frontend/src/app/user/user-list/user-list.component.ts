@@ -12,7 +12,7 @@ import {Router} from "@angular/router";
 export class UserListComponent implements OnInit {
 
   private users: User[];
-  private user: User;
+  //private user: User;
 
   constructor(private router: Router,
               private userService: UserService) {
@@ -56,8 +56,10 @@ export class UserListComponent implements OnInit {
     }
   }
 
-  redirectSingeUserPage(userId: number) {
-    this.router.navigate(['/user/userPage',userId]);
+  redirectSingeUserPage(user:User) {
+    if(user) {
+      this.router.navigate(['/user/userPage', user]);
+    }
   }
 
 

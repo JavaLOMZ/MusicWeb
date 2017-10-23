@@ -1,0 +1,51 @@
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <section>
+        <header class="header">
+          <div class="row">
+            <div class="col-md-4">
+              <h1>Users</h1>
+            </div>
+            <div class="col-md-6">
+
+            </div>
+            <div class="col-md-2">
+              <button type="button" class="btn btn-primary" (click)="redirectNewAuthorPage()">New Author</button>
+
+              <button type="button" class="btn btn-primary" (click)="redirectToUserPage()">Redirect to users</button>
+            </div>
+          </div>
+
+        </header>
+      </section>
+
+      <section class="main">
+
+        <table class="table">
+          <thead>
+          <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>YearOfBirth</th>
+            <th>CountryOfOrigin</th>
+            <th></th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let author of authors">
+            <th scope="row">{{author.authorId}}</th>
+            <td><button type="button" class="btn-primary" (click)="redirectSingeUserPage(author.authorId)">{{author.name}}</button></td>
+            <td>{{author.yearOfBirth}}</td>
+            <td>{{author.countryOfOrigin}}</td>
+            <td>
+              <button type="button" class="btn btn-success" (click)="editAuthorPage(author)">Edit</button>
+              <button type="button" class="btn btn-danger" (click)="deleteAuthor(author.authorId)">Delete</button>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </section>
+    </div>
+  </div>
+</div>
