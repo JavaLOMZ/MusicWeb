@@ -55,6 +55,13 @@ export class AuthorListComponent implements OnInit {
     }
   }
 
+  //TODO
+  redirectToSingleAuthorPage(author:Author){
+    if(author) {
+      this.router.navigate(['/author/authorPage',author]);
+    }
+  }
+
   redirectToUserPage(){
     this.router.navigate(['/user']);
   }

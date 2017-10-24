@@ -2,6 +2,7 @@ package junior.academy.controller;
 
 import junior.academy.domain.Comment;
 import junior.academy.service.CommentService;
+import junior.academy.service.SongService;
 import junior.academy.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,6 +22,9 @@ public class CommentController {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    SongService songService;
 
     @GetMapping("/{commentId}")
     public ResponseEntity<Comment> getComment(@PathVariable long commentId) {
@@ -53,6 +57,14 @@ public class CommentController {
     public ResponseEntity<List<Comment>> getCommentsByUserId(@PathVariable long userId){
         if(userService.isUserPresent(userId)){
             return new ResponseEntity<>(commentService.getCommentsByUserId(userId),HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    @GetMapping("song/{songId}")
+    public ResponseEntity<List<Comment>> getCommentsBySongId(@PathVariable long songId){
+        if(songService.isSongPresent(songId)){
+            return new ResponseEntity<>(commentService.getCommentsBySongId(songId),HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }

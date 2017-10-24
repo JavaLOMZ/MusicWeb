@@ -3,6 +3,7 @@ package junior.academy.controller;
 import junior.academy.controller.CommentController;
 import junior.academy.domain.Comment;
 import junior.academy.service.CommentService;
+import junior.academy.service.SongService;
 import junior.academy.service.UserService;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -27,6 +28,9 @@ public class CommentControllerTest {
 
     @Mock
     UserService userService;
+
+    @Mock
+    SongService songService;
 
     @InjectMocks
     CommentController commentController;
@@ -93,6 +97,20 @@ public class CommentControllerTest {
     public void getCommentsByUserIdWhenNotPresent(){
         when(userService.isUserPresent(anyLong())).thenReturn(false);
         assertEquals(commentController.getCommentsByUserId(anyLong()),new ResponseEntity<>(any(Comment.class),HttpStatus.NOT_FOUND));
+    }
+
+    @Test
+    public void getCommentsBySongIdWhenPresent(){
+        List<Comment>comments2=getCommentList();
+        when(songService.isSongPresent(anyLong())).thenReturn(true);
+        when(commentService.getCommentsBySongId(anyLong())).thenReturn(comments2);
+        assertEquals(commentController.getCommentsBySongId(anyLong()),new ResponseEntity<>(comments2,HttpStatus.OK));
+    }
+
+    @Test
+    public void getCommentsBySongIdWhenNotPresent(){
+        when(songService.isSongPresent(anyLong())).thenReturn(false);
+        assertEquals(commentController.getCommentsBySongId(anyLong()),new ResponseEntity<>(any(Comment.class),HttpStatus.NOT_FOUND));
     }
 
     private List<Comment> getCommentList() {

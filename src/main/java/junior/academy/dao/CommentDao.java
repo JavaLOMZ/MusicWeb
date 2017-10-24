@@ -39,4 +39,10 @@ public class CommentDao {
         return query.list();
     }
 
+    public List<Comment> getCommentsBySongId(long songId){
+        Query query=sessionFactory.getCurrentSession().createQuery("from Comment where songId=:songId");
+        query.setParameter("songId",songId);
+        return query.list();
+    }
+
 }

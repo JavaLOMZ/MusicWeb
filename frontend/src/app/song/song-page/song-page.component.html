@@ -1,0 +1,49 @@
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <section>
+        <table class="table">
+          <thead>
+          <tr>
+            <th>Song name</th>
+            <td>{{song?.songName}}</td>
+          </tr>
+          <tr>
+            <th>Song email</th>
+            <td>{{song?.musicGenre}}</td>
+          </tr>
+          <tr>
+            <th>Song releaseYear</th>
+            <td>{{song?.releaseYear}}</td>
+          </tr>
+          <tr>
+            <th>Song youTubeLink</th>
+            <td>{{song?.youTubeLink}}</td>
+          </tr>
+          <tr>
+            <th>Song AuthorId </th>
+            <td>{{song?.authorId}}</td>
+          </tr>
+          </thead>
+        </table>
+      </section>
+      <section>
+        <table class="table">
+          <thead>
+          <tr>
+            <th>#</th>
+            <th>CommentText</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let comment of comments">
+            <td>{{comment.commentId}}</td>
+            <td>{{comment.commentText}}</td>
+          </tr>
+          </tbody>
+        </table>
+        <button class="button" class="btn btn-danger" (click)="redirectToSongList()">Redirect to song list</button>
+      </section>
+    </div>
+  </div>
+</div>

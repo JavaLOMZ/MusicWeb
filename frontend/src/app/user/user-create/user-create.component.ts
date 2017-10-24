@@ -33,7 +33,7 @@ export class UserCreateComponent implements OnInit {
       email: new FormControl('',Validators.required),
       isAdmin: new FormControl('',Validators.required),
       isBanned:new FormControl('', Validators.required)
-    })
+    });
 
 
     if(this.userId){
@@ -78,12 +78,11 @@ export class UserCreateComponent implements OnInit {
         this.userService.createOrUpdateUser(user).subscribe();
       }
     }
-
-
     this.userForm.reset();
     this.router.navigate(['/user']);
     window.location.reload();
   }
+
   redirectUserListPage(){
     this.router.navigate(['/user']);
   }

@@ -21,12 +21,14 @@
           <tr>
             <th>#</th>
             <th>CommentText</th>
+            <th>SongId</th>
           </tr>
           </thead>
           <tbody>
           <tr *ngFor="let comment of comments">
             <td>{{comment.commentId}}</td>
             <td>{{comment.commentText}}</td>
+            <td>{{comment.songId}}</td>
           </tr>
           </tbody>
         </table>
@@ -35,9 +37,7 @@
         <a id="show_id" onclick="document.getElementById('spoiler_id').style.display='';
         document.getElementById('show_id').style.display='none';" class="link">[Bonus Feature]</a>
         <span id="spoiler_id" style="display: none">
-          <a
-            onclick="document.getElementById('spoiler_id').style.display='none'; document.getElementById('show_id').style.display='';"
-            class="link">[Hide]</a>
+          <a onclick="document.getElementById('spoiler_id').style.display='none'; document.getElementById('show_id').style.display='';" class="link">[Hide]</a>
           <br><img src="https://pbs.twimg.com/media/BvCMlzeIcAALVRj.jpg" alt="Mountain View">
         </span>
       </section>

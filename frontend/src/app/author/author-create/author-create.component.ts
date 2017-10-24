@@ -33,7 +33,7 @@ export class AuthorCreateComponent implements OnInit {
       name: new FormControl('',Validators.required),
       yearOfBirth: new FormControl('',Validators.required),
       countryOfOrigin:new FormControl('', Validators.required)
-    })
+    });
 
 
     if(this.authorId){

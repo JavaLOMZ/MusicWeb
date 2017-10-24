@@ -3,6 +3,7 @@ package junior.academy.dao;
 
 import junior.academy.domain.Author;
 import junior.academy.domain.Song;
+import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -33,5 +34,11 @@ public class SongDao {
 
     public void deleteSongById(long songId){
         sessionFactory.getCurrentSession().delete(getSongById(songId).get());
+    }
+
+    public List<Song> getSongsByAuthorId(long authorId){
+        Query query=sessionFactory.getCurrentSession().createQuery("from Song where authorId=:authorId");
+        query.setParameter("authorId",authorId);
+        return query.list();
     }
 }

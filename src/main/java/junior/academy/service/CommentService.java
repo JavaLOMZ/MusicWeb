@@ -37,4 +37,8 @@ public class CommentService {
     public List<Comment> getCommentsByUserId(long userId){
         return commentDao.getCommentsByUserId(userId);
     }
+
+    public List<Comment> getCommentsBySongId(long songId){
+        return commentDao.getCommentsBySongId(songId);
+    }
 }

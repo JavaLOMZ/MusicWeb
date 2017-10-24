@@ -5,13 +5,13 @@
         <header class="header">
           <div class="row">
             <div class="col-md-4">
-              <h1>Users</h1>
+              <h1>Authors</h1>
             </div>
             <div class="col-md-6">
 
             </div>
             <div class="col-md-2">
-              <button type="button" class="btn btn-primary" (click)="redirectNewAuthorPage()">New Author</button>
+              <button type="button" class="btn btn-primary" (click)="redirectNewAuthorPage()">Add Author</button>
 
               <button type="button" class="btn btn-primary" (click)="redirectToUserPage()">Redirect to users</button>
             </div>
@@ -35,7 +35,7 @@
           <tbody>
           <tr *ngFor="let author of authors">
             <th scope="row">{{author.authorId}}</th>
-            <td><button type="button" class="btn-primary" (click)="redirectSingeUserPage(author.authorId)">{{author.name}}</button></td>
+            <td><button type="button" class="btn-primary" (click)="redirectToSingleAuthorPage(author)">{{author.name}}</button></td>
             <td>{{author.yearOfBirth}}</td>
             <td>{{author.countryOfOrigin}}</td>
             <td>

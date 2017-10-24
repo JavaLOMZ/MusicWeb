@@ -9,7 +9,6 @@ import {Observable} from "rxjs/Observable";
 export class UserService {
 
   private apiUrl = 'http://localhost:8080/user';
-  private apiUrl2 = 'http://localhost:8080/comment';
 
   constructor(private http: Http) {
   }
@@ -33,12 +32,6 @@ export class UserService {
 
   deleteUserById(userId: number): Observable<boolean> {
     return this.http.delete(this.apiUrl + '/' + userId)
-      .map((res: Response) => res.json())
-      .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
-  }
-
-  getAllCommentsFromUser(userId: number): Observable<Comment[]> {
-    return this.http.get(this.apiUrl2 + '/user/' + userId)
       .map((res: Response) => res.json())
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }

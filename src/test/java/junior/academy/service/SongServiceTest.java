@@ -70,6 +70,13 @@ public class SongServiceTest {
         assertEquals(songService.isSongPresent(anyLong()),true);
     }
 
+    @Test
+    public void getCommentsBySongId(){
+        List<Song> songs=getSongList();
+        when(songDao.getSongsByAuthorId(anyLong())).thenReturn(songs);
+        assertEquals(songService.getSongsByAuthorId(anyLong()),songs);
+    }
+
     public List<Song> getSongList(){
         Song song=new Song();
         song.setSongName("testSong");
