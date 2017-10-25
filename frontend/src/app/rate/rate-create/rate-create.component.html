@@ -1,0 +1,36 @@
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <section>
+        <form novalidate [formGroup]="rateForm" (ngSubmit)="onSubmit()">
+          <fieldset>
+            <div class="form-group">
+              <label>RateValue</label>
+              <input type="number"
+                     class="form-control"
+                     formControlName="rateValue">
+            </div>
+
+            <div class="form-group">
+              <input type="hidden"
+                     class="form-control"
+                     [ngModel]="songId"
+                     formControlName="songId">
+            </div>
+
+            <div class="form-group">
+              <label>User</label>
+              <select class="form-control input-lg" formControlName="userId" [ngModel]="userId">
+                <option *ngFor="let user of users" [ngValue]="user.userId">{{user.nickname}} {{user.email}}</option>
+              </select>
+            </div>
+
+          </fieldset>
+          <button type="submit" class="btn btn-primary"  [disabled]="!rateForm.valid" >Submit</button>
+          <button type="button" class="btn btn-warning" (click)="redirectSongListPage()">Cancel</button>
+          <pre>{{rateForm.value | json}}</pre>
+        </form>
+      </section>
+    </div>
+  </div>
+</div>

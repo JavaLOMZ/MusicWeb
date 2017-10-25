@@ -56,9 +56,9 @@ export class UserListComponent implements OnInit {
   }
 
 
-  redirectSingeUserPage(user:User) {
-    if(user) {
-      this.router.navigate(['/user/userPage', user]);
+  redirectSingeUserPage(userId : number) {
+    if(userId) {
+      this.router.navigate(['/user/userPage', userId]);
     }
   }
 

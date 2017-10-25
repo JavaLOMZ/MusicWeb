@@ -2,6 +2,7 @@ package junior.academy.service;
 
 import junior.academy.dao.RateDao;
 import junior.academy.domain.Rate;
+import junior.academy.domain.Rate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,5 +33,13 @@ public class RateService {
 
     public boolean isRatePresent(long rateId){
         return rateDao.getRateById(rateId).isPresent();
+    }
+
+    public List<Rate> getRatesByUserId(long userId){
+        return rateDao.getRatesByUserId(userId);
+    }
+
+    public List<Rate> getRatesBySongId(long songId){
+        return rateDao.getRatesBySongId(songId);
     }
 }

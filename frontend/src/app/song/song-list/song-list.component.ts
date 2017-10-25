@@ -57,15 +57,21 @@ export class SongListComponent implements OnInit {
   }
 
 
-  redirectSingeSongPage(song:Song) {
-    if(song) {
-      this.router.navigate(['/song/songPage', song]);
+  redirectSingeSongPage(songId : number) {
+    if(songId) {
+      this.router.navigate(['/song/songPage', songId]);
     }
   }
 
-  redirectToCreateSong(song:Song){
-    if(song){
-      this.router.navigate(['/comment/createComment',song])
+  redirectToCreateComment(songId: number){
+    if(songId){
+      this.router.navigate(['/comment/createComment',songId])
+    }
+  }
+
+  redirectToCreateRate(songId: number){
+    if(songId){
+      this.router.navigate(['/rate/createRate',songId])
     }
   }
 }

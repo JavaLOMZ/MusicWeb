@@ -33,16 +33,37 @@
           <tr>
             <th>#</th>
             <th>CommentText</th>
+            <th>User</th>
           </tr>
           </thead>
           <tbody>
           <tr *ngFor="let comment of comments">
             <td>{{comment.commentId}}</td>
             <td>{{comment.commentText}}</td>
+            <td>{{comment.userId}}</td>
           </tr>
           </tbody>
         </table>
         <button class="button" class="btn btn-danger" (click)="redirectToSongList()">Redirect to song list</button>
+      </section>
+      <hr>
+      <section>
+        <table class="table">
+          <thead>
+          <tr>
+            <th>#</th>
+            <th>Rates</th>
+            <th>User</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let rate of rates">
+            <td>{{rate.rateId}}</td>
+            <td>{{rate.rateValue}}</td>
+            <td>{{rate.userId}}</td>
+          </tr>
+          </tbody>
+        </table>
       </section>
     </div>
   </div>

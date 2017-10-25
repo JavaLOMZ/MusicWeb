@@ -1,6 +1,8 @@
 package junior.academy.dao;
 
 import junior.academy.domain.Rate;
+import junior.academy.domain.Rate;
+import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -29,7 +31,18 @@ public class RateDao {
     }
 
     public void deleteRateById(long rateId) {
-
         sessionFactory.getCurrentSession().delete(getRateById(rateId).get());
+    }
+
+    public List<Rate> getRatesByUserId(long userId) {
+        Query query=sessionFactory.getCurrentSession().createQuery("from Rate where userId=:userId");
+        query.setParameter("userId",userId);
+        return query.list();
+    }
+
+    public List<Rate> getRatesBySongId(long songId){
+        Query query=sessionFactory.getCurrentSession().createQuery("from Rate where songId=:songId");
+        query.setParameter("songId",songId);
+        return query.list();
     }
 }

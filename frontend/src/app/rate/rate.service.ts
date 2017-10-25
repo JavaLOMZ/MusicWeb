@@ -1,41 +1,43 @@
+import { Injectable } from '@angular/core';
 import {Http, Response} from "@angular/http";
-import {Injectable} from "@angular/core";
 import {Observable} from "rxjs/Observable";
-import {CommentOur} from "./comment";
+import {Rate} from "./rate";
 
 @Injectable()
-export class CommentService {
+export class RateService {
 
-  private apiUrl = 'http://localhost:8080/comment';
+  private apiUrl = 'http://localhost:8080/rate';
+
 
   constructor(private http: Http) { }
 
-  getCommentById(commentId: number): Observable<CommentOur> {
-    return this.http.get(this.apiUrl + '/' + commentId)
+  getRateById(rateId: number): Observable<Rate> {
+    return this.http.get(this.apiUrl + '/' + rateId)
       .map((res: Response) => res.json())
       .catch((error: any) => Observable.throw(error.json().error || 'Server Error'));
   }
   //todo same as delete, edit function in user-page
-  createOrUpdateComment(comment: CommentOur): Observable<CommentOur> {
-    return this.http.post(this.apiUrl, comment)
+  createOrUpdateRate(rate: Rate): Observable<Rate> {
+    return this.http.post(this.apiUrl, rate)
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
-  //todo i think it ll be nice to delete comments only in user-page view
-  deleteCommentById(commentId: number): Observable<boolean> {
-    return this.http.delete(this.apiUrl + '/' + commentId)
+  //todo i think it ll be nice to delete rates only in user-page view
+  deleteRateById(rateId: number): Observable<boolean> {
+    return this.http.delete(this.apiUrl + '/' + rateId)
       .map((res: Response) => res.json())
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
 
-  getAllCommentsFromUser(userId: number): Observable<CommentOur[]> {
+  getAllRatesFromUser(userId: number): Observable<Rate[]> {
     return this.http.get(this.apiUrl + '/user/' + userId)
       .map((res: Response) => res.json())
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
 
-  getAllCommentsForSong(songId: number): Observable<CommentOur[]> {
+  getAllRatesForSong(songId: number): Observable<Rate[]> {
     return this.http.get(this.apiUrl + '/song/' + songId)
       .map((res: Response) => res.json())
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
+
 }

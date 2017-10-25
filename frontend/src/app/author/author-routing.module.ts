@@ -7,7 +7,7 @@ import {AuthorPageComponent} from "./author-page/author-page.component";
 const routes: Routes = [
   {path:'author',component:AuthorListComponent},
   {path:'author/create',component:AuthorCreateComponent},
-  {path:'author/authorPage',component:AuthorPageComponent}
+  {path:'author/authorPage/:authorId',component:AuthorPageComponent}
 
 ];
 

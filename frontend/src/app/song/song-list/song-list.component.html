@@ -35,7 +35,7 @@
           <tbody>
           <tr *ngFor="let song of songs">
             <th scope="row">{{song.songId}}</th>
-            <td><button type="button" class="btn-primary" (click)="redirectSingeSongPage(song)">{{song.songName}}</button></td>
+            <td><button type="button" class="btn-primary" (click)="redirectSingeSongPage(song.songId)">{{song.songName}}</button></td>
             <td>{{song.musicGenre}}</td>
             <td>{{song.releaseYear}}</td>
             <td>{{song.youTubeLink}}</td>
@@ -43,7 +43,8 @@
             <td>
               <button type="button" class="btn btn-success" (click)="editSongPage(song)">Edit</button>
               <button type="button" class="btn btn-danger" (click)="deleteSong(song.songId)">Delete</button>
-              <button type="button" class="btn btn-sm" (click)="redirectToCreateSong(song)">Add Comment</button>
+              <button type="button" class="btn btn-sm" (click)="redirectToCreateComment(song.songId)">Add Comment</button>
+              <button type="button" class="btn btn-sm" (click)="redirectToCreateRate(song.songId)">Add Rate</button>
             </td>
           </tr>
 

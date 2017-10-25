@@ -8,7 +8,7 @@ import {UserPageComponent} from "./user-page/user-page.component";
 const routes: Routes = [
   {path:'user',component:UserListComponent},
   {path:'user/create',component:UserCreateComponent},
-  {path:'user/userPage',component: UserPageComponent}
+  {path:'user/userPage/:userId',component: UserPageComponent}
 ];
 
 @NgModule({

@@ -8,6 +8,7 @@ import {HttpModule} from "@angular/http";
 import {AuthorModule} from "./author/author.module";
 import {CommentModule} from "./comment/comment.module";
 import {SongModule} from "./song/song.module";
+import {RateModule} from "./rate/rate.module";
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import {SongModule} from "./song/song.module";
     UserModule,
     AuthorModule,
     CommentModule,
+    RateModule,
     SongModule,
     HttpModule
   ],
