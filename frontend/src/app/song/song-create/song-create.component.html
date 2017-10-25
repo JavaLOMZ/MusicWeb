@@ -1,0 +1,49 @@
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <section>
+        <form novalidate [formGroup]="songForm" (ngSubmit)="onSubmit()">
+          <fieldset>
+            <div class="form-group">
+              <label>SongName</label>
+              <input type="text"
+                     class="form-control"
+                     formControlName="songName">
+            </div>
+
+            <div class="form-group">
+              <label>MusicGenre</label>
+              <input type="text"
+                     class="form-control"
+                     formControlName="musicGenre">
+            </div>
+
+            <div class="form-group">
+              <label>ReleaseYear</label>
+              <input type="number"
+                     class="form-control"
+                     formControlName="releaseYear">
+            </div>
+
+            <div class="form-group">
+              <label>YouTubeLink</label>
+              <input type="text"
+                     class="form-control"
+                     formControlName="youTubeLink">
+            </div>
+
+            <div class="form-group">
+              <label>Author</label>
+                <select class="form-control input-lg" formControlName="authorId" [ngModel]="authorId">
+                  <option *ngFor="let author of authors" [ngValue]="author.authorId">Name: {{author.name}} Country: {{author.countryOfOrigin}} YearOfBirth: {{author.yearOfBirth}}</option>
+                </select>
+            </div>
+          </fieldset>
+          <button type="submit" class="btn btn-primary"  [disabled]="!songForm.valid" >Submit</button>
+          <button type="button" class="btn btn-warning" (click)="redirectSongListPage()">Cancel</button>
+          <pre>{{songForm.value | json}}</pre>
+        </form>
+      </section>
+    </div>
+  </div>
+</div>

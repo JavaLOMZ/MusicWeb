@@ -41,13 +41,13 @@ public class AuthorControllerTest {
         Author testAuthor = authors.get(0);
         when(authorService.isAuthorPresent(anyLong())).thenReturn(true);
         when(authorService.getAuthorById(anyLong())).thenReturn(java.util.Optional.ofNullable(testAuthor));
-        assertEquals(authorController.getAuthor(anyLong()), new ResponseEntity<>(testAuthor, HttpStatus.OK));
+        assertEquals(authorController.getAuthorById(anyLong()), new ResponseEntity<>(testAuthor, HttpStatus.OK));
     }
 
     @Test
     public void getAuthorWhenNotPresent(){
         when(authorService.isAuthorPresent(anyLong())).thenReturn(false);
-        assertEquals(authorController.getAuthor(anyLong()), new ResponseEntity<>(any(Author.class), HttpStatus.NOT_FOUND));
+        assertEquals(authorController.getAuthorById(anyLong()), new ResponseEntity<>(any(Author.class), HttpStatus.NOT_FOUND));
     }
 
     @Test

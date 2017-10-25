@@ -2,6 +2,7 @@ package junior.academy.controller;
 
 import junior.academy.domain.Author;
 import junior.academy.domain.Song;
+import junior.academy.service.AuthorService;
 import junior.academy.service.SongService;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -25,6 +26,9 @@ public class SongControllerTest {
 
     @Mock
     SongService songService;
+
+    @Mock
+    AuthorService authorService;
 
     @InjectMocks
     SongController songController;
@@ -77,7 +81,20 @@ public class SongControllerTest {
     public void deleteSongByIdWhenNotPresent() {
         when(songService.isSongPresent(anyLong())).thenReturn(false);
         assertEquals(songController.deleteSongById(anyLong()), new ResponseEntity(HttpStatus.NOT_FOUND));
+    }
 
+    @Test
+    public void getSongsByAuthorIdWhenPresent(){
+        List<Song>songs=getSongList();
+        when(authorService.isAuthorPresent(anyLong())).thenReturn(true);
+        when(songService.getSongsByAuthorId(anyLong())).thenReturn(songs);
+        assertEquals(songController.getSongsByAuthorId(anyLong()),new ResponseEntity<>(songs,HttpStatus.OK));
+    }
+
+    @Test
+    public void getSongsByAuthorIdWhenNotPresent(){
+        when(authorService.isAuthorPresent(anyLong())).thenReturn(false);
+        assertEquals(songController.getSongsByAuthorId(anyLong()),new ResponseEntity(HttpStatus.NOT_FOUND));
     }
 
     public List<Song> getSongList() {

@@ -7,6 +7,7 @@ import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.xml.FlatXmlDataSet;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import static org.mockito.Matchers.anyLong;
 import static org.testng.Assert.*;
 
 import org.testng.annotations.Test;
@@ -54,6 +55,12 @@ public class SongDaoTest extends EntityDaoTest {
     public void deleteSong() {
         songDao.deleteSongById(1);
         assertEquals(songDao.getAllSongs().size(), 0);
+    }
+
+    //TODO test nothing
+    @Test
+    public void getSongsByAuthorId(){
+        assertEquals(songDao.getSongsByAuthorId(anyLong()).size(),0);
     }
 
     private Song getSong() {

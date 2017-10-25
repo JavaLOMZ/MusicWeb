@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/author")
 public class AuthorController {
@@ -17,7 +18,7 @@ public class AuthorController {
     AuthorService authorService;
 
     @GetMapping("/{authorId}")
-    public ResponseEntity<Author> getAuthor(@PathVariable long authorId) {
+    public ResponseEntity<Author> getAuthorById(@PathVariable long authorId) {
         if (authorService.isAuthorPresent(authorId)) {
             return new ResponseEntity<>(authorService.getAuthorById(authorId).get(), HttpStatus.OK);
         }

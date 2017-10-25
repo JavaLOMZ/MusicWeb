@@ -1,0 +1,36 @@
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <section>
+        <form novalidate [formGroup]="commentForm" (ngSubmit)="onSubmit()">
+          <fieldset>
+            <div class="form-group">
+              <label>CommentText</label>
+              <input type="text"
+                     class="form-control"
+                     formControlName="commentText">
+            </div>
+
+            <div class="form-group">
+              <input type="hidden"
+                     class="form-control"
+                     [ngModel]="songId"
+                     formControlName="songId">
+            </div>
+
+            <div class="form-group">
+              <label>User</label>
+              <select class="form-control input-lg" formControlName="userId" [ngModel]="userId">
+                <option *ngFor="let user of users" [ngValue]="user.userId">{{user.nickname}} {{user.email}}</option>
+              </select>
+            </div>
+
+          </fieldset>
+          <button type="submit" class="btn btn-primary"  [disabled]="!commentForm.valid" >Submit</button>
+          <button type="button" class="btn btn-warning" (click)="redirectSongListPage()">Cancel</button>
+          <pre>{{commentForm.value | json}}</pre>
+        </form>
+      </section>
+    </div>
+  </div>
+</div>

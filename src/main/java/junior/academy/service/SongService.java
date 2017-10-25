@@ -33,4 +33,8 @@ public class SongService {
     public boolean isSongPresent(long songId) {
         return songDao.getSongById(songId).isPresent();
     }
+
+    public List<Song> getSongsByAuthorId(long authorId){
+        return songDao.getSongsByAuthorId(authorId);
+    }
 }

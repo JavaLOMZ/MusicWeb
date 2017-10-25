@@ -11,7 +11,7 @@
 
           </div>
           <div class="col-md-2">
-            <button type="button" class="btn btn-primary" (click)="redirectNewUserPage()">New User</button>
+            <button type="button" class="btn btn-primary" (click)="redirectNewUserPage()">Add User</button>
           </div>
         </div>
 
@@ -34,7 +34,7 @@
         <tbody>
         <tr *ngFor="let user of users">
           <th scope="row">{{user.userId}}</th>
-          <td><button type="button" class="btn-primary" (click)="redirectSingeUserPage(user.userId)">{{user.nickname}}</button></td>
+          <td><button type="button" class="btn-primary" (click)="redirectSingeUserPage(user)">{{user.nickname}}</button></td>
           <td>{{user.email}}</td>
           <td>{{user.isAdmin}}</td>
           <td>{{user.isBanned}}</td>

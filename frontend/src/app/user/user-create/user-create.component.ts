@@ -33,7 +33,7 @@ export class UserCreateComponent implements OnInit {
       email: new FormControl('',Validators.required),
       isAdmin: new FormControl('',Validators.required),
       isBanned:new FormControl('', Validators.required)
-    })
+    });
 
 
     if(this.userId){
@@ -51,12 +51,10 @@ export class UserCreateComponent implements OnInit {
         }
       );
     }
-
-
   }
 
 
-  ngOnDeastroy(): void{
+  ngOnDestroy(): void{
     this.sub.unsubscribe();
   }
 
@@ -80,13 +78,12 @@ export class UserCreateComponent implements OnInit {
         this.userService.createOrUpdateUser(user).subscribe();
       }
     }
-
-
     this.userForm.reset();
     this.router.navigate(['/user']);
     window.location.reload();
   }
-  redirectUserPage(){
+
+  redirectUserListPage(){
     this.router.navigate(['/user']);
   }
 

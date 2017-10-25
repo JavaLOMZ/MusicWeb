@@ -14,6 +14,4 @@ export class User{
     this.isAdmin = isAdmin;
     this.isBanned = isBanned;
   }
-
-
 }

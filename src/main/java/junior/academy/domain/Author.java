@@ -37,6 +37,10 @@ public class Author {
         return authorId;
     }
 
+    public void setAuthorId(long authorId) {
+        this.authorId = authorId;
+    }
+
     public String getName() {
         return name;
     }
