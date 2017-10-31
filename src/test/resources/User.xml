@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dataset>
-    <user userId="1" nickname="Test"  email="test@test.com" isAdmin="true" isBanned="false" />
+    <user userId="1" nickname="Test"  email="test@test.com" isAdmin="true" isBanned="false" password="testPass"/>
 </dataset>

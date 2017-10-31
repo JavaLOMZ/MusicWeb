@@ -1,6 +1,7 @@
 package junior.academy.dao;
 
 import junior.academy.domain.User;
+import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -32,5 +33,12 @@ public class UserDao {
     public void deleteUserById(long userId) {
 
         sessionFactory.getCurrentSession().delete(getUserById(userId).get());
+    }
+
+    public User findUserByName(String nickname){
+//        System.out.println(nickname);
+        Query query= sessionFactory.getCurrentSession().createQuery("from User where nickname=:nickname");
+        query.setParameter("nickname",nickname);
+        return (User) query.uniqueResult();
     }
 }

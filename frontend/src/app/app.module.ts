@@ -9,6 +9,7 @@ import {AuthorModule} from "./author/author.module";
 import {CommentModule} from "./comment/comment.module";
 import {SongModule} from "./song/song.module";
 import {RateModule} from "./rate/rate.module";
+import {EnterpageModule} from "./enterpage/enterpage.module";
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import {RateModule} from "./rate/rate.module";
     CommentModule,
     RateModule,
     SongModule,
-    HttpModule
+    HttpModule,
+    EnterpageModule
   ],
   providers: [],
   bootstrap: [AppComponent]
