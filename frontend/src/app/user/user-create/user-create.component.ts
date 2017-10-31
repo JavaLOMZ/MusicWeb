@@ -30,9 +30,10 @@ export class UserCreateComponent implements OnInit {
 
     this.userForm=new FormGroup({
       nickname: new FormControl('',Validators.required),
+      password:new FormControl('',Validators.required),
       email: new FormControl('',Validators.required),
-      isAdmin: new FormControl('',Validators.required),
-      isBanned:new FormControl('', Validators.required)
+      isAdmin: new FormControl(false,Validators.required),
+      isBanned:new FormControl(false, Validators.required)
     });
 
 
@@ -42,6 +43,7 @@ export class UserCreateComponent implements OnInit {
           this.userId=user.userId;
           this.userForm.patchValue({
             nickname: user.nickname,
+            password: user.password,
             email: user.email,
             isAdmin: user.isAdmin,
             isBanned: user.isBanned
@@ -65,6 +67,7 @@ export class UserCreateComponent implements OnInit {
       if(this.userId) {
         let user: User = new User(this.userId,
           this.userForm.controls['nickname'].value,
+          this.userForm.controls['password'].value,
           this.userForm.controls['email'].value,
           this.userForm.controls['isAdmin'].value,
           this.userForm.controls['isBanned'].value);
@@ -72,6 +75,7 @@ export class UserCreateComponent implements OnInit {
       }else {
         let user: User = new User(null,
           this.userForm.controls['nickname'].value,
+          this.userForm.controls['password'].value,
           this.userForm.controls['email'].value,
           this.userForm.controls['isAdmin'].value,
           this.userForm.controls['isBanned'].value);

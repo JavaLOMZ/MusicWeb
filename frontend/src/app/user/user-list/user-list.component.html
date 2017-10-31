@@ -25,6 +25,7 @@
         <tr>
           <th>#</th>
           <th>Nickname</th>
+          <th>Password</th>
           <th>Email</th>
           <th>isAdmin</th>
           <th>isBanned</th>
@@ -35,6 +36,7 @@
         <tr *ngFor="let user of users">
           <th scope="row">{{user.userId}}</th>
           <td><button type="button" class="btn-primary" (click)="redirectSingeUserPage(user.userId)">{{user.nickname}}</button></td>
+          <td>{{user.password}}</td>
           <td>{{user.email}}</td>
           <td>{{user.isAdmin}}</td>
           <td>{{user.isBanned}}</td>
