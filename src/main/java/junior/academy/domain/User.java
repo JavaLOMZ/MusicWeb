@@ -49,7 +49,7 @@ public class User {
     @ManyToMany(fetch = FetchType.EAGER)
     @JsonUnwrapped
     @JoinColumn(name="ID")
-    @JsonIgnoreProperties("usersgit ")
+    @JsonIgnoreProperties("users")
     private List<Authority> authorities;
 
 
