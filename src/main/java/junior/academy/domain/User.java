@@ -17,8 +17,6 @@ public class User {
     @Column(name = "userId")
     private long userId;
 
-    @Column(name = "isAdmin")
-    private Boolean isAdmin;
 
     @Column(name = "nickname")
     @NotNull
@@ -31,8 +29,6 @@ public class User {
     @Column(name = "email")
     private String email;
 
-    @Column(name = "isBanned")
-    private Boolean isBanned;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
 
@@ -41,9 +37,6 @@ public class User {
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
     @JsonIgnoreProperties({"user"})
     private Set<Rate> rates;
-
-
-
 
     @Column(name = "ENABLED")
     @NotNull
@@ -56,12 +49,9 @@ public class User {
     @ManyToMany(fetch = FetchType.EAGER)
     @JsonUnwrapped
     @JoinColumn(name="ID")
+    @JsonIgnoreProperties("users")
     private List<Authority> authorities;
 
-    public User(){
-        this.isAdmin = false;
-        this.isBanned = false;
-    }
 
     public long getUserId() {
         return userId;
@@ -69,14 +59,6 @@ public class User {
 
     public void setUserId(long userId) {
         this.userId = userId;
-    }
-
-    public Boolean getIsAdmin() {
-        return isAdmin;
-    }
-
-    public void setIsAdmin(Boolean admin) {
-        isAdmin = admin;
     }
 
     public String getNickname() {
@@ -112,13 +94,6 @@ public class User {
         this.email = email;
     }
 
-    public Boolean getIsBanned() {
-        return isBanned;
-    }
-
-    public void setIsBanned(Boolean banned) {
-        isBanned = banned;
-    }
 
     public Set<Comment> getComments() {
         return comments;
@@ -158,18 +133,5 @@ public class User {
 
     public void setAuthorities(List<Authority> authorities) {
         this.authorities = authorities;
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "userId=" + userId +
-                ", isAdmin=" + isAdmin +
-                ", nickname='" + nickname + '\'' +
-                ", email='" + email + '\'' +
-                ", isBanned=" + isBanned +
-                ", comments=" + comments +
-                ", rates=" + rates +
-                '}';
     }
 }
