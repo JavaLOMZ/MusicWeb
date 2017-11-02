@@ -45,8 +45,6 @@ export class UserCreateComponent implements OnInit {
             nickname: user.nickname,
             password: user.password,
             email: user.email,
-            isAdmin: user.isAdmin,
-            isBanned: user.isBanned
           });
         }, error=>{
           console.log(error);

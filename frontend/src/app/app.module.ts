@@ -9,7 +9,9 @@ import {AuthorModule} from "./author/author.module";
 import {CommentModule} from "./comment/comment.module";
 import {SongModule} from "./song/song.module";
 import {RateModule} from "./rate/rate.module";
-import {EnterpageModule} from "./enterpage/enterpage.module";
+import {LoginModule} from "./login/login.module";
+import {AuthenticationService} from "./authentication.service";
+import {FormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -24,9 +26,10 @@ import {EnterpageModule} from "./enterpage/enterpage.module";
     RateModule,
     SongModule,
     HttpModule,
-    EnterpageModule
+    LoginModule,
+    FormsModule
   ],
-  providers: [],
+  providers: [AuthenticationService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

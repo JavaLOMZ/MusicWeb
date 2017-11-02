@@ -4,8 +4,6 @@ export class User{
   nickname: string;
   password: string;
   email:string;
-  isAdmin: boolean;
-  isBanned:boolean;
 
 
   constructor(userId: number, nickname: string,password: string, email: string, isAdmin: boolean, isBanned: boolean) {
@@ -13,7 +11,5 @@ export class User{
     this.nickname = nickname;
     this.password=password;
     this.email = email;
-    this.isAdmin = isAdmin;
-    this.isBanned = isBanned;
   }
 }
