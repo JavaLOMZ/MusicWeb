@@ -13,14 +13,15 @@ export class AuthenticationService {
   constructor(private http: Http) {
   }
 
-  login(nickname: string, password: string): Observable<boolean> {
-    return this.http.post(this.authUrl, JSON.stringify({nickname: nickname, password: password}), {headers: this.headers})
+  login(username: string, password: string): Observable<boolean> {
+    return this.http.post(this.authUrl, JSON.stringify({username: username, password: password}), {headers: this.headers})
       .map((response: Response) => {
+        console.log(username);
         // login successful if there's a jwt token in the response
         let token = response.json() && response.json().token;
         if (token) {
           // store nickname and jwt token in local storage to keep user logged in between page refreshes
-          localStorage.setItem('currentUser', JSON.stringify({ nickname: nickname, token: token }));
+          localStorage.setItem('currentUser', JSON.stringify({ username: username, token: token }));
 
           // return true to indicate successful login
           return true;

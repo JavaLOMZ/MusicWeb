@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-//@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/user")
 public class UserController {
@@ -44,8 +44,8 @@ public class UserController {
         return new ResponseEntity(HttpStatus.NOT_FOUND);
     }
 
-    @GetMapping("/nick/{nickname}")
-    public User findUserByName(@PathVariable String nickname) {
-        return userService.findUserByName(nickname);
-    }
+//    @GetMapping("/nick/{nickname}")
+//    public User findUserByName(@PathVariable String nickname) {
+//        return userService.findUserByName(nickname);
+//    }
 }

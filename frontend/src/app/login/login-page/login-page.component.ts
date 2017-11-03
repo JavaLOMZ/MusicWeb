@@ -11,7 +11,8 @@ import {User} from "../../user/user";
 })
 export class LoginPageComponent implements OnInit {
 
-  model: User;
+  //model: User;
+  model:any={};
   loading = false;
   error = '';
 
@@ -25,11 +26,11 @@ export class LoginPageComponent implements OnInit {
 
   login() {
     this.loading = true;
-    this.authService.login(this.model.nickname, this.model.password)
+    this.authService.login(this.model.username, this.model.password)
       .subscribe(result => {
         if (result === true) {
           // login successful
-          this.router.navigate(['home']);
+          this.router.navigate(['']);
         } else {
           // login failed
           this.error = 'Username or password is incorrect';
