@@ -11,7 +11,7 @@ import {SongModule} from "./song/song.module";
 import {RateModule} from "./rate/rate.module";
 import {LoginModule} from "./login/login.module";
 import {AuthenticationService} from "./authentication.service";
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -27,7 +27,8 @@ import {FormsModule} from "@angular/forms";
     SongModule,
     HttpModule,
     LoginModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [AuthenticationService],
   bootstrap: [AppComponent]

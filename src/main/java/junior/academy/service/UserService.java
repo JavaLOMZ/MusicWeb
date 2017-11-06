@@ -35,7 +35,6 @@ public class UserService {
     }
 
     public User findUserByName(String nickname){
-        System.out.println(userDao.findUserByName(nickname));
         return userDao.findUserByName(nickname);
     }
 }
