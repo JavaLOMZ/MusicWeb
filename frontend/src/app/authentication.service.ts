@@ -42,4 +42,9 @@ export class AuthenticationService {
     // clear token remove user from local storage to log user out
     localStorage.removeItem('currentUser');
   }
+
+  isLoggedIn(): boolean {
+    var token: String = this.getToken();
+    return token && token.length > 0;
+  }
 }

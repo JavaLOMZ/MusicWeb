@@ -6,6 +6,8 @@ import { UserListComponent } from './user-list/user-list.component';
 import { UserCreateComponent } from './user-create/user-create.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { UserPageComponent } from './user-page/user-page.component';
+import {CanActivateAuthGuard} from "../can-active.authguard";
+import {AuthenticationService} from "../authentication.service";
 
 @NgModule({
   imports: [

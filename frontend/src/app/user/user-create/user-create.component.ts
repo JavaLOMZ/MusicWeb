@@ -32,8 +32,6 @@ export class UserCreateComponent implements OnInit {
       nickname: new FormControl('',Validators.required),
       password:new FormControl('',Validators.required),
       email: new FormControl('',Validators.required),
-      isAdmin: new FormControl(false,Validators.required),
-      isBanned:new FormControl(false, Validators.required)
     });
 
 
@@ -48,6 +46,8 @@ export class UserCreateComponent implements OnInit {
           });
         }, error=>{
           console.log(error);
+          this.router.navigate(['login']);
+          console.error("Error in UserListPage, redirecting to login");
         }
       );
     }
@@ -66,17 +66,13 @@ export class UserCreateComponent implements OnInit {
         let user: User = new User(this.userId,
           this.userForm.controls['nickname'].value,
           this.userForm.controls['password'].value,
-          this.userForm.controls['email'].value,
-          this.userForm.controls['isAdmin'].value,
-          this.userForm.controls['isBanned'].value);
+          this.userForm.controls['email'].value);
         this.userService.createOrUpdateUser(user).subscribe();
       }else {
         let user: User = new User(null,
           this.userForm.controls['nickname'].value,
           this.userForm.controls['password'].value,
-          this.userForm.controls['email'].value,
-          this.userForm.controls['isAdmin'].value,
-          this.userForm.controls['isBanned'].value);
+          this.userForm.controls['email'].value);
         this.userService.createOrUpdateUser(user).subscribe();
       }
     }
