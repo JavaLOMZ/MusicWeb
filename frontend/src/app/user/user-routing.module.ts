@@ -8,7 +8,8 @@ import {CanActivateAuthGuard} from "../can-active.authguard";
 
 const routes: Routes = [
   {path:'user',component: UserListComponent, canActivate: [CanActivateAuthGuard]},
-  {path:'user/create',component: UserCreateComponent, canActivate: [CanActivateAuthGuard]},
+  // {path:'user/create',component: UserCreateComponent, canActivate: [CanActivateAuthGuard]},
+  {path:'user/create',component: UserCreateComponent},
   {path:'user/userPage/:userId',component: UserPageComponent, canActivate: [CanActivateAuthGuard]}
 ];
 

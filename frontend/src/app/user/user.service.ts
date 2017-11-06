@@ -33,7 +33,7 @@ export class UserService {
   }
 
   createOrUpdateUser(user: User): Observable<User> {
-    return this.http.post(this.apiUrl, user, {headers: this.headers})
+    return this.http.post(this.apiUrl+'/create', user, {headers: this.headers})
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
 
