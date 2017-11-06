@@ -12,6 +12,7 @@ import {RateModule} from "./rate/rate.module";
 import {LoginModule} from "./login/login.module";
 import {AuthenticationService} from "./authentication.service";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {CanActivateAuthGuard} from "./can-active.authguard";
 
 @NgModule({
   declarations: [
@@ -30,7 +31,7 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
     FormsModule,
     ReactiveFormsModule
   ],
-  providers: [AuthenticationService],
+  providers: [AuthenticationService, CanActivateAuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
