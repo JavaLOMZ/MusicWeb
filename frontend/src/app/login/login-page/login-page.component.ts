@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from "@angular/router";
 import {AuthenticationService} from "../../authentication.service";
-import {User} from "../../user/user";
 
 @Component({
   moduleId: module.id,
@@ -11,7 +10,6 @@ import {User} from "../../user/user";
 })
 export class LoginPageComponent implements OnInit {
 
-  //model: User;
   model:any={};
   loading = false;
   error = '';

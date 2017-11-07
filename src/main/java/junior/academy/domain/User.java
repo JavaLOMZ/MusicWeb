@@ -31,7 +31,6 @@ public class User {
 
 
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
-
     private Set<Comment> comments;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
@@ -51,6 +50,10 @@ public class User {
     @JoinColumn(name="ID")
     @JsonIgnoreProperties("users")
     private List<Authority> authorities;
+
+    private User(){
+        this.enabled=true;
+    }
 
 
     public long getUserId() {
