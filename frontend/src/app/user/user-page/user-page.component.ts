@@ -7,9 +7,7 @@ import {CommentService} from "../../comment/comment.service";
 import {CommentOur} from "../../comment/comment";
 import {RateService} from "../../rate/rate.service";
 import {Rate} from "../../rate/rate";
-import {SongService} from "../../song/song.service";
-import {Song} from "../../song/song";
-
+import {AuthenticationService} from "../../authentication.service";
 @Component({
   selector: 'app-user-page',
   templateUrl: './user-page.component.html',
@@ -18,11 +16,13 @@ import {Song} from "../../song/song";
 })
 export class UserPageComponent implements OnInit {
 
-  userId: number;
+  username: string;
   user: User;
   rates:Rate[];
   comments:CommentOur[];
+  userId: number;
   private sub:any;
+
 
   constructor(private route: ActivatedRoute,
               private router: Router,
@@ -32,11 +32,11 @@ export class UserPageComponent implements OnInit {
 
   ngOnInit() {
     this.sub=this.route.params.subscribe(params=>{
-      this.userId=params['userId'];
+      this.username=params['username'];
     });
 
-    if(this.userId) {
-      this.userService.getUserById(this.userId).subscribe(
+    if(this.username) {
+      this.userService.getUserByUsername(this.username).subscribe(
         user => {
           this.user = user;
         }, error => {
@@ -44,12 +44,13 @@ export class UserPageComponent implements OnInit {
         }
       );
     }
+
     //todo method which will get songs to combine them with Comments like Comment -> SongName not only songId
-    this.getAllRatesFromUser(this.userId);
-    this.getAllCommentsFromUser(this.userId);
+    this.getAllRatesFromUser(this.user.userId);
+    this.getAllCommentsFromUser(this.user.userId);
   }
 
-  getAllCommentsFromUser(userId:number){
+  getAllCommentsFromUser(userId: number){
     this.commentService.getAllCommentsFromUser(userId).subscribe(
       comments => {
         this.comments=comments;
@@ -60,8 +61,8 @@ export class UserPageComponent implements OnInit {
     );
   }
 
-  getAllRatesFromUser(userId:number){
-    this.rateService.getAllRatesFromUser(this.userId).subscribe(
+  getAllRatesFromUser(userId: number){
+    this.rateService.getAllRatesFromUser(userId).subscribe(
       rates => {
         this.rates=rates;
       },
@@ -74,5 +75,4 @@ export class UserPageComponent implements OnInit {
   redirectToUserList(){
     this.router.navigate(['/user'])
   }
-
 }
