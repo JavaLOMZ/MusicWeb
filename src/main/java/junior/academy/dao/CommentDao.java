@@ -39,6 +39,12 @@ public class CommentDao {
         return query.list();
     }
 
+    public List<Comment> getCommentsByUserNickname(String nickname) {
+        Query query=sessionFactory.getCurrentSession().createQuery("select comment from Comment as comment join comment.user user where user.nickname=:nickname");
+        query.setParameter("nickname",nickname);
+        return query.list();
+    }
+
     public List<Comment> getCommentsBySongId(long songId){
         Query query=sessionFactory.getCurrentSession().createQuery("from Comment where songId=:songId");
         query.setParameter("songId",songId);

@@ -1,7 +1,9 @@
 package junior.academy.service;
 
 import junior.academy.dao.CommentDao;
+import junior.academy.dao.UserDao;
 import junior.academy.domain.Comment;
+import junior.academy.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +15,9 @@ public class CommentService {
 
     @Autowired
     CommentDao commentDao;
+
+    @Autowired
+    UserService userService;
 
     public Optional<Comment> getCommentById(long commentId){
         return commentDao.getCommentById(commentId);
@@ -36,6 +41,15 @@ public class CommentService {
 
     public List<Comment> getCommentsByUserId(long userId){
         return commentDao.getCommentsByUserId(userId);
+    }
+
+    public List<Comment> getCommentsByUserNickname(String nickname){
+        /*you've got here 2 options.
+          commented one is using method which was wrote earlier
+          the second one is using some hibernate new query schema, new for me so check it out*/
+
+//        return commentDao.getCommentsByUserId(userService.findUserByName(nickname).getUserId());
+        return commentDao.getCommentsByUserNickname(nickname);
     }
 
     public List<Comment> getCommentsBySongId(long songId){

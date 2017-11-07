@@ -17,10 +17,12 @@ import {AuthenticationService} from "../../authentication.service";
 export class UserPageComponent implements OnInit {
 
   username: string;
+  userId:number;
   user: User;
+
   rates:Rate[];
   comments:CommentOur[];
-  userId: number;
+
   private sub:any;
 
 
@@ -32,7 +34,8 @@ export class UserPageComponent implements OnInit {
 
   ngOnInit() {
     this.sub=this.route.params.subscribe(params=>{
-      this.username=params['username'];
+      this.username=params['username'],
+      this.userId=params['userId'];
     });
 
     if(this.username) {
@@ -46,8 +49,26 @@ export class UserPageComponent implements OnInit {
     }
 
     //todo method which will get songs to combine them with Comments like Comment -> SongName not only songId
-    this.getAllRatesFromUser(this.user.userId);
-    this.getAllCommentsFromUser(this.user.userId);
+    //this.getAllRatesFromUser(this.user.userId);
+    this.getAllCommentsFromUserNickname(this.username);
+  }
+
+
+  getAllCommentsFromUserNickname(nickname: string){
+    this.commentService.getAllCommentsFromUserByNickname(nickname).subscribe(
+      comments => {
+        this.comments=comments;
+      },
+      err => {
+        console.log(err);
+      }
+    );
+  }
+
+  redirectToSongPage(songId:number){
+    if(songId>0){
+      this.router.navigate(['/song/songPage',songId]);
+    }
   }
 
   getAllCommentsFromUser(userId: number){
@@ -61,16 +82,16 @@ export class UserPageComponent implements OnInit {
     );
   }
 
-  getAllRatesFromUser(userId: number){
-    this.rateService.getAllRatesFromUser(userId).subscribe(
-      rates => {
-        this.rates=rates;
-      },
-      err => {
-        console.log(err);
-      }
-    );
-  }
+  // getAllRatesFromUser(userId: number){
+  //   this.rateService.getAllRatesFromUser(userId).subscribe(
+  //     rates => {
+  //       this.rates=rates;
+  //     },
+  //     err => {
+  //       console.log(err);
+  //     }
+  //   );
+  // }
 
   redirectToUserList(){
     this.router.navigate(['/user'])

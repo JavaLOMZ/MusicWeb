@@ -22,7 +22,7 @@
           </tr>
           <tr>
             <th>Song AuthorId </th>
-            <td>{{song?.authorId}}</td>
+            <td><button type="button" class="btn-primary" (click)="redirectToAuthorPage(song?.authorId)">{{song?.authorId}}</button></td>
           </tr>
           </thead>
         </table>
@@ -40,11 +40,11 @@
           <tr *ngFor="let comment of comments">
             <td>{{comment.commentId}}</td>
             <td>{{comment.commentText}}</td>
-            <td>{{comment.userId}}</td>
+            <td><button type="button" class="btn-primary" (click)="redirectToUserPage(comment.userId)">{{comment.userId}}</button></td>
           </tr>
           </tbody>
         </table>
-        <button class="button" class="btn btn-danger" (click)="redirectToSongList()">Redirect to song list</button>
+        <button type="button" class="btn btn-danger" (click)="redirectToSongList()">Redirect to song list</button>
       </section>
       <hr>
       <section>
