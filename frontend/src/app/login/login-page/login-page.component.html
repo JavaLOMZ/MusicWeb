@@ -23,6 +23,11 @@
     <div class="form-group">
       <button [disabled]="loading" class="btn btn-primary">Login</button>
     </div>
+    <div>
+      <a routerLink="/user/create" routerLinkActive="active">
+        <button class="btn btn-primary">Register</button>
+      </a>
+    </div>
     <div *ngIf="error" class="alert alert-error">{{error}}</div>
   </form>
 </div>

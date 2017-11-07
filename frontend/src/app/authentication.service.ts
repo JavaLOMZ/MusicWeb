@@ -32,11 +32,16 @@ export class AuthenticationService {
       }).catch((error:any) => Observable.throw(error.json().error || 'Server error'));
   }
 
-  getToken(): String {
+  getToken(): string {
     var currentUser = JSON.parse(localStorage.getItem('currentUser'));
     var token = currentUser && currentUser.token;
     return token ? token : "";
   }
+
+  getUsername(): String {
+    var currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    var username = currentUser && currentUser.username;
+    return username? username : ""}
 
   logout(): void {
     // clear token remove user from local storage to log user out

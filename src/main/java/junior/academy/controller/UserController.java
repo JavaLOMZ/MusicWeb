@@ -44,8 +44,8 @@ public class UserController {
         return new ResponseEntity(HttpStatus.NOT_FOUND);
     }
 
-//    @GetMapping("/nick/{nickname}")
-//    public User findUserByName(@PathVariable String nickname) {
-//        return userService.findUserByName(nickname);
-//    }
+    @GetMapping("/nick/{nickname}")
+    public User findUserByName(@PathVariable String nickname) {
+        return userService.findUserByName(nickname);
+    }
 }

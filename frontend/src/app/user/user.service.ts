@@ -42,4 +42,10 @@ export class UserService {
       .map((res: Response) => res.json())
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
+
+  getUserByUsername(username: string): Observable<User> {
+    return this.http.get(this.apiUrl + '/nick/' + username, {headers: this.headers})
+      .map((res: Response) => res.json())
+      .catch((error: any) => Observable.throw(error.json().error || 'Server Error'));
+  }
 }
