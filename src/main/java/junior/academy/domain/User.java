@@ -51,7 +51,7 @@ public class User {
     @JsonIgnoreProperties("users")
     private List<Authority> authorities;
 
-    private User(){
+    public User(){
         this.enabled=true;
     }
 
