@@ -80,10 +80,22 @@ public class RateServiceTest {
         assertEquals(rateService.getRatesBySongId(anyLong()),rates);
     }
 
+    @Test
+    public void songAverageRate(){
+        when(rateService.getRatesBySongId(anyLong())).thenReturn(rates);
+        double averageSongRate=(rates.stream().mapToDouble(Rate::getRateValue).sum())/rates.size();
+        assertEquals(rateService.songAverageRate(anyLong()),averageSongRate,0);
+    }
+
     private List<Rate> getRateList() {
         Rate rate = new Rate();
+        rate.setRateValue(10);
+
+        Rate rate2=new Rate();
+        rate2.setRateValue(20);
 
         rates.add(rate);
+        rates.add(rate2);
         return rates;
     }
 }

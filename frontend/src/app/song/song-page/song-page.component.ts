@@ -23,6 +23,7 @@ export class SongPageComponent implements OnInit {
   comments:CommentOur[];
   rates: Rate[];
   user:User;
+  songAverageRate:number;
   private sub:any;
 
   constructor(private route: ActivatedRoute,
@@ -51,6 +52,7 @@ export class SongPageComponent implements OnInit {
 
     this.getAllRatesForSong(this.songId);
     this.getAllCommentsForSong(this.songId);
+    this.getSongAverageRate(this.songId);
   }
 
   getAllCommentsForSong(songId:number){
@@ -73,6 +75,16 @@ export class SongPageComponent implements OnInit {
         console.log(err);
       }
     );
+  }
+
+  getSongAverageRate(songId:number){
+    this.songService.getSongAverageRate(songId).subscribe(
+      songAverageRate=>{
+        this.songAverageRate=songAverageRate;
+      },err=>{
+        console.log(err);
+      }
+    )
   }
 
   redirectToSongList(){

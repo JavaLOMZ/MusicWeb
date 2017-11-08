@@ -1,8 +1,10 @@
 package junior.academy.controller;
 
 import junior.academy.domain.Author;
+import junior.academy.domain.Rate;
 import junior.academy.domain.Song;
 import junior.academy.service.AuthorService;
+import junior.academy.service.RateService;
 import junior.academy.service.SongService;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -30,11 +32,16 @@ public class SongControllerTest {
     @Mock
     AuthorService authorService;
 
+    @Mock
+    RateService rateService;
+
     @InjectMocks
     SongController songController;
 
     @Spy
     List<Song> songs = new ArrayList<>();
+
+
 
     @BeforeClass
     public void setUp() {
@@ -97,6 +104,20 @@ public class SongControllerTest {
         assertEquals(songController.getSongsByAuthorId(anyLong()),new ResponseEntity(HttpStatus.NOT_FOUND));
     }
 
+    @Test
+    public void songAverageRateWhenPresent(){
+        when(songService.isSongPresent(anyLong())).thenReturn(true);
+        Double x=0.0;
+        when(rateService.songAverageRate(anyLong())).thenReturn(x);
+        assertEquals(songController.songAverageRate(anyLong()),new ResponseEntity<>(x,HttpStatus.OK));
+    }
+
+    @Test
+    public void songAverageRateWhenNotPresent(){
+        when(songService.isSongPresent(anyLong())).thenReturn(false);
+        assertEquals(songController.songAverageRate(anyLong()),new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
     public List<Song> getSongList() {
         Song song = new Song();
         song.setSongName("testSong");
@@ -107,5 +128,17 @@ public class SongControllerTest {
         songs.add(song);
         return songs;
     }
+
+//    public List<Rate> getRateList() {
+//        Rate rate = new Rate();
+//        rate.setRateValue(10);
+//
+//        Rate rate2=new Rate();
+//        rate2.setRateValue(20);
+//
+//        rates.add(rate);
+//        rates.add(rate2);
+//        return rates;
+//    }
 
 }

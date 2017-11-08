@@ -42,4 +42,9 @@ public class RateService {
     public List<Rate> getRatesBySongId(long songId){
         return rateDao.getRatesBySongId(songId);
     }
+
+    public double songAverageRate(long songId){
+        List<Rate>rates=getRatesBySongId(songId);
+        return (rates.stream().mapToDouble(Rate::getRateValue).sum())/rates.size();
+    }
 }
