@@ -40,6 +40,12 @@ export class CommentService {
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
 
+  getAllCommentsFromUserByNickname(nickname:string):Observable<CommentOur[]>{
+    return this.http.get(this.apiUrl+'/user/nickname/'+nickname,{headers:this.headers})
+      .map((res:Response)=>res.json())
+      .catch((error:any)=>Observable.throw(error.json().error || 'Server error'));
+  }
+
   getAllCommentsForSong(songId: number): Observable<CommentOur[]> {
     return this.http.get(this.apiUrl + '/song/' + songId, {headers: this.headers})
       .map((res: Response) => res.json())

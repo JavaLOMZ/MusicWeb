@@ -30,7 +30,7 @@
             <tr *ngFor="let comment of comments">
               <td>{{comment.commentId}}</td>
               <td>{{comment.commentText}}</td>
-              <td>{{comment.songId}}</td>
+              <td><button type="button" class="btn-primary" (click)="redirectToSongPage(comment.songId)">{{comment.songId}}</button></td>
             </tr>
             </tbody>
           </table>

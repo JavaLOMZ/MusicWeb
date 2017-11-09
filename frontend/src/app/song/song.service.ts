@@ -47,4 +47,10 @@ export class SongService {
       .map((res: Response) => res.json())
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
+
+  getSongAverageRate(songId:number):Observable<number>{
+    return this.http.get(this.apiUrl+'/songAverageRate/'+songId,{headers:this.headers})
+      .map((res:Response)=>res.json())
+      .catch((error:any)=>Observable.throw(error.json().error || 'Server error'));
+  }
 }

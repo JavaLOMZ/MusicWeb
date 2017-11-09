@@ -28,7 +28,7 @@ export class LoginPageComponent implements OnInit {
       .subscribe(result => {
         if (result === true) {
           // login successful
-          this.router.navigate(['/user/userPage/'+this.model.username]);
+          this.router.navigate(['/user/userPage/',this.model.username]);
         } else {
           // login failed
           this.error = 'Username or password is incorrect';

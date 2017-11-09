@@ -3,6 +3,7 @@ package junior.academy.controller;
 
 import junior.academy.domain.Song;
 import junior.academy.service.AuthorService;
+import junior.academy.service.RateService;
 import junior.academy.service.SongService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,6 +22,9 @@ public class SongController {
 
     @Autowired
     AuthorService authorService;
+
+    @Autowired
+    RateService rateService;
 
     @GetMapping("/{songId}")
     public ResponseEntity<Song> getSongById(@PathVariable long songId) {
@@ -53,6 +57,14 @@ public class SongController {
     public ResponseEntity<List<Song>> getSongsByAuthorId(@PathVariable long authorId){
         if(authorService.isAuthorPresent(authorId)){
             return new ResponseEntity<>(songService.getSongsByAuthorId(authorId),HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    @GetMapping("/songAverageRate/{songId}")
+    public ResponseEntity<Double> songAverageRate(@PathVariable long songId){
+        if(songService.isSongPresent(songId)){
+            return new ResponseEntity<>(rateService.songAverageRate(songId),HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }

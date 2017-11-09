@@ -43,4 +43,9 @@ public class UserService {
     public User findUserByName(String nickname){
         return userDao.findUserByName(nickname);
     }
+
+    public boolean isUserPresent(String nickname){
+        User user= userDao.findUserByName(nickname);
+        return userDao.getUserById(user.getUserId()).isPresent();
+    }
 }

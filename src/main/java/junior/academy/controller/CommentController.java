@@ -61,6 +61,15 @@ public class CommentController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
+    @GetMapping("user/nickname/{nickname}")
+    public ResponseEntity<List<Comment>> getCommentsByUserNickname(@PathVariable String nickname){
+
+        if(userService.isUserPresent(nickname)){
+            return new ResponseEntity<>(commentService.getCommentsByUserNickname(nickname),HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
     @GetMapping("song/{songId}")
     public ResponseEntity<List<Comment>> getCommentsBySongId(@PathVariable long songId){
         if(songService.isSongPresent(songId)){
