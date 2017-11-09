@@ -61,6 +61,14 @@ public class RateController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
+    @GetMapping("/user/nickname/{nickname}")
+    public ResponseEntity<List<Rate>> getRatesByUserNickname(@PathVariable String nickname){
+        if(userService.isUserPresent(nickname)){
+            return new ResponseEntity<>(rateService.getRatesByUsername(nickname),HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
     @GetMapping("/song/{songId}")
     public ResponseEntity<List<Rate>> getRatesBySongId(@PathVariable long songId){
         if(songService.isSongPresent(songId)){
