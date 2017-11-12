@@ -1,6 +1,7 @@
 <div class="container">
   <div class="row">
     <div class="col">
+      <iframe width="560" height="315" [src]='sanitizer.bypassSecurityTrustResourceUrl(song?.youTubeLink)' frameborder="0" allowfullscreen></iframe>
       <section>
         <table class="table">
           <thead>
@@ -17,16 +18,16 @@
             <td>{{song?.releaseYear}}</td>
           </tr>
           <tr>
-            <th>Song youTubeLink</th>
-            <td>{{song?.youTubeLink}}</td>
-          </tr>
-          <tr>
             <th>Song AuthorId </th>
-            <td><button type="button" class="btn-primary" (click)="redirectToAuthorPage(song?.authorId)">{{song?.authorId}}</button></td>
+            <td><button type="button" class="btn-primary" (click)="redirectToAuthorPage(song?.authorId)">Redirect to author's page</button></td>
           </tr>
           <tr>
             <th>SONG AVERAGE RATE</th>
             <td><button class="ssv-big-bold-label"> {{songAverageRate}}</button></td>
+          </tr>
+          <tr>
+            <button type="button" class="btn btn-sm" (click)="redirectToCreateComment(song.songId)">Add Comment</button>
+            <button type="button" class="btn btn-sm" (click)="redirectToCreateRate(song.songId)">Add Rate</button>
           </tr>
           </thead>
         </table>
@@ -51,24 +52,6 @@
         <button type="button" class="btn btn-danger" (click)="redirectToSongList()">Redirect to song list</button>
       </section>
       <hr>
-      <section>
-        <table class="table">
-          <thead>
-          <tr>
-            <th>#</th>
-            <th>Rates</th>
-            <th>User</th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr *ngFor="let rate of rates">
-            <td>{{rate.rateId}}</td>
-            <td>{{rate.rateValue}}</td>
-            <td>{{rate.userId}}</td>
-          </tr>
-          </tbody>
-        </table>
-      </section>
     </div>
   </div>
 </div>

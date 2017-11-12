@@ -57,7 +57,6 @@ export class SongCreateComponent implements OnInit {
         }
       );
     }
-
     this.getAllAuthors();
   }
 

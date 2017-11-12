@@ -82,27 +82,7 @@ export class UserPageComponent implements OnInit {
     }
   }
 
-  // getAllCommentsFromUser(userId: number){
-  //   this.commentService.getAllCommentsFromUser(userId).subscribe(
-  //     comments => {
-  //       this.comments=comments;
-  //     },
-  //     err => {
-  //       console.log(err);
-  //     }
-  //   );
-  // }
 
-  // getAllRatesFromUser(userId: number){
-  //   this.rateService.getAllRatesFromUser(userId).subscribe(
-  //     rates => {
-  //       this.rates=rates;
-  //     },
-  //     err => {
-  //       console.log(err);
-  //     }
-  //   );
-  // }
 
   redirectToUserList(){
     this.router.navigate(['/user'])

@@ -81,8 +81,7 @@ export class RateCreateComponent implements OnInit {
       }
     }
     this.rateForm.reset();
-    //todo it ll be nice to redirecct straight into rateed song
-    this.router.navigate(['/song']);
+    this.router.navigate(['/song/songPage/'+ this.songId]);
     window.location.reload();
   }
 

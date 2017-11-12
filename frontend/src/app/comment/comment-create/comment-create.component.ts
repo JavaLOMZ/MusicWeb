@@ -7,6 +7,7 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {User} from "../../user/user";
 import {ActivatedRoute, Router} from "@angular/router";
 import {CommentOur} from "../comment";
+import {AuthenticationService} from "../../authentication.service";
 
 
 @Component({
@@ -20,7 +21,7 @@ export class CommentCreateComponent implements OnInit {
   commentId: number;
   songId:number;
   comment: CommentOur;
-  users:User[];
+  userId: number;
 
   commentForm: FormGroup;
   private sub:any;
@@ -28,7 +29,8 @@ export class CommentCreateComponent implements OnInit {
               private router: Router,
               private commentService:CommentService,
               private songService: SongService,
-              private userService: UserService) { }
+              private userService: UserService,
+              private authenticationService: AuthenticationService) { }
 
   ngOnInit() {
     this.sub=this.route.params.subscribe(params=>{
@@ -57,11 +59,8 @@ export class CommentCreateComponent implements OnInit {
         }
       );
     }
-
-    // this.getAllSongs();
-    this.getAllUsers();
+    this.getUserId();
   }
-
 
   ngOnDestroy(): void{
     this.sub.unsubscribe();
@@ -84,8 +83,7 @@ export class CommentCreateComponent implements OnInit {
       }
     }
     this.commentForm.reset();
-    //todo it ll be nice to redirecct straight into commented song
-    this.router.navigate(['/song']);
+    this.router.navigate(['/song/songPage/'+ this.songId]);
     window.location.reload();
   }
 
@@ -93,11 +91,11 @@ export class CommentCreateComponent implements OnInit {
     this.router.navigate(['/song']);
   }
 
-  getAllUsers(){
-    this.userService.getAllUsers().subscribe(
-      users=>{
-        this.users=users;
-      },err=>{
+  getUserId() {
+    this.userService.getUserByUsername(this.authenticationService.getUsername()).subscribe(
+      user => {
+        this.userId = user.userId;
+      }, err => {
         console.log(err);
       }
     )
