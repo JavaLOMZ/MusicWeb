@@ -49,7 +49,7 @@ export class UserPageComponent implements OnInit {
     }
 
     //todo method which will get songs to combine them with Comments like Comment -> SongName not only songId
-    //this.getAllRatesFromUser(this.user.userId);
+    this.getAllRatesFromUserNickname(this.username);
     this.getAllCommentsFromUserNickname(this.username);
   }
 
@@ -65,16 +65,10 @@ export class UserPageComponent implements OnInit {
     );
   }
 
-  redirectToSongPage(songId:number){
-    if(songId>0){
-      this.router.navigate(['/song/songPage',songId]);
-    }
-  }
-
-  getAllCommentsFromUser(userId: number){
-    this.commentService.getAllCommentsFromUser(userId).subscribe(
-      comments => {
-        this.comments=comments;
+  getAllRatesFromUserNickname(nickname: string){
+    this.rateService.getAllRatesFromUserByNickname(nickname).subscribe(
+      rates => {
+        this.rates = rates;
       },
       err => {
         console.log(err);
@@ -82,16 +76,13 @@ export class UserPageComponent implements OnInit {
     );
   }
 
-  // getAllRatesFromUser(userId: number){
-  //   this.rateService.getAllRatesFromUser(userId).subscribe(
-  //     rates => {
-  //       this.rates=rates;
-  //     },
-  //     err => {
-  //       console.log(err);
-  //     }
-  //   );
-  // }
+  redirectToSongPage(songId:number){
+    if(songId>0){
+      this.router.navigate(['/song/songPage',songId]);
+    }
+  }
+
+
 
   redirectToUserList(){
     this.router.navigate(['/user'])

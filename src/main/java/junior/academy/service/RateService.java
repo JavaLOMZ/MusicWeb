@@ -39,6 +39,10 @@ public class RateService {
         return rateDao.getRatesByUserId(userId);
     }
 
+    public List<Rate> getRatesByUsername(String username) {
+        return rateDao.getRatesByUsername(username);
+    }
+
     public List<Rate> getRatesBySongId(long songId){
         return rateDao.getRatesBySongId(songId);
     }

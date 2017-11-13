@@ -3,6 +3,7 @@ import {Headers, Http, Response} from "@angular/http";
 import {Observable} from "rxjs/Observable";
 import {Rate} from "./rate";
 import {AuthenticationService} from "../authentication.service";
+import {CommentOur} from "../comment/comment";
 
 @Injectable()
 export class RateService {
@@ -45,6 +46,12 @@ export class RateService {
     return this.http.get(this.apiUrl + '/song/' + songId, {headers: this.headers})
       .map((res: Response) => res.json())
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+  }
+
+  getAllRatesFromUserByNickname(nickname:string):Observable<Rate[]>{
+    return this.http.get(this.apiUrl+'/user/nickname/'+nickname,{headers:this.headers})
+      .map((res:Response)=>res.json())
+      .catch((error:any)=>Observable.throw(error.json().error || 'Server error'));
   }
 
 }

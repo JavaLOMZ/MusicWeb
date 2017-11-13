@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {SongService} from "../song.service";
 import {CommentService} from "../../comment/comment.service";
 import {Song} from "../song";
@@ -8,37 +8,50 @@ import {RateService} from "../../rate/rate.service";
 import {Rate} from "../../rate/rate";
 import {User} from "../../user/user";
 import {UserService} from "../../user/user.service";
+import {DomSanitizer} from "@angular/platform-browser";
+
 
 
 @Component({
   selector: 'app-song-page',
   templateUrl: './song-page.component.html',
   styleUrls: ['./song-page.component.css'],
-  providers:[SongService, CommentService, RateService, UserService]
+  providers: [SongService, CommentService, RateService, UserService]
 })
 export class SongPageComponent implements OnInit {
 
-  songId:number;
-  song:Song;
-  comments:CommentOur[];
+  songId: number;
+  song: Song;
+  comments: CommentOur[];
   rates: Rate[];
-  user:User;
-  songAverageRate:number;
-  private sub:any;
+  user: User;
+  songAverageRate: number;
+  private sub: any;
 
   constructor(private route: ActivatedRoute,
               private router: Router,
               private songService: SongService,
               private rateService: RateService,
               private commentService: CommentService,
-              private userService: UserService) { }
+              private userService: UserService,
+              public sanitizer: DomSanitizer) {
+  }
 
   ngOnInit() {
-    this.sub=this.route.params.subscribe(params=>{
-      this.songId=params['songId'];
-    });
+    this.getSongIdFromParam();
+    this.getSong();
+    this.getAllCommentsForSong(this.songId);
+    this.getSongAverageRate(this.songId);
+  }
 
-    if(this.songId) {
+  getSongIdFromParam() {
+    this.sub = this.route.params.subscribe(params => {
+      this.songId = params['songId'];
+    });
+  }
+
+  getSong() {
+    if (this.songId) {
       this.songService.getSongById(this.songId).subscribe(
         song => {
           this.song = song;
@@ -47,18 +60,12 @@ export class SongPageComponent implements OnInit {
         }
       );
     }
-
-    //todo method which ll getAuthorForSong(songID)
-
-    this.getAllRatesForSong(this.songId);
-    this.getAllCommentsForSong(this.songId);
-    this.getSongAverageRate(this.songId);
   }
 
-  getAllCommentsForSong(songId:number){
+  getAllCommentsForSong(songId: number) {
     this.commentService.getAllCommentsForSong(songId).subscribe(
       comments => {
-        this.comments=comments;
+        this.comments = comments;
       },
       err => {
         console.log(err);
@@ -66,51 +73,52 @@ export class SongPageComponent implements OnInit {
     );
   }
 
-  getAllRatesForSong(songId:number){
-    this.rateService.getAllRatesForSong(songId).subscribe(
-      rates => {
-        this.rates=rates;
-      },
-      err => {
-        console.log(err);
-      }
-    );
-  }
 
-  getSongAverageRate(songId:number){
+  getSongAverageRate(songId: number) {
     this.songService.getSongAverageRate(songId).subscribe(
-      songAverageRate=>{
-        this.songAverageRate=songAverageRate;
-      },err=>{
+      songAverageRate => {
+        this.songAverageRate = songAverageRate;
+      }, err => {
         console.log(err);
       }
     )
   }
 
-  redirectToSongList(){
+  redirectToSongList() {
     this.router.navigate(['/song'])
   }
 
-  redirectToAuthorPage(authorId: number){
-    if(authorId>0) {
+  redirectToAuthorPage(authorId: number) {
+    if (authorId > 0) {
       this.router.navigate(['/author/authorPage', authorId]);
     }
   }
 
-  redirectToUserPage(userId: number){
-    if(userId>0) {
+
+  redirectToUserPage(userId: number) {
+    if (userId > 0) {
       this.userService.getUserById(userId).subscribe(
-        user=>{
-          this.user=user;
+        user => {
+          this.user = user;
           // if(user.nickname=isLogged)
           this.router.navigate(['/user/userPage', this.user.nickname]);
         },
-        err=>{
+        err => {
           console.log(err);
         }
       );
-
     }
   }
 
+  redirectToCreateComment(songId: number){
+    if(songId){
+      this.router.navigate(['/comment/createComment',songId])
+    }
+  }
+
+  redirectToCreateRate(songId: number){
+    if(songId){
+      this.router.navigate(['/rate/createRate',songId])
+    }
+  }
 }

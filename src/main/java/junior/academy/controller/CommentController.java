@@ -63,7 +63,6 @@ public class CommentController {
 
     @GetMapping("user/nickname/{nickname}")
     public ResponseEntity<List<Comment>> getCommentsByUserNickname(@PathVariable String nickname){
-
         if(userService.isUserPresent(nickname)){
             return new ResponseEntity<>(commentService.getCommentsByUserNickname(nickname),HttpStatus.OK);
         }

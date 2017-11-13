@@ -34,21 +34,20 @@ public class CommentDao {
     }
 
     public List<Comment> getCommentsByUserId(long userId) {
-        Query query=sessionFactory.getCurrentSession().createQuery("from Comment where userId=:userId");
-        query.setParameter("userId",userId);
+        Query query = sessionFactory.getCurrentSession().createQuery("from Comment where userId=:userId");
+        query.setParameter("userId", userId);
         return query.list();
     }
 
     public List<Comment> getCommentsByUserNickname(String nickname) {
-        Query query=sessionFactory.getCurrentSession().createQuery("select comment from Comment as comment join comment.user user where user.nickname=:nickname");
-        query.setParameter("nickname",nickname);
+        Query query = sessionFactory.getCurrentSession().createQuery("select comment from Comment as comment join comment.user user where user.nickname=:nickname");
+        query.setParameter("nickname", nickname);
         return query.list();
     }
 
-    public List<Comment> getCommentsBySongId(long songId){
-        Query query=sessionFactory.getCurrentSession().createQuery("from Comment where songId=:songId");
-        query.setParameter("songId",songId);
+    public List<Comment> getCommentsBySongId(long songId) {
+        Query query = sessionFactory.getCurrentSession().createQuery("from Comment where songId=:songId");
+        query.setParameter("songId", songId);
         return query.list();
     }
-
 }
