@@ -49,7 +49,7 @@
             <tr *ngFor="let rate of rates">
               <td>{{rate.rateId}}</td>
               <td>{{rate.rateValue}}</td>
-              <td>{{rate.songId}}</td>
+              <td><button type="button" class="btn-primary" (click)="redirectToSongPage(rate.songId)">{{rate.songId}}</button></td>
             </tr>
             </tbody>
           </table>

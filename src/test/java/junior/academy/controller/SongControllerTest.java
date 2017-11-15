@@ -1,6 +1,7 @@
 package junior.academy.controller;
 
 import junior.academy.domain.Author;
+import junior.academy.domain.MusicGenre;
 import junior.academy.domain.Rate;
 import junior.academy.domain.Song;
 import junior.academy.service.AuthorService;
@@ -20,7 +21,9 @@ import static org.mockito.Matchers.anyLong;
 import static org.mockito.Mockito.*;
 import static org.testng.Assert.assertEquals;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -118,11 +121,18 @@ public class SongControllerTest {
         assertEquals(songController.songAverageRate(anyLong()),new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
+    @Test
+    public void getMusicGenreTypes(){
+        ArrayList<MusicGenre>musicGenres=new ArrayList<>(Arrays.asList(MusicGenre.values()));
+        when(songService.getMusicGenreTypes()).thenReturn(musicGenres);
+        assertEquals(songController.getMusicGenreTypes(),musicGenres);
+    }
+
     public List<Song> getSongList() {
         Song song = new Song();
         song.setSongName("testSong");
         song.setAuthor(new Author());
-        song.setMusicGenre("testGenre");
+        song.setMusicGenre(MusicGenre.HIPHOP);
         song.setReleaseYear(1900);
         song.setYouTubeLink("www.youtube.com/test2");
         songs.add(song);

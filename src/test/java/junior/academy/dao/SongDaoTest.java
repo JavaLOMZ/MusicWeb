@@ -1,6 +1,7 @@
 package junior.academy.dao;
 
 import junior.academy.domain.Author;
+import junior.academy.domain.MusicGenre;
 import junior.academy.domain.Song;
 import org.dbunit.dataset.CompositeDataSet;
 import org.dbunit.dataset.IDataSet;
@@ -66,7 +67,9 @@ public class SongDaoTest extends EntityDaoTest {
     private Song getSong() {
         Song song = new Song();
         song.setSongName("TestSongName");
-        song.setMusicGenre("TestMusicGenre");
+//        song.setMusicGenre("TestMusicGenre");
+        song.setMusicGenre(MusicGenre.HIPHOP);
+
         song.setYouTubeLink("YoutubeLink");
         return song;
     }

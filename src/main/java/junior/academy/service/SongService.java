@@ -1,10 +1,13 @@
 package junior.academy.service;
 
 import junior.academy.dao.SongDao;
+import junior.academy.domain.MusicGenre;
 import junior.academy.domain.Song;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,5 +39,9 @@ public class SongService {
 
     public List<Song> getSongsByAuthorId(long authorId){
         return songDao.getSongsByAuthorId(authorId);
+    }
+
+    public ArrayList<MusicGenre> getMusicGenreTypes(){
+        return new ArrayList<>(Arrays.asList(MusicGenre.values()));
     }
 }
