@@ -19,8 +19,9 @@ public class Song {
     @NotNull
     private String songName;
 
-    @Column(name = "musicGenre")
-    private String musicGenre;
+    @Column(name="musicGenre")
+    @Enumerated(EnumType.STRING)
+    private MusicGenre musicGenre;
 
     @Column(name = "releaseYear")
     private int releaseYear;
@@ -58,11 +59,12 @@ public class Song {
         this.songName = songName;
     }
 
-    public String getMusicGenre() {
+
+    public MusicGenre getMusicGenre() {
         return musicGenre;
     }
 
-    public void setMusicGenre(String musicGenre) {
+    public void setMusicGenre(MusicGenre musicGenre) {
         this.musicGenre = musicGenre;
     }
 

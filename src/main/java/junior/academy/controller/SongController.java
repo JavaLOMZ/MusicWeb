@@ -1,6 +1,7 @@
 package junior.academy.controller;
 
 
+import junior.academy.domain.MusicGenre;
 import junior.academy.domain.Song;
 import junior.academy.service.AuthorService;
 import junior.academy.service.RateService;
@@ -10,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:4200")
@@ -67,5 +69,10 @@ public class SongController {
             return new ResponseEntity<>(rateService.songAverageRate(songId),HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    @GetMapping("/musicGenre")
+    public ArrayList<MusicGenre> getMusicGenreTypes() {
+        return songService.getMusicGenreTypes();
     }
 }

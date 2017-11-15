@@ -4,6 +4,7 @@ import {Injectable} from "@angular/core";
 import {Observable} from "rxjs/Observable";
 import {Song} from "./song";
 import {AuthenticationService} from "../authentication.service";
+import {MusicGenre} from "./music.genre";
 
 @Injectable()
 export class SongService {
@@ -52,5 +53,11 @@ export class SongService {
     return this.http.get(this.apiUrl+'/songAverageRate/'+songId,{headers:this.headers})
       .map((res:Response)=>res.json())
       .catch((error:any)=>Observable.throw(error.json().error || 'Server error'));
+  }
+
+  getMusicGenreTypes(): Observable<MusicGenre[]> {
+    return this.http.get(this.apiUrl+'/musicGenre', {headers: this.headers})
+      .map((res: Response) => res.json())
+      .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
 }

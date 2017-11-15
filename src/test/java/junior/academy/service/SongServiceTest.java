@@ -3,6 +3,7 @@ package junior.academy.service;
 
 import junior.academy.dao.SongDao;
 import junior.academy.domain.Author;
+import junior.academy.domain.MusicGenre;
 import junior.academy.domain.Song;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -16,6 +17,7 @@ import static org.mockito.Mockito.*;
 import static org.testng.Assert.assertEquals;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -77,15 +79,17 @@ public class SongServiceTest {
         assertEquals(songService.getSongsByAuthorId(anyLong()),songs);
     }
 
-
-
-
+    @Test
+    public void getMusicGenreTypes(){
+        assertEquals(songService.getMusicGenreTypes(),new ArrayList<>(Arrays.asList(MusicGenre.values())));
+    }
 
     public List<Song> getSongList(){
         Song song=new Song();
         song.setSongName("testSong");
         song.setAuthor(new Author());
-        song.setMusicGenre("testGenre");
+        //song.setMusicGenre("testGenre");
+        song.setMusicGenre(MusicGenre.HIPHOP);
         song.setReleaseYear(1900);
         song.setYouTubeLink("www.youtube.com/test2");
         songs.add(song);

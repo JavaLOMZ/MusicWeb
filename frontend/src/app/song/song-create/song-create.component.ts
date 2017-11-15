@@ -5,6 +5,7 @@ import {SongService} from "../song.service";
 import {Song} from "../song";
 import {AuthorService} from "../../author/author.service";
 import {Author} from "../../author/author";
+import {MusicGenre} from "../music.genre";
 
 
 @Component({
@@ -17,59 +18,63 @@ export class SongCreateComponent implements OnInit {
 
   songId: number;
   song: Song;
-  authors:Author[];
+  authors: Author[];
+  musicGenre: MusicGenre[];
+
 
   songForm: FormGroup;
-  private sub:any;
+  private sub: any;
 
   constructor(private route: ActivatedRoute,
               private router: Router,
               private songService: SongService,
-              private authorService: AuthorService) { }
+              private authorService: AuthorService) {
+  }
 
   ngOnInit() {
-    this.sub=this.route.params.subscribe(params=>{
-      this.songId=params['songId'];
+    this.sub = this.route.params.subscribe(params => {
+      this.songId = params['songId'];
     });
 
-    this.songForm=new FormGroup({
-      songName: new FormControl('',Validators.required),
-      musicGenre: new FormControl('',Validators.required),
-      releaseYear: new FormControl('',Validators.required),
-      youTubeLink:new FormControl('', Validators.required),
-      authorId:new FormControl('',Validators.required)
+    this.songForm = new FormGroup({
+      songName: new FormControl('', Validators.required),
+      musicGenre: new FormControl('', Validators.required),
+      releaseYear: new FormControl('', Validators.required),
+      youTubeLink: new FormControl('', Validators.required),
+      authorId: new FormControl('', Validators.required)
     });
 
 
-    if(this.songId){
+    if (this.songId) {
       this.songService.getSongById(this.songId).subscribe(
-        song=>{
-          this.songId=song.songId;
+        song => {
+          this.songId = song.songId;
           this.songForm.patchValue({
             songName: song.songName,
             musicGenre: song.musicGenre,
             releaseYear: song.releaseYear,
             youTubeLink: song.youTubeLink,
-            authorId:song.authorId
+            authorId: song.authorId
           });
-        }, error=>{
+        }, error => {
           console.log(error);
         }
       );
     }
     this.getAllAuthors();
+    this.getMusicGenreTypes();
+
   }
 
 
-  ngOnDestroy(): void{
+  ngOnDestroy(): void {
     this.sub.unsubscribe();
   }
 
 
-
-  onSubmit(){
-    if(this.songForm.valid){
-      if(this.songId) {
+  onSubmit() {
+    if (this.songForm.valid) {
+      if (this.songId) {
         let song: Song = new Song(this.songId,
           this.songForm.controls['songName'].value,
           this.songForm.controls['musicGenre'].value,
@@ -77,7 +82,7 @@ export class SongCreateComponent implements OnInit {
           this.songForm.controls['youTubeLink'].value,
           this.songForm.controls['authorId'].value);
         this.songService.createOrUpdateSong(song).subscribe();
-      }else {
+      } else {
         let song: Song = new Song(null,
           this.songForm.controls['songName'].value,
           this.songForm.controls['musicGenre'].value,
@@ -92,15 +97,25 @@ export class SongCreateComponent implements OnInit {
     window.location.reload();
   }
 
-  redirectSongListPage(){
+  redirectSongListPage() {
     this.router.navigate(['/song']);
   }
 
-  getAllAuthors(){
+  getAllAuthors() {
     this.authorService.getAllAuthors().subscribe(
-      authors=>{
-        this.authors=authors;
-    },err=>{
+      authors => {
+        this.authors = authors;
+      }, err => {
+        console.log(err);
+      }
+    )
+  }
+
+  getMusicGenreTypes() {
+    this.songService.getMusicGenreTypes().subscribe(
+      musicGenre => {
+        this.musicGenre = musicGenre;
+      }, err => {
         console.log(err);
       }
     )

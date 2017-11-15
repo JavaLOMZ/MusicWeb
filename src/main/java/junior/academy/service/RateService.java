@@ -49,6 +49,6 @@ public class RateService {
 
     public double songAverageRate(long songId){
         List<Rate>rates=getRatesBySongId(songId);
-        return (rates.stream().mapToDouble(Rate::getRateValue).sum())/rates.size();
+        return Math.round(rates.stream().mapToDouble(Rate::getRateValue).sum()/rates.size()*100)/100.00;
     }
 }

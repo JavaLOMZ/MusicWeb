@@ -13,10 +13,11 @@
 
             <div class="form-group">
               <label>MusicGenre</label>
-              <input type="text"
-                     class="form-control"
-                     formControlName="musicGenre">
+              <select class="form-control input-lg" formControlName="musicGenre" >
+                <option *ngFor="let musicGenre of musicGenre" [ngValue]="musicGenre">{{musicGenre}}</option>
+              </select>
             </div>
+
 
             <div class="form-group">
               <label>ReleaseYear</label>
