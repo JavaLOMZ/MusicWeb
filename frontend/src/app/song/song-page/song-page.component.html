@@ -18,12 +18,16 @@
             <td>{{song?.releaseYear}}</td>
           </tr>
           <tr>
-            <th>Song AuthorId </th>
+            <th>Song AuthorId</th>
             <td><button type="button" class="btn-primary" (click)="redirectToAuthorPage(song?.authorId)">Redirect to author's page</button></td>
           </tr>
           <tr>
-            <th>SONG AVERAGE RATE</th>
+            <th>Song average rate</th>
             <td><button class="ssv-big-bold-label"> {{songAverageRate}}</button></td>
+          </tr>
+          <tr>
+            <th>Your rate</th>
+            <td><button class="ssv-big-bold-label"> {{rateOfUser?.rateValue}}</button></td>
           </tr>
           <tr>
             <button type="button" class="btn btn-sm" (click)="redirectToCreateComment(song.songId)">Add Comment</button>

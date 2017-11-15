@@ -51,4 +51,8 @@ public class RateService {
         List<Rate>rates=getRatesBySongId(songId);
         return Math.round(rates.stream().mapToDouble(Rate::getRateValue).sum()/rates.size()*100)/100.00;
     }
+
+    public Optional<Rate> getRateForUserAndSong(long userId, long songId){
+        return rateDao.getRateForUserAndSong(userId,songId);
+    }
 }

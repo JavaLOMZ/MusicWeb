@@ -76,4 +76,12 @@ public class RateController {
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
+
+    @GetMapping("/{userId}/{songId}")
+    public ResponseEntity<Rate> getRateForUserAndSong(@PathVariable long userId,@PathVariable long songId){
+        if(rateService.getRateForUserAndSong(userId,songId).isPresent()){
+            return new ResponseEntity<>(rateService.getRateForUserAndSong(userId,songId).get(),HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
 }

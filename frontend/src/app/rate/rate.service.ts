@@ -54,4 +54,10 @@ export class RateService {
       .catch((error:any)=>Observable.throw(error.json().error || 'Server error'));
   }
 
+  getRateForUserAndSong(userId:number, songId:number): Observable<Rate>{
+    return this.http.get(this.apiUrl + '/' + userId+'/'+songId, {headers: this.headers})
+      .map((res: Response) => res.json())
+      .catch((error: any) => Observable.throw(error.json().error || 'Server Error'));
+  }
+
 }

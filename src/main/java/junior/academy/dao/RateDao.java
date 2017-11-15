@@ -51,4 +51,12 @@ public class RateDao {
         query.setParameter("songId",songId);
         return query.list();
     }
+
+    public Optional<Rate> getRateForUserAndSong(long userId, long songId){
+        Query query=sessionFactory.getCurrentSession().createQuery("from Rate where userId=:userId and songId=:songId");
+        query.setParameter("userId",userId);
+        query.setParameter("songId",songId);
+        return Optional.ofNullable((Rate)query.uniqueResult());
+
+    }
 }
