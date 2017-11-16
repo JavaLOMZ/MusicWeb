@@ -9,6 +9,7 @@ import {Rate} from "../../rate/rate";
 import {User} from "../../user/user";
 import {UserService} from "../../user/user.service";
 import {DomSanitizer} from "@angular/platform-browser";
+import {AuthenticationService} from "../../authentication.service";
 
 
 
@@ -16,16 +17,17 @@ import {DomSanitizer} from "@angular/platform-browser";
   selector: 'app-song-page',
   templateUrl: './song-page.component.html',
   styleUrls: ['./song-page.component.css'],
-  providers: [SongService, CommentService, RateService, UserService]
+  providers: [SongService, CommentService, RateService, UserService, AuthenticationService]
 })
 export class SongPageComponent implements OnInit {
 
   songId: number;
   song: Song;
   comments: CommentOur[];
-  rates: Rate[];
   user: User;
   songAverageRate: number;
+  userId: number;
+  rateOfUser: Rate;
   private sub: any;
 
   constructor(private route: ActivatedRoute,
@@ -34,6 +36,7 @@ export class SongPageComponent implements OnInit {
               private rateService: RateService,
               private commentService: CommentService,
               private userService: UserService,
+              private authenticationService: AuthenticationService,
               public sanitizer: DomSanitizer) {
   }
 
@@ -42,7 +45,10 @@ export class SongPageComponent implements OnInit {
     this.getSong();
     this.getAllCommentsForSong(this.songId);
     this.getSongAverageRate(this.songId);
+    this.getRateForUserAndSong(this.songId);
+
   }
+
 
   getSongIdFromParam() {
     this.sub = this.route.params.subscribe(params => {
@@ -110,15 +116,39 @@ export class SongPageComponent implements OnInit {
     }
   }
 
-  redirectToCreateComment(songId: number){
-    if(songId){
-      this.router.navigate(['/comment/createComment',songId])
+  redirectToCreateComment(songId: number) {
+    if (songId) {
+      this.router.navigate(['/comment/createComment', songId])
     }
   }
 
-  redirectToCreateRate(songId: number){
-    if(songId){
-      this.router.navigate(['/rate/createRate',songId])
+  redirectToCreateRate(songId: number) {
+    if (songId) {
+      this.router.navigate(['/rate/createRate', songId])
     }
   }
+
+  getRateForUserAndSong(songId:number) {
+    this.userService.getUserByUsername(this.authenticationService.getUsername()).subscribe(
+      user => {
+        this.userId = user.userId;
+        this.rateService.getRateForUserAndSong(this.userId, songId).subscribe(
+          rate => {
+            this.rateOfUser = rate;
+          },err=>{
+            console.log(err);
+          }
+        )
+      }, err => {
+        console.log(err);
+      }
+    )
+  }
+
+  //todo probably new component? cuz now it's passing songId in comment and rate. we need rate/comment object passed
+  // editRate(rate: Rate) {
+  //   if (rate) {
+  //     this.router.navigate(['/rate/createRate', rate])
+  //   }
+  // }
 }
