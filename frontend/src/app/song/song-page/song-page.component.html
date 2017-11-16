@@ -25,13 +25,15 @@
             <th>Song average rate</th>
             <td><button class="ssv-big-bold-label"> {{songAverageRate}}</button></td>
           </tr>
-          <tr>
+          <tr *ngIf="rateOfUser?.rateValue">
             <th>Your rate</th>
-            <td><button class="ssv-big-bold-label"> {{rateOfUser?.rateValue}}</button></td>
+           <!--<td><button class="ssv-big-bold-label" (click)="redirectToCreateRate(rateOfUser)">  {{rateOfUser?.rateValue}}</button></td>-->
+            <td><button class="ssv-big-bold-label">  {{rateOfUser?.rateValue}}</button></td>
+
           </tr>
           <tr>
             <button type="button" class="btn btn-sm" (click)="redirectToCreateComment(song.songId)">Add Comment</button>
-            <button type="button" class="btn btn-sm" (click)="redirectToCreateRate(song.songId)">Add Rate</button>
+            <td *ngIf="!rateOfUser?.rateValue"><button  type="button" class="btn btn-sm" (click)="redirectToCreateRate(song.songId)">Add Rate</button></td>
           </tr>
           </thead>
         </table>

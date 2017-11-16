@@ -82,6 +82,6 @@ public class RateController {
         if(rateService.getRateForUserAndSong(userId,songId).isPresent()){
             return new ResponseEntity<>(rateService.getRateForUserAndSong(userId,songId).get(),HttpStatus.OK);
         }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

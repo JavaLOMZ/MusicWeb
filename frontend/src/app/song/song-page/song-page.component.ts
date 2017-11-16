@@ -45,9 +45,10 @@ export class SongPageComponent implements OnInit {
     this.getSong();
     this.getAllCommentsForSong(this.songId);
     this.getSongAverageRate(this.songId);
-    //todo tutaj cos trzeba zrobic z przekazywaniem nulla xD QUERBA
     this.getRateForUserAndSong(this.songId);
+
   }
+
 
   getSongIdFromParam() {
     this.sub = this.route.params.subscribe(params => {
@@ -144,15 +145,10 @@ export class SongPageComponent implements OnInit {
     )
   }
 
-
-  // getRateForUserAndSong(songId:number){
-  //   this.rateService.getRateForUserAndSong(this.userId,this.songId).subscribe(
-  //     rate=>{
-  //       this.rateOfUser=rate;
-  //     },
-  //     err=>{
-  //       console.log(err);
-  //     }
-  //   )
+  //todo probably new component? cuz now it's passing songId in comment and rate. we need rate/comment object passed
+  // editRate(rate: Rate) {
+  //   if (rate) {
+  //     this.router.navigate(['/rate/createRate', rate])
+  //   }
   // }
 }
