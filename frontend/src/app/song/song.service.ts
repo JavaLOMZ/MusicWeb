@@ -28,7 +28,7 @@ export class SongService {
 
   getSongById(songId: number): Observable<Song> {
     return this.http.get(this.apiUrl + '/' + songId, {headers: this.headers})
-      .map((res: Response) => res.json())
+      .map(this.extractData)
       .catch((error: any) => Observable.throw(error.json().error || 'Server Error'));
   }
 
@@ -59,5 +59,11 @@ export class SongService {
     return this.http.get(this.apiUrl+'/musicGenre', {headers: this.headers})
       .map((res: Response) => res.json())
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+  }
+
+  extractData( response : Response){
+    let body = response.json();
+    console.log("Body", body);
+    return body || [];
   }
 }

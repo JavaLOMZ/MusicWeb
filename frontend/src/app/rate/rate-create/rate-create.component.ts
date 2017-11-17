@@ -42,6 +42,7 @@ export class RateCreateComponent implements OnInit {
     this.rateForm = new FormGroup({
       rateValue: new FormControl('', Validators.required),
       songId: new FormControl('', Validators.required),
+      rateId: new FormControl(''),
       userId: new FormControl('', Validators.required)
     });
     if (this.rateId) {
@@ -49,6 +50,7 @@ export class RateCreateComponent implements OnInit {
         rate => {
           this.rateId = rate.rateId;
           this.rateForm.patchValue({
+            rateId: rate.rateId,
             rateValue: rate.rateValue,
             userId: rate.userId,
             songId: this.songId
