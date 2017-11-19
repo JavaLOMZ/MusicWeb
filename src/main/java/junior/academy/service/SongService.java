@@ -26,6 +26,8 @@ public class SongService {
     }
 
     public void createOrUpdateSong(Song song) {
+        String watchYoutubeLink=song.getYouTubeLink();
+        song.setYouTubeLink(watchYoutubeLink.replace("https://www.youtube.com/watch?v=","https://www.youtube.com/embed/"));
         songDao.createOrUpdateSong(song);
     }
 
