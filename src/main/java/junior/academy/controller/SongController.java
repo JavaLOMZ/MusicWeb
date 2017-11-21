@@ -75,4 +75,16 @@ public class SongController {
     public ArrayList<MusicGenre> getMusicGenreTypes() {
         return songService.getMusicGenreTypes();
     }
+
+    //temporary
+    @GetMapping("/user/notRated/{userId}")
+    public List<Song> getNotRatedSongsByUserId(@PathVariable long userId) {
+        return songService.getNotRatedSongsByUserId(userId);
+    }
+
+    //temporary
+    @GetMapping("/user/rated/{userId}")
+    public List<Song> getRatedSongsByUserId(@PathVariable long userId) {
+        return songService.getRatedSongsByUserId(userId);
+    }
 }

@@ -65,13 +65,13 @@ public class CommentDaoTest extends EntityDaoTest {
     //TODO test nothing
     @Test
     public void getCommentsByUserId(){
-        assertEquals(commentDao.getCommentsByUserId(anyLong()).size(),0);
+        assertEquals(commentDao.getCommentsByUserId(1).size(),1);
     }
 
     //TODO test nothing
     @Test
     public void getCommentsBySongId(){
-        assertEquals(commentDao.getCommentsBySongId(anyLong()).size(),0);
+        assertEquals(commentDao.getCommentsBySongId(1).size(),1);
     }
 
     private Comment getComment() {
@@ -79,4 +79,6 @@ public class CommentDaoTest extends EntityDaoTest {
         comment.setCommentText(" ");
         return comment;
     }
+
+
 }
