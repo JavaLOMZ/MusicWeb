@@ -107,4 +107,18 @@ public class Song {
     public void setSongId(long songId) {
         this.songId = songId;
     }
+
+    @Override
+    public String toString() {
+        return "Song{" +
+                "songId=" + songId +
+                ", songName='" + songName + '\'' +
+                ", musicGenre=" + musicGenre +
+                ", releaseYear=" + releaseYear +
+                ", youTubeLink='" + youTubeLink + '\'' +
+                ", author=" + author +
+                ", rates=" + rates +
+                ", comments=" + comments +
+                '}';
+    }
 }

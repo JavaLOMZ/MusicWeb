@@ -41,4 +41,16 @@ public class SongDao {
         query.setParameter("authorId",authorId);
         return query.list();
     }
+
+    public List<Song> getNotRatedSongsByUserId(long userId){
+        Query query=sessionFactory.getCurrentSession().createQuery("select song from Rate as rate right join rate.song song with rate.user.userId=:userId where rate.rateValue is null");
+        query.setParameter("userId", userId);
+        return query.list();
+    }
+
+    public List<Song> getRatedSongsByUserId(long userId){
+        Query query=sessionFactory.getCurrentSession().createQuery("select song from Rate as rate right join rate.song song where rate.user.userId=:userId");
+        query.setParameter("userId", userId);
+        return query.list();
+    }
 }
