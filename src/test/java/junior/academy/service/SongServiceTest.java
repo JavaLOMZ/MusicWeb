@@ -5,6 +5,7 @@ import junior.academy.dao.SongDao;
 import junior.academy.domain.Author;
 import junior.academy.domain.MusicGenre;
 import junior.academy.domain.Song;
+import junior.academy.domain.User;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -16,10 +17,7 @@ import static org.mockito.Matchers.anyLong;
 import static org.mockito.Mockito.*;
 import static org.testng.Assert.assertEquals;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 public class SongServiceTest {
     @Mock
@@ -40,7 +38,7 @@ public class SongServiceTest {
     @Test
     public void getAllSongs(){
         when(songDao.getAllSongs()).thenReturn(songs);
-        assertEquals(songService.getAllSongs().size(),1);
+        assertEquals(songService.getAllSongs().size(),2);
     }
 
     @Test
@@ -53,9 +51,11 @@ public class SongServiceTest {
 
     @Test
     public void createOrUpdateSong(){
-        doNothing().when(songDao).createOrUpdateSong(any(Song.class));
-        songService.createOrUpdateSong(any(Song.class));
-        verify(songDao,atLeastOnce()).createOrUpdateSong(any(Song.class));
+        Song song=getSongList().get(0);
+        doNothing().when(songDao).createOrUpdateSong(song);
+        song.setYouTubeLink(song.getYouTubeLink().replace("https://www.youtube.com/watch?v=", "https://www.youtube.com/embed/"));
+        songService.createOrUpdateSong(song);
+        verify(songDao,atLeastOnce()).createOrUpdateSong(song);
     }
 
     @Test
@@ -84,6 +84,7 @@ public class SongServiceTest {
         assertEquals(songService.getMusicGenreTypes(),new ArrayList<>(Arrays.asList(MusicGenre.values())));
     }
 
+
     public List<Song> getSongList(){
         Song song=new Song();
         song.setSongName("testSong");
@@ -95,5 +96,4 @@ public class SongServiceTest {
         songs.add(song);
         return songs;
     }
-
 }

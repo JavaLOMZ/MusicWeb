@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
@@ -76,15 +77,9 @@ public class SongController {
         return songService.getMusicGenreTypes();
     }
 
-    //temporary
-    @GetMapping("/user/notRated/{userId}")
-    public List<Song> getNotRatedSongsByUserId(@PathVariable long userId) {
-        return songService.getNotRatedSongsByUserId(userId);
-    }
 
-    //temporary
-    @GetMapping("/user/rated/{userId}")
-    public List<Song> getRatedSongsByUserId(@PathVariable long userId) {
-        return songService.getRatedSongsByUserId(userId);
+    @GetMapping("/user/recommendedSongs/{userId}")
+    public Set<Song> getRandomSongsByUserPreferences(@PathVariable long userId){
+        return songService.getRandomSongsByUserPreferences(userId);
     }
 }
