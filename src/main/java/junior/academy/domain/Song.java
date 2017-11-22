@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -108,17 +109,22 @@ public class Song {
         this.songId = songId;
     }
 
+
     @Override
-    public String toString() {
-        return "Song{" +
-                "songId=" + songId +
-                ", songName='" + songName + '\'' +
-                ", musicGenre=" + musicGenre +
-                ", releaseYear=" + releaseYear +
-                ", youTubeLink='" + youTubeLink + '\'' +
-                ", author=" + author +
-                ", rates=" + rates +
-                ", comments=" + comments +
-                '}';
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Song song = (Song) o;
+        return songId == song.songId &&
+                releaseYear == song.releaseYear &&
+                Objects.equals(songName, song.songName) &&
+                musicGenre == song.musicGenre &&
+                Objects.equals(youTubeLink, song.youTubeLink);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(songId, songName, musicGenre, releaseYear, youTubeLink);
     }
 }

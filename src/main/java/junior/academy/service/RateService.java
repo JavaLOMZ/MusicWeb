@@ -6,7 +6,9 @@ import junior.academy.domain.Rate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -54,5 +56,14 @@ public class RateService {
 
     public Optional<Rate> getRateForUserAndSong(long userId, long songId){
         return rateDao.getRateForUserAndSong(userId,songId);
+    }
+
+    public Map<Long, Integer> getSongAndRateValue(long userId){
+        List<Rate> rates=getRatesByUserId(userId);
+        Map<Long, Integer> mapOfRates=new HashMap<>();
+        for(Rate r:rates){
+            mapOfRates.put(r.getSong().getSongId(),r.getRateValue());
+        }
+        return mapOfRates;
     }
 }
