@@ -6,13 +6,12 @@ import junior.academy.domain.Rate;
 
 import static org.junit.Assert.*;
 
+import junior.academy.domain.Song;
 import org.mockito.*;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyLong;
@@ -75,6 +74,12 @@ public class RateServiceTest {
     }
 
     @Test
+    public void getRatedByUsername(){
+        when(rateDao.getRatesByUsername(anyString())).thenReturn(rates);
+        assertEquals(rateService.getRatesByUsername(anyString()),rates);
+    }
+
+    @Test
     public void getRatesBySongId(){
         when(rateDao.getRatesBySongId(anyLong())).thenReturn(rates);
         assertEquals(rateService.getRatesBySongId(anyLong()),rates);
@@ -87,13 +92,31 @@ public class RateServiceTest {
         assertEquals(rateService.songAverageRate(anyLong()),averageSongRate,0);
     }
 
+    @Test
+    public void getRateForUserAndSong(){
+        Rate rate = getRateList().get(0);
+        when(rateDao.getRateForUserAndSong(anyLong(),anyLong())).thenReturn(Optional.ofNullable(rate));
+        assertEquals(rateService.getRateForUserAndSong(anyLong(),anyLong()),Optional.ofNullable(rate));
+    }
+
+    @Test
+    public void getSongAndRateValue(){
+        when(rateDao.getRatesByUserId(anyLong())).thenReturn(rates);
+        List<Rate>rates=rateService.getRatesByUserId(anyLong());
+        Map<Long,Integer> mapOfRates=new HashMap<>();
+        for(Rate r:rates){
+            mapOfRates.put(r.getSong().getSongId(),r.getRateValue());
+        }
+        assertEquals(rateService.getSongAndRateValue(anyLong()),mapOfRates);
+    }
+
     private List<Rate> getRateList() {
         Rate rate = new Rate();
         rate.setRateValue(10);
-
+        rate.setSong(new Song());
         Rate rate2=new Rate();
         rate2.setRateValue(20);
-
+        rate2.setSong(new Song());
         rates.add(rate);
         rates.add(rate2);
         return rates;
