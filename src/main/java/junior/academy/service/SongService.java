@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 @Service
 public class SongService {
 
-    private static final int AMOUNT_OF_SONGS_ON_RECOMMENDATION_PAGE = 5;
+    private static final int AMOUNT_OF_SONGS_ON_RECOMMENDATION_PAGE = 9;
 
     @Autowired
     SongDao songDao;
@@ -53,20 +53,23 @@ public class SongService {
 
 
     public Set<Song> getRandomSongsByUserPreferences(long userId) {
-        Map<String, Integer> songsSplitBetweenMusicGenre = calculatingUserPreferences(userId);
+        Map<String, Integer> songsByMusicGenre = calculatingUserPreferences(userId);
         List<Song>allNotRatedSongs=getNotRatedSongs(userId);
 
         Set<Song> randomSongs = new HashSet<>();
-        for (String name : songsSplitBetweenMusicGenre.keySet()) {
+        for (String name : songsByMusicGenre.keySet()) {
 
             List<Song> notRatedSongsOfMusicGenre = getNotRatedSongs(userId, name);
 
-            for (int i = 0; i < songsSplitBetweenMusicGenre.get(name) ; i++) {
+
+            for (int i = 0; i < songsByMusicGenre.get(name) ; i++) {
                 if(notRatedSongsOfMusicGenre.size() != 0) {
                     Collections.shuffle(notRatedSongsOfMusicGenre);
                     randomSongs.add(notRatedSongsOfMusicGenre.get(0));
                     notRatedSongsOfMusicGenre.remove(0);
                 }
+
+                //todo
                 else if(allNotRatedSongs.size()!=0){
                     Collections.shuffle(allNotRatedSongs);
                     randomSongs.add(allNotRatedSongs.get(0));
@@ -88,13 +91,25 @@ public class SongService {
     private Map<String, Integer> calculatingUserPreferences(long userId) {
         Map<String, Double> sumOfRatesValuePerMusicGenre = getSumOfRatesValuePerMusicGenre(userId);
         int totalValueOfRates = getTotalValueOfRates(sumOfRatesValuePerMusicGenre);
-
-        Map<String, Integer> songsSplitBetweenMusicGenre = new HashMap<>();
+        int songCount=0;
+        Map<String, Integer> songsByMusicGenre = new TreeMap<>();
         for (String name : sumOfRatesValuePerMusicGenre.keySet()) {
             Long balancedNumber = Math.round((sumOfRatesValuePerMusicGenre.get(name) / totalValueOfRates) * AMOUNT_OF_SONGS_ON_RECOMMENDATION_PAGE);
-            songsSplitBetweenMusicGenre.put(name, balancedNumber.intValue());
+            songCount+=balancedNumber;
+            songsByMusicGenre.put(name, balancedNumber.intValue());
         }
-        return songsSplitBetweenMusicGenre;
+        if(songCount<AMOUNT_OF_SONGS_ON_RECOMMENDATION_PAGE){
+            Map<String, Integer> sortedSongsByMusicGenre =
+                    songsByMusicGenre.entrySet().stream()
+                            .sorted(Map.Entry.comparingByValue())
+                            .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue,
+                                    (e1, e2) -> e1, LinkedHashMap::new));
+            List<String> indexes=new ArrayList<>(sortedSongsByMusicGenre.keySet());
+            String musicGenreWithBiggestBalanceNumber=indexes.get(indexes.size()-1);
+            sortedSongsByMusicGenre.put(musicGenreWithBiggestBalanceNumber,sortedSongsByMusicGenre.get(musicGenreWithBiggestBalanceNumber)+1);
+            return sortedSongsByMusicGenre;
+        }
+        return songsByMusicGenre;
     }
 
     private Map<String, Double> getSumOfRatesValuePerMusicGenre(long userId) {
