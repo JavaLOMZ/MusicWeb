@@ -79,7 +79,12 @@ public class SongController {
 
 
     @GetMapping("/user/recommendedSongs/{userId}")
-    public Set<Song> getRandomSongsByUserPreferences(@PathVariable long userId){
-        return songService.getRandomSongsByUserPreferences(userId);
+    public List<Song> getRandomSongsByUserPreferences(@PathVariable long userId){
+        return songService.getRandomSongs(userId);
+    }
+
+    @GetMapping("/user/mostrated/{userId}")
+    public MusicGenre getMostRatedMusicGenre(@PathVariable long userId){
+        return songService.getMostRatedMusicGenre(userId);
     }
 }

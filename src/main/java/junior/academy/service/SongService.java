@@ -7,14 +7,14 @@ import junior.academy.domain.Song;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EnumType;
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 public class SongService {
 
-    private static final int AMOUNT_OF_SONGS_ON_RECOMMENDATION_PAGE = 9;
+    private static final int NUMBER_OF_RECOMMENDED_SONGS = 5;
 
     @Autowired
     SongDao songDao;
@@ -50,6 +50,7 @@ public class SongService {
     public ArrayList<MusicGenre> getMusicGenreTypes() {
         return new ArrayList<>(Arrays.asList(MusicGenre.values()));
     }
+
 
 
     public Set<Song> getRandomSongsByUserPreferences(long userId) {
@@ -135,21 +136,78 @@ public class SongService {
     private List<Song> getRatedSongs(long userId) {
         return songDao.getRatedSongs(userId);
     }
+//
+//    private Set<String> getRatedMusicGenres(List<Song> ratedSongs) {
+//        Set<String> ratedMusicGenres = new HashSet<>();
+//        for (Song s : ratedSongs) {
+//            ratedMusicGenres.add(s.getMusicGenre().name());
+//        }
+//        return ratedMusicGenres;
+//    }
+//
+//    private int getTotalValueOfRates(Map<String, Double> sumOfRatesValuePerMusicGenre) {
+//        int totalValueOfRates = 0;
+//        for (String name : sumOfRatesValuePerMusicGenre.keySet()) {
+//            totalValueOfRates += sumOfRatesValuePerMusicGenre.get(name);
+//        }
+//        return totalValueOfRates;
+//    }
 
-    private Set<String> getRatedMusicGenres(List<Song> ratedSongs) {
-        Set<String> ratedMusicGenres = new HashSet<>();
-        for (Song s : ratedSongs) {
-            ratedMusicGenres.add(s.getMusicGenre().name());
-        }
-        return ratedMusicGenres;
+    //MY METHOD FOR RANDOM SONGS
+
+    private Map<MusicGenre, List<Song>> getRatedSongsByGenre(long userId) {
+        return this.getRatedSongs(userId).stream().collect(Collectors.groupingBy(Song::getMusicGenre));
     }
 
-    private int getTotalValueOfRates(Map<String, Double> sumOfRatesValuePerMusicGenre) {
-        int totalValueOfRates = 0;
-        for (String name : sumOfRatesValuePerMusicGenre.keySet()) {
-            totalValueOfRates += sumOfRatesValuePerMusicGenre.get(name);
+    private Map<MusicGenre, Integer> getPreferenceRateByMusicGenres(long userId) {
+        Map<MusicGenre, List<Song>> ratedSongsByGenre = this.getRatedSongsByGenre(userId);
+        Map<MusicGenre, Integer> preferenceMap = new HashMap<>();
+        for (MusicGenre musicGenre : ratedSongsByGenre.keySet()) {
+            int numberOfSongsTimesSumOfRates = ratedSongsByGenre.get(musicGenre).stream()
+                    .mapToInt(song -> song.getRates().stream()
+                            .filter(rate -> rate.getUser().getUserId() == userId)
+                            .mapToInt(Rate::getRateValue).sum()).sum() * ratedSongsByGenre.get(musicGenre).size();
+            preferenceMap.put(musicGenre, numberOfSongsTimesSumOfRates);
         }
-        return totalValueOfRates;
+        return preferenceMap;
     }
 
+    public List<Song> getRandomSongs(long userId) {
+        Map<MusicGenre, Integer> preferenceMap = this.getPreferenceRateByMusicGenres(userId);
+        List<Song> randomSongs = new ArrayList<>();
+        double totalPreferenceValue = preferenceMap.values().stream().mapToInt(integer -> integer).sum();
+        for (MusicGenre musicGenre : preferenceMap.keySet()) {
+            List<Song> currentGenreNotRatedSongList = this.getNotRatedSongs(userId, String.valueOf(musicGenre));
+            Collections.shuffle(currentGenreNotRatedSongList);
+            double numberOfSongs = (preferenceMap.get(musicGenre).doubleValue() / totalPreferenceValue * NUMBER_OF_RECOMMENDED_SONGS);
+            for (int i = 0; i < numberOfSongs && randomSongs.size() < NUMBER_OF_RECOMMENDED_SONGS && currentGenreNotRatedSongList.size() > i; i++) {
+                randomSongs.add(currentGenreNotRatedSongList.get(i));
+            }
+        }
+        return randomSongs;
+    }
+
+    //METHOD FOR MOST RATED MUSIC GENRE
+    public MusicGenre getMostRatedMusicGenre(long userId) {
+        return this.getRatedSongs(userId).stream()
+                .collect(Collectors.groupingBy(Song::getMusicGenre, Collectors.counting()))
+                .entrySet().stream()
+                .max(Map.Entry.comparingByValue())
+                .map(Map.Entry::getKey).orElse(null);
+    }
+//        ArrayList<MusicGenre> musicGenres = this.getMusicGenreTypes();
+//        long maxGenreOccurrences = 0;
+//        long currentGenreOccurrences = 0;
+//        MusicGenre mostRatedMusicGenre = null;
+//        for(MusicGenre musicGenre: musicGenres){
+//           currentGenreOccurrences = songDao.getRatedSongsByUserId(userId).stream().filter(song -> song.getMusicGenre().equals(musicGenre)).count();
+//            System.out.println("CURRENT MUSIC GENRE: "+ musicGenre);
+//            System.out.println("MAX GENRE OCCURENCES: " +maxGenreOccurrences + mostRatedMusicGenre);
+//           if(currentGenreOccurrences > maxGenreOccurrences){
+//               maxGenreOccurrences = currentGenreOccurrences;
+//               mostRatedMusicGenre = musicGenre;
+//           }
+//        }
+//        return mostRatedMusicGenre;
+//    }
 }
