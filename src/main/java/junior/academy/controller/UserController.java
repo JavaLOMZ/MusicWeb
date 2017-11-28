@@ -2,10 +2,16 @@ package junior.academy.controller;
 
 import junior.academy.domain.User;
 import junior.academy.service.UserService;
+import junior.academy.validator.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.Validator;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 import java.util.List;
 
@@ -16,6 +22,14 @@ public class UserController {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    UserValidator userValidator;
+
+    @InitBinder()
+    protected void initBinder(WebDataBinder binder) {
+        binder.setValidator(this.userValidator);
+    }
 
     @GetMapping("/{userId}")
     public ResponseEntity<User> getUserById(@PathVariable long userId) {
@@ -31,7 +45,7 @@ public class UserController {
     }
 
     @PostMapping("/create")
-    public void createOrUpdateUser(@RequestBody User user) {
+    public void createOrUpdateUser(@RequestBody @Valid User user) {
         userService.createOrUpdateUser(user);
     }
 
