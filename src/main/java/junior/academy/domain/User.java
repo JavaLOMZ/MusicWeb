@@ -3,10 +3,12 @@ package junior.academy.domain;
 import com.fasterxml.jackson.annotation.*;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
+
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
 @Table(name = "user")
@@ -17,18 +19,14 @@ public class User {
     @Column(name = "userId")
     private long userId;
 
-
     @Column(name = "nickname")
-    @NotNull
     private String nickname;
 
     @Column(name="password")
-    @NotNull
     private String password;
 
     @Column(name = "email")
     private String email;
-
 
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
     private Set<Comment> comments;
@@ -38,7 +36,6 @@ public class User {
     private Set<Rate> rates;
 
     @Column(name = "ENABLED")
-    @NotNull
     private Boolean enabled;
 
     @Column(name = "LASTPASSWORDRESETDATE")
@@ -96,7 +93,6 @@ public class User {
     public void setEmail(String email) {
         this.email = email;
     }
-
 
     public Set<Comment> getComments() {
         return comments;
