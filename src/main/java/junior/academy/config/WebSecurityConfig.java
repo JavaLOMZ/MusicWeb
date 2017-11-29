@@ -55,13 +55,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         httpSecurity
                 // we don't need CSRF because our token is invulnerable
                 .csrf().disable()
-
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
-
                 // don't create session
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-
                 .authorizeRequests()
+                .antMatchers("/user/nick/**").permitAll()
                 .antMatchers("/auth/**").permitAll()
                 .antMatchers("/user/create").permitAll()
                 .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()

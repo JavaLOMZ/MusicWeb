@@ -33,7 +33,7 @@ export class UserService {
   }
 
   createOrUpdateUser(user: User): Observable<User> {
-    return this.http.post(this.apiUrl+'/create', user, {headers: this.headers})
+    return this.http.post(this.apiUrl + '/create', user, {headers: this.headers})
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
 
@@ -43,9 +43,42 @@ export class UserService {
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
 
-  getUserByUsername(username: string): Observable<User> {
-    return this.http.get(this.apiUrl + '/nick/' + username, {headers: this.headers})
-      .map((res: Response) => res.json())
-      .catch((error: any) => Observable.throw(error.json().error || 'Server Error'));
+  getUserByUsername(username: string): Observable<any> {
+    return this.http.get(this.apiUrl + "/nick/" + username)
+      .map(this.extractData)
+      .catch(this.handleError) as Observable<any>;
+  };
+
+  handleError(error: any) {
+    let errMsg = (error.message) ? error.message :
+      error.status ? `${error.status} - ${error.statusText}` : 'Server error';
+    console.error(errMsg);
+    return Observable.throw(errMsg);
+  }
+
+  extractData<T>(res: Response) {
+    let body = res.json();
+    return <T>body;
   }
 }
+
+  export function usernameTaken(userService: UserService) {
+    return control => new Promise((resolve, reject) => {
+      console.log("in validator");
+      userService.getUserByUsername(control.value).subscribe(data => {
+        console.log(data);
+        if (data.userId) {
+          resolve({usernameTaken: true})
+        } else {
+          resolve(null);
+        }
+      }, (err) => {
+        console.log("in error" + err);
+        if (err != "404 - Not Found") {
+          resolve(null);
+        } else {
+          resolve(null);
+        }
+      });
+    });
+  }
