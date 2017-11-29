@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {UserService} from "../user.service";
+import {usernameTaken, UserService} from "../user.service";
 import {User} from "../user";
 import {ActivatedRoute, Router} from "@angular/router";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
@@ -29,9 +29,9 @@ export class UserCreateComponent implements OnInit {
     });
 
     this.userForm=new FormGroup({
-      nickname: new FormControl('',[Validators.required, Validators.minLength(5), Validators.maxLength(15)]),
+      nickname: new FormControl('',[Validators.required], [usernameTaken(this.userService)]),
       password:new FormControl('',Validators.required),
-      email: new FormControl('',[Validators.required, Validators.email])
+      email: new FormControl('',[Validators.required])
     });
 
 
@@ -53,12 +53,9 @@ export class UserCreateComponent implements OnInit {
     }
   }
 
-
   ngOnDestroy(): void{
     this.sub.unsubscribe();
   }
-
-
 
   onSubmit(){
     if(this.userForm.valid){
@@ -84,6 +81,4 @@ export class UserCreateComponent implements OnInit {
   redirectUserListPage(){
     this.router.navigate(['/user']);
   }
-
-
 }
