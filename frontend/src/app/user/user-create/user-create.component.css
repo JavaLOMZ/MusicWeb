@@ -1,0 +1,10 @@
+input.ng-invalid {
+  background-color: pink;
+}
+input.ng-valid {
+  background-color: lightgreen;
+}
+
+h5{
+  color:red;
+}

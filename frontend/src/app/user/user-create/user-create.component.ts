@@ -29,9 +29,9 @@ export class UserCreateComponent implements OnInit {
     });
 
     this.userForm=new FormGroup({
-      nickname: new FormControl('',[Validators.required], [usernameTaken(this.userService)]),
-      password:new FormControl('',Validators.required),
-      email: new FormControl('',[Validators.required])
+      nickname: new FormControl('',[Validators.required, Validators.minLength(3)], [usernameTaken(this.userService)]),
+      password:new FormControl('',[Validators.required, Validators.minLength(5),Validators.maxLength(12)]),
+      email: new FormControl('',[Validators.required, Validators.email])
     });
 
 
