@@ -5,13 +5,10 @@
         <header class="header">
           <div class="row">
             <div class="col-md-4">
-              <h1>Songs</h1>
+              <h1>SPECIAL LIST OF SONGS BY YOUR PREFERENCES</h1>
             </div>
             <div class="col-md-6">
 
-            </div>
-            <div class="col-md-2">
-              <button type="button" class="btn btn-primary" (click)="redirectNewSongPage()">Add Song</button>
             </div>
           </div>
 
@@ -19,7 +16,6 @@
       </section>
 
       <section class="main">
-
         <table class="table">
           <thead>
           <tr>
@@ -40,10 +36,6 @@
             <td>{{song.releaseYear}}</td>
             <td>{{song.youTubeLink}}</td>
             <td>{{song.authorId}}</td>
-            <td>
-              <button type="button" class="btn btn-success" (click)="editSongPage(song)">Edit</button>
-              <button type="button" class="btn btn-danger" (click)="deleteSong(song.songId)">Delete</button>
-            </td>
           </tr>
           </tbody>
         </table>

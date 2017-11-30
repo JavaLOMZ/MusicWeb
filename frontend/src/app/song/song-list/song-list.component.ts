@@ -57,7 +57,7 @@ export class SongListComponent implements OnInit {
   }
 
 
-  redirectSingeSongPage(songId : number) {
+  redirectSingleSongPage(songId : number) {
     if(songId) {
       this.router.navigate(['/song/songPage', songId]);
     }

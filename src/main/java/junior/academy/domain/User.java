@@ -52,6 +52,11 @@ public class User {
         this.enabled=true;
     }
 
+    public User(String nickname, String password, String email) {
+        this.nickname = nickname;
+        this.password = password;
+        this.email = email;
+    }
 
     public long getUserId() {
         return userId;

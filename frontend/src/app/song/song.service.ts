@@ -61,6 +61,13 @@ export class SongService {
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
 
+  getRandomSongsByUserPreferences(userId:number):Observable<Song[]>{
+    return this.http.get(this.apiUrl+'/user/recommendedSongs/'+userId, {headers: this.headers})
+      .map((res: Response) => res.json())
+      .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+  }
+
+
   extractData( response : Response){
     let body = response.json();
     console.log("Body", body);
