@@ -31,7 +31,7 @@ export class UserCreateComponent implements OnInit {
     this.userForm=new FormGroup({
       nickname: new FormControl('',[Validators.required, Validators.minLength(3)], [usernameTaken(this.userService)]),
       password:new FormControl('',[Validators.required, Validators.minLength(5),Validators.maxLength(12)]),
-      email: new FormControl('',[Validators.required, Validators.email])
+      email: new FormControl('',[Validators.required, Validators.email,Validators.pattern (/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)])
     });
 
 

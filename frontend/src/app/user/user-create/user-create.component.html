@@ -31,6 +31,7 @@
                      class="form-control"
                      formControlName="email">
               <div *ngIf="userForm.get('email').hasError('required') && userForm.get('email').touched"><h5>Email is required</h5></div>
+              <div *ngIf="userForm.get('email').hasError('pattern')"><h5>Your email address has to be correct!</h5></div>
             </div>
           </fieldset>
           <button type="submit" class="btn btn-primary"  [disabled]="!userForm.valid" >Submit</button>
