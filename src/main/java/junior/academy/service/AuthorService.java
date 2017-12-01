@@ -33,4 +33,8 @@ public class AuthorService {
     public boolean isAuthorPresent(long authorId){
         return authorDao.getAuthorById(authorId).isPresent();
     }
+
+    public Author findAuthorByName(String name){
+        return authorDao.findAuthorByName(name);
+    }
 }

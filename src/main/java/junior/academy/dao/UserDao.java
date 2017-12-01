@@ -36,7 +36,6 @@ public class UserDao {
     }
 
     public User findUserByName(String nickname){
-//        System.out.println(nickname);
         Query query= sessionFactory.getCurrentSession().createQuery("from User where nickname=:nickname");
         query.setParameter("nickname",nickname);
         return (User) query.uniqueResult();
