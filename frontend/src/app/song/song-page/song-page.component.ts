@@ -28,6 +28,7 @@ export class SongPageComponent implements OnInit {
   songAverageRate: number;
   userId: number;
   rateOfUser: Rate;
+  commentOfUser:CommentOur;
   private sub: any;
 
   constructor(private route: ActivatedRoute,
@@ -46,7 +47,7 @@ export class SongPageComponent implements OnInit {
     this.getAllCommentsForSong(this.songId);
     this.getSongAverageRate(this.songId);
     this.getRateForUserAndSong(this.songId);
-
+    this.getCommentForUserAndSong(this.songId);
   }
 
 
@@ -140,6 +141,23 @@ export class SongPageComponent implements OnInit {
           }
         )
       }, err => {
+        console.log(err);
+      }
+    )
+  }
+
+  getCommentForUserAndSong(songId:number){
+    this.userService.getUserByUsername(this.authenticationService.getUsername()).subscribe(
+      user=>{
+        this.userId=user.userId;
+        this.commentService.getCommentForUserAndSong(this.userId,songId).subscribe(
+          comment=>{
+            this.commentOfUser=comment;
+          },err=>{
+            console.log(err);
+          }
+        )
+      },err=>{
         console.log(err);
       }
     )

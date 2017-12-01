@@ -30,9 +30,10 @@
             <td><button class="ssv-big-bold-label">  {{rateOfUser?.rateValue}}</button></td>
             <td><button class="ssv-big-bold-label" (click)="redirectToCreateRate(rateOfUser)">Edit rate</button></td>
           </tr>
-          <tr>
-            <button type="button" class="btn btn-sm" (click)="redirectToCreateComment(song.songId)">Add Comment</button>
-            <!--<td *ngIf="!rateOfUser?.rateValue"><button  type="button" class="btn btn-sm" (click)="redirectToCreateRate(song.songId)">Add Rate</button></td>-->
+          <tr *ngIf="commentOfUser?.commentText">
+            <th>Your comment</th>
+            <td><button class="ssv-big-bold-label">  {{commentOfUser?.commentText}}</button></td>
+            <td><button class="ssv-big-bold-label" (click)="redirectToCreateComment(commentOfUser)">Edit comment</button></td>
           </tr>
           </thead>
         </table>
@@ -57,8 +58,8 @@
         <button type="button" class="btn btn-danger" (click)="redirectToSongList()">Redirect to song list</button>
       </section>
 
-      <td *ngIf="!rateOfUser?.rateValue"><app-rate-create>{{rateId}}</app-rate-create></td>
-      <!--<td><app-rate-create></app-rate-create></td>-->
+      <tr><td *ngIf="!rateOfUser?.rateValue"><app-rate-create></app-rate-create></td></tr>
+      <tr><td *ngIf="!commentOfUser?.commentText"><app-comment-create></app-comment-create></td></tr>
       <hr>
     </div>
   </div>

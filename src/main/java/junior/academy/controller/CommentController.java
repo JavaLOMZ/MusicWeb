@@ -76,4 +76,12 @@ public class CommentController {
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
+
+    @GetMapping("/user/{userId}/{songId}")
+    public ResponseEntity<Comment> getRateForUserAndSong(@PathVariable long userId,@PathVariable long songId){
+        if(commentService.getCommentForUserAndSong(userId,songId).isPresent()){
+            return new ResponseEntity<>(commentService.getCommentForUserAndSong(userId,songId).get(),HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }

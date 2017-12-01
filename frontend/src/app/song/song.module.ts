@@ -8,6 +8,7 @@ import { SongListComponent } from './song-list/song-list.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {RateModule} from "../rate/rate.module";
 import { SongRandomListComponent } from './song-random-list/song-random-list.component';
+import {CommentModule} from "../comment/comment.module";
 
 @NgModule({
   imports: [
@@ -15,7 +16,8 @@ import { SongRandomListComponent } from './song-random-list/song-random-list.com
     SongRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    RateModule
+    RateModule,
+    CommentModule
   ],
   declarations: [SongCreateComponent, SongPageComponent, SongListComponent, SongRandomListComponent]
 })
