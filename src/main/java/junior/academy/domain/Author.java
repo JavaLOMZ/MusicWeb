@@ -21,7 +21,6 @@ public class Author {
     private long authorId;
 
     @Column(name = "name")
-    @NotNull
     private String name;
 
     @Column(name = "yearOfBirth")

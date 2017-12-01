@@ -17,7 +17,6 @@ public class Rate {
     private long rateId;
 
     @Column(name = "rateValue")
-    @NotNull
     private int rateValue; //min 1 max 10
 
     @ManyToOne(fetch = FetchType.EAGER)

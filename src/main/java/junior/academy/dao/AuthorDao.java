@@ -1,6 +1,7 @@
 package junior.academy.dao;
 
 import junior.academy.domain.Author;
+import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -30,5 +31,11 @@ public class AuthorDao {
 
     public void deleteAuthorById(long authorId) {
         sessionFactory.getCurrentSession().delete(getAuthorById(authorId).get());
+    }
+
+    public Author findAuthorByName(String name){
+        Query query= sessionFactory.getCurrentSession().createQuery("from Author where name=:name");
+        query.setParameter("name",name);
+        return (Author) query.uniqueResult();
     }
 }
