@@ -55,4 +55,9 @@ public class CommentService {
     public List<Comment> getCommentsBySongId(long songId){
         return commentDao.getCommentsBySongId(songId);
     }
+
+    public Optional<Comment> getCommentForUserAndSong(long userId, long songId){
+        return commentDao.getCommentForUserAndSong(userId,songId);
+    }
+
 }

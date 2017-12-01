@@ -5,7 +5,8 @@ import {CanActivateAuthGuard} from "../can-active.authguard";
 
 
 const routes: Routes = [
-  {path:'comment/createComment/:songId',component:CommentCreateComponent,  canActivate: [CanActivateAuthGuard]}
+  {path:'comment/createComment/:songId',component:CommentCreateComponent,  canActivate: [CanActivateAuthGuard]},
+  {path:'comment/createComment',component:CommentCreateComponent,  canActivate: [CanActivateAuthGuard]}
 ];
 
 @NgModule({

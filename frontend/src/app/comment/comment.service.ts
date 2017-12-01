@@ -51,4 +51,10 @@ export class CommentService {
       .map((res: Response) => res.json())
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
+
+  getCommentForUserAndSong(userId:number, songId:number):Observable<CommentOur>{
+    return this.http.get(this.apiUrl + '/user/' +userId+'/'+ songId, {headers: this.headers})
+      .map((res: Response) => res.json())
+      .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+  }
 }
