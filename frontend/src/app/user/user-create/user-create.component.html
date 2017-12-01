@@ -10,7 +10,7 @@
                      class="form-control"
                      formControlName="nickname">
               <div *ngIf="userForm.get('nickname').hasError('required') && userForm.get('nickname').touched"><h5>Nickname is required</h5></div>
-              <div *ngIf="userForm.get('nickname').hasError('minlength') && userForm.get('nickname').touched"><h5>Nickname requires at least 2 characters</h5></div>
+              <div *ngIf="userForm.get('nickname').hasError('minlength') && userForm.get('nickname').touched"><h5>Nickname requires at least 3 characters</h5></div>
               <div *ngIf="userForm.get('nickname').errors && !userForm.get('nickname').hasError('required') && !userForm.get('nickname').hasError('minlength')"><h5>Nickname is taken</h5></div>
             </div>
 

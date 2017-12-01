@@ -144,11 +144,4 @@ export class SongPageComponent implements OnInit {
       }
     )
   }
-
-  //todo probably new component? cuz now it's passing songId in comment and rate. we need rate/comment object passed
-  editRate(rate: Rate) {
-    if (rate) {
-      this.router.navigate(['/rate/createRate', rate])
-    }
-  }
 }

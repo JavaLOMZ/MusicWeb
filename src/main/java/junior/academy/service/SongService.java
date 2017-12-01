@@ -52,30 +52,6 @@ public class SongService {
         return new ArrayList<>(Arrays.asList(MusicGenre.values()));
     }
 
-    private List<Song> getNotRatedSongs(long userId, String musicGenre) {
-        return songDao.getNotRatedSongs(userId, MusicGenre.valueOf(musicGenre));
-    }
-
-    private List<Song> getRatedSongs(long userId) {
-        return songDao.getRatedSongs(userId);
-    }
-
-    private Map<MusicGenre, List<Song>> getRatedSongsByGenre(long userId) {
-        return this.getRatedSongs(userId).stream().collect(Collectors.groupingBy(Song::getMusicGenre));
-    }
-
-    private Map<MusicGenre, Integer> getPreferenceRateByMusicGenres(long userId) {
-        Map<MusicGenre, List<Song>> ratedSongsByGenre = this.getRatedSongsByGenre(userId);
-        Map<MusicGenre, Integer> preferenceMap = new HashMap<>();
-        for (MusicGenre musicGenre : ratedSongsByGenre.keySet()) {
-            int numberOfSongsTimesSumOfRates = ratedSongsByGenre.get(musicGenre).stream()
-                    .mapToInt(song -> song.getRates().stream()
-                            .filter(rate -> rate.getUser().getUserId() == userId)
-                            .mapToInt(Rate::getRateValue).sum()).sum() * ratedSongsByGenre.get(musicGenre).size();
-            preferenceMap.put(musicGenre, numberOfSongsTimesSumOfRates);
-        }
-        return preferenceMap;
-    }
 
     public List<Song> getRandomSongs(long userId) {
         Map<MusicGenre, Integer> preferenceMap = getMusicGenrePreferenceSorted(getPreferenceRateByMusicGenres(userId));
@@ -93,11 +69,37 @@ public class SongService {
     }
 
     private Map<MusicGenre, Integer> getMusicGenrePreferenceSorted(Map<MusicGenre, Integer> unsortedPreferenceMap) {
-       return unsortedPreferenceMap.entrySet().stream()
-                        .sorted(Entry.comparingByValue(Collections.reverseOrder()))
-                        .collect(Collectors.toMap(Entry::getKey, Entry::getValue,
-                                (e1, e2) -> e1, LinkedHashMap::new));
+        return unsortedPreferenceMap.entrySet().stream()
+                .sorted(Entry.comparingByValue(Collections.reverseOrder()))
+                .collect(Collectors.toMap(Entry::getKey, Entry::getValue,
+                        (e1, e2) -> e1, LinkedHashMap::new));
     }
+
+    private List<Song> getNotRatedSongs(long userId, String musicGenre) {
+        return songDao.getNotRatedSongs(userId, MusicGenre.valueOf(musicGenre));
+    }
+
+    private Map<MusicGenre, Integer> getPreferenceRateByMusicGenres(long userId) {
+        Map<MusicGenre, List<Song>> ratedSongsByGenre = this.getRatedSongsByGenre(userId);
+        Map<MusicGenre, Integer> preferenceMap = new HashMap<>();
+        for (MusicGenre musicGenre : ratedSongsByGenre.keySet()) {
+            int numberOfSongsTimesSumOfRates = ratedSongsByGenre.get(musicGenre).stream()
+                    .mapToInt(song -> song.getRates().stream()
+                            .filter(rate -> rate.getUser().getUserId() == userId)
+                            .mapToInt(Rate::getRateValue).sum()).sum() * ratedSongsByGenre.get(musicGenre).size();
+            preferenceMap.put(musicGenre, numberOfSongsTimesSumOfRates);
+        }
+        return preferenceMap;
+    }
+
+    private Map<MusicGenre, List<Song>> getRatedSongsByGenre(long userId) {
+        return this.getRatedSongs(userId).stream().collect(Collectors.groupingBy(Song::getMusicGenre));
+    }
+
+    private List<Song> getRatedSongs(long userId) {
+        return songDao.getRatedSongs(userId);
+    }
+
 
     public MusicGenre getMostRatedMusicGenre(long userId) {
         return this.getRatedSongs(userId).stream()
