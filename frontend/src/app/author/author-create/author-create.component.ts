@@ -4,7 +4,7 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {Author} from "../author";
 import {ActivatedRoute, Router} from "@angular/router";
 import {UserService} from "../../user/user.service";
-import {AuthorService} from "../author.service";
+import {authorNameTaken, AuthorService} from "../author.service";
 
 @Component({
   selector: 'app-author-create',
@@ -30,9 +30,9 @@ export class AuthorCreateComponent implements OnInit {
   });
 
     this.authorForm=new FormGroup({
-      name: new FormControl('',Validators.required),
-      yearOfBirth: new FormControl('',Validators.required),
-      countryOfOrigin:new FormControl('', Validators.required)
+      name: new FormControl('',[Validators.required, Validators.maxLength(25)], [authorNameTaken(this.authorService)]),
+      yearOfBirth: new FormControl('',[Validators.required, Validators.min(1000), Validators.max(2017)]),
+      countryOfOrigin:new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(25)])
     });
 
 
