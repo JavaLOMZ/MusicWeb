@@ -40,7 +40,7 @@ export class RateCreateComponent implements OnInit {
     this.getUserId();
 
     this.rateForm = new FormGroup({
-      rateValue: new FormControl('', Validators.required),
+      rateValue: new FormControl('', [Validators.required, Validators.min(1), Validators.max(10)]),
       songId: new FormControl('', Validators.required),
       rateId: new FormControl(''),
       userId: new FormControl('', Validators.required)

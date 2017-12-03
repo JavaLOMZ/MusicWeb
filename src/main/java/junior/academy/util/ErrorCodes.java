@@ -8,4 +8,6 @@ public interface ErrorCodes {
     String AUTHOR_TOO_YOUNG="AUTHOR_TOO_YOUNG";
     String VALUE_TOO_BIG= "VALUE_TOO_BIG";
     String VALUE_TOO_SMALL = "VALUE_TOO_SMALL";
+    String SONG_DOES_NOT_EXIST = "SONG_DOES_NOT_EXIST";
+    String USER_DOES_NOT_EXIST = "USER_DOES_NOT_EXIST";
 }

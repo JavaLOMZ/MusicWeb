@@ -9,6 +9,9 @@
               <input type="number"
                      class="form-control"
                      formControlName="rateValue">
+              <div *ngIf="rateForm.get('rateValue').hasError('required') && rateForm.get('rateValue').touched"><h5>Value is required.</h5></div>
+              <div *ngIf="rateForm.get('rateValue').hasError('min') && rateForm.get('rateValue').touched"><h5>Value can not be smaller than 1.</h5></div>
+              <div *ngIf="rateForm.get('rateValue').hasError('max') && rateForm.get('rateValue').touched"><h5>Value can not be bigger than 10.</h5></div>
             </div>
 
             <div class="form-group">

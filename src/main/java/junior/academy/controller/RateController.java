@@ -5,11 +5,14 @@ import junior.academy.domain.Rate;
 import junior.academy.service.RateService;
 import junior.academy.service.SongService;
 import junior.academy.service.UserService;
+import junior.academy.validator.RateValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -26,6 +29,14 @@ public class RateController {
     @Autowired
     SongService songService;
 
+    @Autowired
+    RateValidator rateValidator;
+
+    @InitBinder()
+    protected void initBinder(WebDataBinder binder) {
+        binder.setValidator(this.rateValidator);
+    }
+
     @GetMapping("/{rateId}")
     public ResponseEntity<Rate> getRate(@PathVariable long rateId) {
         if (rateService.isRatePresent(rateId)) {
@@ -40,7 +51,7 @@ public class RateController {
     }
 
     @PostMapping
-    public void createOrUpdateRate(@RequestBody Rate rate) {
+    public void createOrUpdateRate(@RequestBody @Valid Rate rate) {
         rateService.createOrUpdateRate(rate);
     }
 
