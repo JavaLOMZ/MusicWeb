@@ -124,7 +124,19 @@ public class Song {
 
     @Override
     public int hashCode() {
-
         return Objects.hash(songId, songName, musicGenre, releaseYear, youTubeLink);
+    }
+
+    @Override
+    public String toString() {
+        return "Song{" +
+                "songId=" + songId +
+                ", songName='" + songName + '\'' +
+                ", musicGenre=" + musicGenre +
+                ", releaseYear=" + releaseYear +
+                ", youTubeLink='" + youTubeLink + '\'' +
+                ", author=" + author +
+                ", comments=" + comments +
+                '}';
     }
 }

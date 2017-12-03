@@ -56,14 +56,7 @@ export class RateService {
 
   getRateForUserAndSong(userId:number, songId:number): Observable<Rate>{
     return this.http.get(this.apiUrl + '/' + userId+'/'+songId, {headers: this.headers})
-      .map(this.extractData)
+      .map((res:Response)=>res.json())
       .catch((error: any) => Observable.throw(error.json().error || 'Server Error'));
   }
-
-  extractData( response : Response){
-    let body = response.json();
-    console.log("Body", body);
-    return body || [];
-  }
-
 }

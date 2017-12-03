@@ -62,4 +62,14 @@ public class Rate {
     public void setRateId(long rateId) {
         this.rateId = rateId;
     }
+
+    @Override
+    public String toString() {
+        return "Rate{" +
+                "rateId=" + rateId +
+                ", rateValue=" + rateValue +
+                ", user=" + user +
+                ", song=" + song +
+                '}';
+    }
 }
