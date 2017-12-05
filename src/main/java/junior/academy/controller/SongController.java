@@ -6,11 +6,14 @@ import junior.academy.domain.Song;
 import junior.academy.service.AuthorService;
 import junior.academy.service.RateService;
 import junior.academy.service.SongService;
+import junior.academy.validator.SongValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -29,6 +32,14 @@ public class SongController {
     @Autowired
     RateService rateService;
 
+    @Autowired
+    SongValidator songValidator;
+
+    @InitBinder()
+    protected void initBinder(WebDataBinder webDataBinder){
+        webDataBinder.setValidator(this.songValidator);
+    }
+
     @GetMapping("/{songId}")
     public ResponseEntity<Song> getSongById(@PathVariable long songId) {
         if (songService.isSongPresent(songId)) {
@@ -43,7 +54,7 @@ public class SongController {
     }
 
     @PostMapping
-    public void createOrUpdateSong(@RequestBody Song song) {
+    public void createOrUpdateSong(@RequestBody @Valid Song song) {
         songService.createOrUpdateSong(song);
     }
 
@@ -83,8 +94,33 @@ public class SongController {
         return songService.getRandomSongs(userId);
     }
 
-    @GetMapping("/user/mostrated/{userId}")
+    @GetMapping("/user/mostRated/{userId}")
     public MusicGenre getMostRatedMusicGenre(@PathVariable long userId){
         return songService.getMostRatedMusicGenre(userId);
     }
+
+    @GetMapping("/songName/{songName}/{authorId}")
+    public ResponseEntity<Song> findSongByNameAndAuthor(@PathVariable String songName, @PathVariable long authorId){
+        Song responseSong=songService.findSongByNameAndAuthor(songName,authorId);
+        if(responseSong!=null){
+            return new ResponseEntity<>(responseSong,HttpStatus.OK);
+        }
+        else{
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    //probably will be nice to song/author browser
+    @GetMapping("/songName/{songName}")
+    public ResponseEntity<Song> findSongByName(@PathVariable String songName){
+        Song responseSong=songService.findSongByName(songName);
+        if(responseSong!=null){
+            return new ResponseEntity<>(responseSong,HttpStatus.OK);
+        }
+        else{
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+
 }

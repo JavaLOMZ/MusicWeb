@@ -27,9 +27,12 @@ public class UserValidator implements Validator, ErrorCodes {
     @Override
     public void validate(Object object, Errors errors) {
         User user = (User) object;
-
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors,"nickname",EMPTY);
         if(user.getNickname().length()<3){
             errors.rejectValue("nickname",NOT_ENOUGH_CHARACTERS);
+        }
+        if(user.getNickname().length()>25){
+            errors.rejectValue("nickname",TOO_MANY_CHARACTERS);
         }
         if(user.getPassword().length()<5){
             errors.rejectValue("password",NOT_ENOUGH_CHARACTERS);

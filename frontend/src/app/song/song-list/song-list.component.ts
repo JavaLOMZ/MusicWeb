@@ -33,10 +33,6 @@ export class SongListComponent implements OnInit {
     );
   }
 
-  redirectNewSongPage() {
-    this.router.navigate(['/song/create']);
-  }
-
   editSongPage(song: Song) {
     if (song) {
       this.router.navigate(['/song/create', song])

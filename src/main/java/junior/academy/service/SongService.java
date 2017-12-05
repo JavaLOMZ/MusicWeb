@@ -108,4 +108,12 @@ public class SongService {
                 .max(Entry.comparingByValue())
                 .map(Entry::getKey).orElse(null);
     }
+
+    public Song findSongByNameAndAuthor(String songName, long authorId){
+        return songDao.findSongByNameAndAuthor(songName,authorId);
+    }
+
+    public Song findSongByName(String songName){
+        return songDao.findSongByName(songName);
+    }
 }

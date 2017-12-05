@@ -40,6 +40,7 @@
             <td>{{author.countryOfOrigin}}</td>
             <td>
               <button type="button" class="btn btn-success" (click)="editAuthorPage(author)">Edit</button>
+              <button type="button" class="btn-primary" (click)="redirectToSongCreatePage(author.authorId)">Add Song</button>
               <button type="button" class="btn btn-danger" (click)="deleteAuthor(author.authorId)">Delete</button>
             </td>
           </tr>

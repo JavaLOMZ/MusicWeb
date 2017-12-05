@@ -9,6 +9,10 @@
               <input type="text"
                      class="form-control"
                      formControlName="songName">
+              <div *ngIf="songForm.get('songName').hasError('required') && songForm.get('songName').touched"><h5>Song name is required!</h5></div>
+              <div *ngIf="songForm.get('songName').hasError('minlength') && songForm.get('songName').touched"><h5>Song name requires at least 2 characters</h5></div>
+              <div *ngIf="songForm.get('songName').hasError('maxlength')"><h5>Song name cannot exceed 100 characters</h5></div>
+              <div *ngIf="songForm.get('songName').errors && !songForm.get('songName').hasError('required') && !songForm.get('songName').hasError('minlength') && !songForm.get('songName').hasError('maxlength')"><h5>Someone has already add author's song with the same name!</h5></div>
             </div>
 
             <div class="form-group">
@@ -16,6 +20,7 @@
               <select class="form-control input-lg" formControlName="musicGenre" >
                 <option *ngFor="let musicGenre of musicGenre" [ngValue]="musicGenre">{{musicGenre}}</option>
               </select>
+              <div *ngIf="songForm.get('musicGenre').hasError('required')"><h5>Remember! Choose type!</h5></div>
             </div>
 
 
@@ -24,6 +29,8 @@
               <input type="number"
                      class="form-control"
                      formControlName="releaseYear">
+              <div *ngIf="songForm.get('releaseYear').hasError('required') && songForm.get('releaseYear').touched"><h5>Song release year is required!</h5></div>
+              <div *ngIf="songForm.get('releaseYear').hasError('max')"><h5>Date you choose is too high!</h5></div>
             </div>
 
             <div class="form-group">
@@ -31,17 +38,27 @@
               <input type="text"
                      class="form-control"
                      formControlName="youTubeLink">
+              <div *ngIf="songForm.get('youTubeLink').hasError('pattern')"><h5>If you choose to add youtube link, do it properly!</h5></div>
             </div>
 
             <div class="form-group">
-              <label>Author</label>
-                <select class="form-control input-lg" formControlName="authorId" [ngModel]="authorId">
-                  <option *ngFor="let author of authors" [ngValue]="author.authorId">Name: {{author.name}} Country: {{author.countryOfOrigin}} YearOfBirth: {{author.yearOfBirth}}</option>
-                </select>
+              <input type="hidden"
+                     class="form-control"
+                     [ngModel]="authorId"
+                     formControlName="authorId">
             </div>
+
+            <!--I LL LEAVE IT BECAUSE IT'S AN OPTION IF YOU WANT TO CHOOSE FROM A LIST-->
+            <!--<div class="form-group">-->
+              <!--<label>Author</label>-->
+                <!--<select class="form-control input-lg" formControlName="authorId" [ngModel]="authorId">-->
+                  <!--<option *ngFor="let author of authors" [ngValue]="author.authorId">Name: {{author.name}} Country: {{author.countryOfOrigin}} YearOfBirth: {{author.yearOfBirth}}</option>-->
+                <!--</select>-->
+            <!--</div>-->
           </fieldset>
           <button type="submit" class="btn btn-primary"  [disabled]="!songForm.valid" >Submit</button>
-          <button type="button" class="btn btn-warning" (click)="redirectSongListPage()">Cancel</button>
+          <button type="button" class="btn btn-warning" (click)="redirectToSingleAuthorPage(authorId)">Cancel</button>
+          <button type="button" class="btn-primary" (click)="redirectSongListPage()">Redirect to song list</button>
           <pre>{{songForm.value | json}}</pre>
         </form>
       </section>

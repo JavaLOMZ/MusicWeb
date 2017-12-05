@@ -5,6 +5,7 @@ import {Observable} from "rxjs/Observable";
 import {Song} from "./song";
 import {AuthenticationService} from "../authentication.service";
 import {MusicGenre} from "./music.genre";
+import {reject} from "q";
 
 @Injectable()
 export class SongService {
@@ -43,34 +44,75 @@ export class SongService {
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
 
-  getSongsByAuthorId(authorId:number): Observable<Song[]> {
-    return this.http.get(this.apiUrl+'/author/'+authorId, {headers: this.headers})
+  getSongsByAuthorId(authorId: number): Observable<Song[]> {
+    return this.http.get(this.apiUrl + '/author/' + authorId, {headers: this.headers})
       .map((res: Response) => res.json())
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
 
-  getSongAverageRate(songId:number):Observable<number>{
-    return this.http.get(this.apiUrl+'/songAverageRate/'+songId,{headers:this.headers})
-      .map((res:Response)=>res.json())
-      .catch((error:any)=>Observable.throw(error.json().error || 'Server error'));
+  getSongAverageRate(songId: number): Observable<number> {
+    return this.http.get(this.apiUrl + '/songAverageRate/' + songId, {headers: this.headers})
+      .map((res: Response) => res.json())
+      .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
 
   getMusicGenreTypes(): Observable<MusicGenre[]> {
-    return this.http.get(this.apiUrl+'/musicGenre', {headers: this.headers})
+    return this.http.get(this.apiUrl + '/musicGenre', {headers: this.headers})
       .map((res: Response) => res.json())
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
 
-  getRandomSongsByUserPreferences(userId:number):Observable<Song[]>{
-    return this.http.get(this.apiUrl+'/user/recommendedSongs/'+userId, {headers: this.headers})
+  getRandomSongsByUserPreferences(userId: number): Observable<Song[]> {
+    return this.http.get(this.apiUrl + '/user/recommendedSongs/' + userId, {headers: this.headers})
       .map((res: Response) => res.json())
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
 
+  getSongByNameAndAuthor(songName: string, authorId: number): Observable<any> {
+    return this, this.http.get(this.apiUrl + '/songName/' + songName + '/' + authorId,{headers: this.headers})
+      .map((res: Response) => res.json())
+      .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+  }
 
-  extractData( response : Response){
-    let body = response.json();
-    console.log("Body", body);
-    return body || [];
+  getSongByName(songName: string): Observable<any> {
+    return this, this.http.get(this.apiUrl + '/songName/' + songName,{headers: this.headers})
+      .map((res: Response) => res.json())
+      .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+  }
+
+  handleError(error: any) {
+    let errMsg = (error.message) ? error.message :
+      error.status ? `${error.status} - ${error.statusText}` : 'Server error';
+    console.error(errMsg);
+    return Observable.throw(errMsg);
+  }
+
+  extractData<T>(res: Response) {
+    let body = res.json();
+    return <T>body;
   }
 }
+  export function songNameTaken(songService: SongService,authorId:number){
+    return control => new Promise((resolve, reject) => {
+      console.log("validator");
+      songService.getSongByNameAndAuthor(control.value,authorId).subscribe(data=> {
+        console.log(data);
+        if (data.songId) {
+          console.log(data.songName);
+          console.log(data.authorId);
+          resolve({songNameTaken: true})
+        } else {
+          resolve(null);
+        }
+      },(err)=>{
+        console.log("in error"+err);
+        if(err!="404- Not found"){
+          resolve(null);
+        }else {
+          resolve(null);
+        }
+      });
+    });
+  }
+
+

@@ -65,4 +65,10 @@ export class AuthorPageComponent implements OnInit {
       this.router.navigate(['/song/songPage', songId]);
     }
   }
+
+  redirectToSongCreatePage(authorId:number) {
+    if (authorId > 0) {
+      this.router.navigate(['/song/create', authorId]);
+    }
+  }
 }
