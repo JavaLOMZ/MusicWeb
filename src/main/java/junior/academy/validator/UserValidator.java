@@ -4,6 +4,7 @@ import junior.academy.domain.User;
 
 
 //import org.hibernate.validator.internal.constraintvalidators.hv.EmailValidator;
+import junior.academy.service.UserService;
 import junior.academy.util.ErrorCodes;
 import org.apache.commons.validator.routines.EmailValidator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +17,8 @@ import org.springframework.validation.Validator;
 @Component
 public class UserValidator implements Validator, ErrorCodes {
 
-
-
+    @Autowired
+    UserService userService;
 
     @Override
     public boolean supports(Class<?> aClass) {
@@ -27,7 +28,11 @@ public class UserValidator implements Validator, ErrorCodes {
     @Override
     public void validate(Object object, Errors errors) {
         User user = (User) object;
+        boolean isUsernameTaken = (userService.findUserByName(user.getNickname()) != null);
 
+        if(isUsernameTaken){
+            errors.rejectValue("nickname", USERNAME_TAKEN);
+        }
         if(user.getNickname().length()<3){
             errors.rejectValue("nickname",NOT_ENOUGH_CHARACTERS);
         }
@@ -40,7 +45,5 @@ public class UserValidator implements Validator, ErrorCodes {
         if(!EmailValidator.getInstance().isValid(user.getEmail())){
             errors.rejectValue("email",WRONG_EMAIL_PATTERN);
         }
-
-
     }
 }

@@ -10,4 +10,6 @@ public interface ErrorCodes {
     String VALUE_TOO_SMALL = "VALUE_TOO_SMALL";
     String SONG_DOES_NOT_EXIST = "SONG_DOES_NOT_EXIST";
     String USER_DOES_NOT_EXIST = "USER_DOES_NOT_EXIST";
+    String USERNAME_TAKEN = "USERNAME_TAKEN";
+    String NAME_TAKEN = "NAME_TAKEN";
 }

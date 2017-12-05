@@ -40,4 +40,10 @@ public class UserDao {
         query.setParameter("nickname",nickname);
         return (User) query.uniqueResult();
     }
+
+    public User findUserByEmail(String email){
+        Query query= sessionFactory.getCurrentSession().createQuery("from User where email=:email");
+        query.setParameter("email",email);
+        return (User) query.uniqueResult();
+    }
 }
