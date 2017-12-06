@@ -1,18 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {SongService} from "../song.service";
+import {songNameTaken, SongService} from "../song.service";
 import {Song} from "../song";
 import {AuthorService} from "../../author/author.service";
 import {Author} from "../../author/author";
 import {MusicGenre} from "../music.genre";
+import {Validator} from "codelyzer/walkerFactory/walkerFn";
 
 
 @Component({
   selector: 'app-song-create',
   templateUrl: './song-create.component.html',
   styleUrls: ['./song-create.component.css'],
-  providers:[SongService, AuthorService]
+  providers: [SongService, AuthorService]
 })
 export class SongCreateComponent implements OnInit {
 
@@ -21,6 +22,7 @@ export class SongCreateComponent implements OnInit {
   authors: Author[];
   musicGenre: MusicGenre[];
 
+  authorId:number;
 
   songForm: FormGroup;
   private sub: any;
@@ -33,16 +35,18 @@ export class SongCreateComponent implements OnInit {
 
   ngOnInit() {
     this.sub = this.route.params.subscribe(params => {
-      this.songId = params['songId'];
+      this.songId = params['songId'],
+      this.authorId=params['authorId'];
     });
 
     this.songForm = new FormGroup({
-      songName: new FormControl('', Validators.required),
+      songName: new FormControl('', [Validators.required, Validators.minLength(2),Validators.maxLength(100)], [songNameTaken(this.songService,this.authorId)]),
       musicGenre: new FormControl('', Validators.required),
-      releaseYear: new FormControl('', Validators.required),
-      youTubeLink: new FormControl('', Validators.required),
+      releaseYear: new FormControl('', [Validators.required, Validators.max(2017)]),
+      youTubeLink: new FormControl('', [Validators.pattern(/^((?:https?:)?\/\/)?((?:www|m)\.)?((?:youtube\.com|youtu.be))(\/(?:[\w\-]+\?v=|embed\/|v\/)?)([\w\-]+)(\S+)?$/)]),
       authorId: new FormControl('', Validators.required)
     });
+
 
 
     if (this.songId) {
@@ -54,7 +58,7 @@ export class SongCreateComponent implements OnInit {
             musicGenre: song.musicGenre,
             releaseYear: song.releaseYear,
             youTubeLink: song.youTubeLink,
-            authorId: song.authorId
+            authorId: this.authorId
           });
         }, error => {
           console.log(error);
@@ -74,28 +78,29 @@ export class SongCreateComponent implements OnInit {
 
   onSubmit() {
     if (this.songForm.valid) {
-      if (this.songId) {
-        let song: Song = new Song(this.songId,
-          this.songForm.controls['songName'].value,
-          this.songForm.controls['musicGenre'].value,
-          this.songForm.controls['releaseYear'].value,
-          this.songForm.controls['youTubeLink'].value,
-          this.songForm.controls['authorId'].value);
-        this.songService.createOrUpdateSong(song).subscribe();
-      } else {
-        let song: Song = new Song(null,
-          this.songForm.controls['songName'].value,
-          this.songForm.controls['musicGenre'].value,
-          this.songForm.controls['releaseYear'].value,
-          this.songForm.controls['youTubeLink'].value,
-          this.songForm.controls['authorId'].value);
-        this.songService.createOrUpdateSong(song).subscribe();
+        if (this.songId) {
+          let song: Song = new Song(this.songId,
+            this.songForm.controls['songName'].value,
+            this.songForm.controls['musicGenre'].value,
+            this.songForm.controls['releaseYear'].value,
+            this.songForm.controls['youTubeLink'].value,
+            this.songForm.controls['authorId'].value);
+          this.songService.createOrUpdateSong(song).subscribe();
+        } else {
+          let song: Song = new Song(null,
+            this.songForm.controls['songName'].value,
+            this.songForm.controls['musicGenre'].value,
+            this.songForm.controls['releaseYear'].value,
+            this.songForm.controls['youTubeLink'].value,
+            this.songForm.controls['authorId'].value);
+          this.songService.createOrUpdateSong(song).subscribe();
+        }
+        this.songForm.reset();
+        this.router.navigate(['/song']);
+        window.location.reload();
       }
     }
-    this.songForm.reset();
-    this.router.navigate(['/song']);
-    window.location.reload();
-  }
+
 
   redirectSongListPage() {
     this.router.navigate(['/song']);
@@ -119,5 +124,11 @@ export class SongCreateComponent implements OnInit {
         console.log(err);
       }
     )
+  }
+
+  redirectToSingleAuthorPage(authorId: number){
+    if(authorId) {
+      this.router.navigate(['/author/authorPage', authorId]);
+    }
   }
 }

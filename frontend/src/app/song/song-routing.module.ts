@@ -10,6 +10,7 @@ import {SongRandomListComponent} from "./song-random-list/song-random-list.compo
 const routes: Routes = [
   {path:'song',component:SongListComponent,  canActivate: [CanActivateAuthGuard]},
   {path:'song/create',component:SongCreateComponent,  canActivate: [CanActivateAuthGuard]},
+  {path:'song/create/:authorId',component:SongCreateComponent,  canActivate: [CanActivateAuthGuard]},
   {path:'song/songPage/:songId',component:SongPageComponent,  canActivate: [CanActivateAuthGuard]},
   {path:'song/songRandomList',component:SongRandomListComponent, canActivate: [CanActivateAuthGuard]}
 ];

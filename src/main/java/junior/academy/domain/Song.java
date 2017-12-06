@@ -44,6 +44,16 @@ public class Song {
     @JsonIgnoreProperties({"song", "user"})
     private Set<Comment> comments;
 
+    public Song(){};
+
+    public Song(String songName, MusicGenre musicGenre, int releaseYear, String youTubeLink, Author author) {
+        this.songName = songName;
+        this.musicGenre = musicGenre;
+        this.releaseYear = releaseYear;
+        this.youTubeLink = youTubeLink;
+        this.author = author;
+    }
+
     public Author getAuthor() {
         return author;
     }

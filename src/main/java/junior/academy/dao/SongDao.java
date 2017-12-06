@@ -62,4 +62,17 @@ public class SongDao {
         query.setParameter("userId", userId);
         return query.list();
     }
+
+    public Song findSongByNameAndAuthor(String songName, long authorId){
+        Query query=sessionFactory.getCurrentSession().createQuery("from Song where songName=:songName and authorId=:authorId");
+        query.setParameter("songName",songName);
+        query.setParameter("authorId",authorId);
+        return (Song)query.uniqueResult();
+    }
+
+    public Song findSongByName(String songName){
+        Query query=sessionFactory.getCurrentSession().createQuery("from Song where songName=:songName");
+        query.setParameter("songName",songName);
+        return (Song)query.uniqueResult();
+    }
 }
