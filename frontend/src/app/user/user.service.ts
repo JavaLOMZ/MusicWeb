@@ -16,7 +16,7 @@ export class UserService {
   }
 
   private headers = new Headers({
-    'Content-Type': 'application/json',
+    'Content-Type': 'application/json; charset=UTF-8',
     'Authorization': 'Bearer ' + this.authenticationService.getToken()
   });
 
@@ -45,6 +45,12 @@ export class UserService {
 
   getUserByUsername(username: string): Observable<any> {
     return this.http.get(this.apiUrl + "/nick/" + username)
+      .map(this.extractData)
+      .catch(this.handleError) as Observable<any>;
+  };
+
+  getUserByEmail(email: string): Observable<any> {
+    return this.http.get(this.apiUrl + "/email/" + email)
       .map(this.extractData)
       .catch(this.handleError) as Observable<any>;
   };
@@ -82,3 +88,25 @@ export class UserService {
       });
     });
   }
+
+  export function emailTaken(userService: UserService) {
+    return control => new Promise((resolve, reject) => {
+    console.log("in validator");
+    userService.getUserByEmail(control.value).subscribe(data => {
+      console.log(data);
+      console.log(control.value);
+      if (data.userId) {
+        resolve({emailTaken: true})
+      } else {
+        resolve(null);
+      }
+    }, (err) => {
+      console.log("in error" + err);
+      if (err != "404 - Not Found") {
+        resolve(null);
+      } else {
+        resolve(null);
+      }
+    });
+  });
+}

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:4200")
@@ -65,6 +66,17 @@ public class UserController {
             return new ResponseEntity<>(responseUser, HttpStatus.OK);
         } else {
            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @GetMapping("/email/{email}")
+    public ResponseEntity<User> findUserByEmail(@PathVariable String email){
+        System.out.println(email);
+        User responseUser = userService.findUserByEmail(email);
+        if (responseUser != null) {
+            return new ResponseEntity<>(responseUser, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 }

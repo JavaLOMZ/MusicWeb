@@ -13,6 +13,7 @@
               <div *ngIf="userForm.get('nickname').hasError('minlength') && userForm.get('nickname').touched"><h5>Nickname requires at least 3 characters</h5></div>
               <div *ngIf="userForm.get('nickname').hasError('maxlength')"><h5>Your nickname cannot exceed 25 characters</h5></div>
               <div *ngIf="userForm.get('nickname').errors && !userForm.get('nickname').hasError('required') && !userForm.get('nickname').hasError('minlength') && !userForm.get('name').hasError('maxlength')"><h5>Nickname is taken</h5></div>
+
             </div>
 
             <div class="form-group">
@@ -33,6 +34,8 @@
                      formControlName="email">
               <div *ngIf="userForm.get('email').hasError('required') && userForm.get('email').touched"><h5>Email is required</h5></div>
               <div *ngIf="userForm.get('email').hasError('pattern')"><h5>Your email address has to be correct!</h5></div>
+              <div *ngIf="userForm.get('email').errors && !userForm.get('email').hasError('required') && !userForm.get('email').hasError('pattern')"><h5>The account with this e-mail address already exists.</h5></div>
+
             </div>
           </fieldset>
           <button type="submit" class="btn btn-primary"  [disabled]="!userForm.valid" >Submit</button>
