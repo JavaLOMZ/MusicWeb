@@ -102,9 +102,9 @@ export class UserService {
       }
     }, (err) => {
       console.log("in error" + err);
-      if (err != "404 - Not Found") {
-        resolve(null);
-      } else {
+      if (err == "406 - OK") {
+        resolve({emailTaken: true});
+      } else  {
         resolve(null);
       }
     });
