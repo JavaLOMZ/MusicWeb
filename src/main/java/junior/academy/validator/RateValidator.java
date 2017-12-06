@@ -3,16 +3,12 @@ package junior.academy.validator;
 import junior.academy.dao.SongDao;
 import junior.academy.dao.UserDao;
 import junior.academy.domain.Rate;
-import junior.academy.domain.Song;
-import junior.academy.domain.User;
 import junior.academy.util.ErrorCodes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
-
-import java.util.Optional;
 
 @Component
 public class RateValidator implements Validator, ErrorCodes {

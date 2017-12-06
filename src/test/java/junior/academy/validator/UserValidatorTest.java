@@ -2,66 +2,84 @@ package junior.academy.validator;
 
 
 import junior.academy.domain.User;
+import junior.academy.service.UserService;
 import junior.academy.util.ErrorCodes;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.Errors;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class UserValidatorTest implements ErrorCodes{
 
     private static String NICKNAME="test";
-    private static String TOO_SHORT_NICKNAME="te";
     private static String PASSWORD="password";
-    private static String TOO_SHORT_PASSWORD="pass";
-    private static String TOO_BIG_PASSWORD="tobigpassword";
     private static String EMAIL="test@test.pl";
-    private static String WRONG_EMAIL="test@test";
-
-
 
     private Errors errors;
     private User user;
+
+    @Mock
+    private UserService userService;
 
     @InjectMocks
     private UserValidator userValidator;
 
     @Test
-    public void shouldPassValidation(){
+    public void shouldPassUsernameAvailabilityCheck(){
         prepareForTest(NICKNAME,PASSWORD,EMAIL);
-        userValidator.validate(user,errors);
+        when(userService.findUserByName(anyString())).thenReturn(null);
+        userValidator.validate(user, errors);
         assertEquals(0,errors.getErrorCount());
     }
 
     @Test
+    public void shouldFailUsernameAvailabilityCheck(){
+        prepareForTest(NICKNAME,PASSWORD,EMAIL);
+        when(userService.findUserByName(anyString())).thenReturn(new User());
+        userValidator.validate(user, errors);
+        assertSingleError(USERNAME_TAKEN);
+    }
+
+    @Test
     public void shouldFailValidationDueToTooShortNickname(){
+        String TOO_SHORT_NICKNAME = "te";
         prepareForTest(TOO_SHORT_NICKNAME,PASSWORD,EMAIL);
+        when(userService.findUserByName(anyString())).thenReturn(null);
         userValidator.validate(user,errors);
         assertSingleError(NOT_ENOUGH_CHARACTERS);
     }
 
     @Test
     public void shouldFailValidationDueToTooShortPassword(){
-        prepareForTest(NICKNAME,TOO_SHORT_PASSWORD,EMAIL);
+        String TOO_SHORT_PASSWORD = "pass";
+        prepareForTest(NICKNAME, TOO_SHORT_PASSWORD,EMAIL);
+        when(userService.findUserByName(anyString())).thenReturn(null);
         userValidator.validate(user,errors);
         assertSingleError(NOT_ENOUGH_CHARACTERS);
     }
 
     @Test
     public void shouldFailValidationDueToTooBigPassword(){
-        prepareForTest(NICKNAME,TOO_BIG_PASSWORD,EMAIL);
+        String TOO_BIG_PASSWORD = "tobigpassword";
+        prepareForTest(NICKNAME, TOO_BIG_PASSWORD,EMAIL);
+        when(userService.findUserByName(anyString())).thenReturn(null);
         userValidator.validate(user,errors);
         assertSingleError(TOO_MANY_CHARACTERS);
     }
 
     @Test
     public void shouldFailValidationDueToWrongEmailPattern(){
-        prepareForTest(NICKNAME,PASSWORD,WRONG_EMAIL);
+        String WRONG_EMAIL = "test@test";
+        prepareForTest(NICKNAME,PASSWORD, WRONG_EMAIL);
+        when(userService.findUserByName(anyString())).thenReturn(null);
         userValidator.validate(user,errors);
         assertSingleError(WRONG_EMAIL_PATTERN);
     }
