@@ -40,7 +40,7 @@ export class CommentCreateComponent implements OnInit {
 
 
     this.commentForm=new FormGroup({
-      commentText: new FormControl('',Validators.required),
+      commentText: new FormControl('',[Validators.required, Validators.maxLength(100)]),
       songId:new FormControl('',Validators.required),
       userId:new FormControl('',Validators.required)
     });

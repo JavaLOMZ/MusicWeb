@@ -9,6 +9,8 @@
               <input type="text"
                      class="form-control"
                      formControlName="commentText">
+              <div *ngIf="commentForm.get('commentText').hasError('required') && commentForm.get('commentText').touched"><h5>You have to write something</h5></div>
+              <div *ngIf="commentForm.get('commentText').hasError('maxlength') && commentForm.get('commentText').touched"><h5>Text length of comment cannot exceed 100 characters</h5></div>
             </div>
 
             <div class="form-group">
