@@ -30,6 +30,14 @@ public class Comment {
     @JsonIgnoreProperties({"comments", "rates", "author"})
     private Song song;
 
+    public Comment(){};
+
+    public Comment(String commentText, User user, Song song) {
+        this.commentText = commentText;
+        this.user = user;
+        this.song = song;
+    }
+
     public String getCommentText() {
         return commentText;
     }

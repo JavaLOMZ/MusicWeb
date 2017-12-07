@@ -3,7 +3,6 @@ package junior.academy.validator;
 
 
 import junior.academy.domain.Song;
-import junior.academy.service.AuthorService;
 import junior.academy.service.SongService;
 import junior.academy.util.ErrorCodes;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,9 +15,6 @@ import java.time.LocalDate;
 
 @Component
 public class SongValidator implements Validator, ErrorCodes{
-
-    @Autowired
-    AuthorService authorService;
 
     @Autowired
     SongService songService;
@@ -45,6 +41,11 @@ public class SongValidator implements Validator, ErrorCodes{
         }
         if(!song.getYouTubeLink().contains("https://www.youtube.com/watch?v=")){
            errors.rejectValue("youTubeLink",BAD_YOUTUBE_LINK);
+        }
+
+
+        if(songService.findSongByNameAndAuthor(song.getSongName(),song.getAuthor().getAuthorId())!=null){
+            errors.rejectValue("songName",SONGNAME_TAKEN);
         }
     }
 }

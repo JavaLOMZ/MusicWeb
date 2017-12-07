@@ -4,11 +4,14 @@ import junior.academy.domain.Comment;
 import junior.academy.service.CommentService;
 import junior.academy.service.SongService;
 import junior.academy.service.UserService;
+import junior.academy.validator.CommentValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 
@@ -26,6 +29,14 @@ public class CommentController {
     @Autowired
     SongService songService;
 
+    @Autowired
+    CommentValidator commentValidator;
+
+    @InitBinder()
+    protected void initBinder(WebDataBinder binder){
+        binder.setValidator(this.commentValidator);
+    }
+
     @GetMapping("/{commentId}")
     public ResponseEntity<Comment> getComment(@PathVariable long commentId) {
         if (commentService.isCommentPresent(commentId)) {
@@ -40,7 +51,7 @@ public class CommentController {
     }
 
     @PostMapping
-    public void createOrUpdateComment(@RequestBody Comment comment) {
+    public void createOrUpdateComment(@RequestBody @Valid Comment comment) {
         commentService.createOrUpdateComment(comment);
     }
 

@@ -14,4 +14,5 @@ public interface ErrorCodes {
     String BAD_YOUTUBE_LINK="WRONG_YOUTUBE_PATTERN";
     String USERNAME_TAKEN = "USERNAME_TAKEN";
     String NAME_TAKEN = "NAME_TAKEN";
+    String SONGNAME_TAKEN="SONGNAME_TAKEN";
 }
