@@ -31,6 +31,13 @@ public class Rate {
     @JsonIgnoreProperties({"comments", "rates", "author"})
     private Song song;
 
+    public Rate( User user, Song song) {
+        this.user = user;
+        this.song = song;
+    }
+
+    public Rate() {}
+
     public int getRateValue() {
         return rateValue;
     }

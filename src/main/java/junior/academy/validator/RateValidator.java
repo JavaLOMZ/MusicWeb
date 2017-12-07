@@ -1,7 +1,5 @@
 package junior.academy.validator;
 
-import junior.academy.dao.SongDao;
-import junior.academy.dao.UserDao;
 import junior.academy.domain.Rate;
 import junior.academy.service.SongService;
 import junior.academy.service.UserService;
@@ -29,17 +27,16 @@ public class RateValidator implements Validator, ErrorCodes {
     @Override
     public void validate(Object object, Errors errors) {
         Rate rate = (Rate) object;
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "rateValue", EMPTY);
         if (rate.getRateValue() > 10) {
             errors.rejectValue("rateValue", VALUE_TOO_BIG);
         }
         if (rate.getRateValue() < 1) {
             errors.rejectValue("rateValue", VALUE_TOO_SMALL);
         }
-        if(!userService.getUserById(rate.getUser().getUserId()).isPresent()){
+        if(!userService.isUserPresent(rate.getUser().getUserId())){
             errors.rejectValue("user", USER_DOES_NOT_EXIST);
         }
-        if(!songService.getSongById(rate.getSong().getSongId()).isPresent()){
+        if(!songService.isSongPresent(rate.getSong().getSongId())){
             errors.rejectValue("song", SONG_DOES_NOT_EXIST);
         }
     }

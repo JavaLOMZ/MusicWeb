@@ -32,6 +32,14 @@ public class Author {
     @OneToMany(mappedBy = "author", fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
     private Set<Song> songs;
 
+    public Author(String name, int yearOfBirth, String countryOfOrigin) {
+        this.name = name;
+        this.yearOfBirth = yearOfBirth;
+        this.countryOfOrigin = countryOfOrigin;
+    }
+
+    public Author() {}
+
     public long getAuthorId() {
         return authorId;
     }
