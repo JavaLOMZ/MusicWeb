@@ -122,5 +122,9 @@ public class SongController {
         }
     }
 
+    @GetMapping("/search/{searchWord}")
+    public List<Song> getSongBySearchWord(@PathVariable String searchWord){
+        return songService.getSongBySearchWord(searchWord);
+    }
 
 }

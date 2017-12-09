@@ -14,9 +14,20 @@
 
         </header>
       </section>
-
+      <div>
+      <form novalidate [formGroup]="songSearchForm" (ngSubmit)="onSubmit()">
+        <fieldset>
+      <div class="form-group">
+        <label>Search song</label>
+        <input type="text"
+               class="form-control"
+               formControlName="searchWord">
+      </div>
+        </fieldset>
+        <button type="submit" class="btn btn-primary"  [disabled]="!songSearchForm.valid" >Submit</button>
+      </form>
+      </div>
       <section class="main">
-
         <table class="table">
           <thead>
           <tr>

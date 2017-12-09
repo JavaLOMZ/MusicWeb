@@ -6,6 +6,7 @@ import junior.academy.validator.AuthorValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.method.P;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
@@ -57,12 +58,17 @@ public class AuthorController {
     }
 
     @GetMapping("/name/{name}")
-    public ResponseEntity<Author> findAuthorByName(@PathVariable String name) {
+    public ResponseEntity<Author> getUniqueAuthorByName(@PathVariable String name) {
         Author responseAuthor = authorService.findAuthorByName(name);
         if (responseAuthor != null) {
             return new ResponseEntity<>(responseAuthor, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+    }
+
+    @GetMapping("/search/{searchWord}")
+    public List<Author> getAuthorsBySearchWord(@PathVariable String searchWord){
+        return authorService.getAuthorBySearchWord(searchWord);
     }
 }

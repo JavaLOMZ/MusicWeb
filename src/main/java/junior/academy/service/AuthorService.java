@@ -37,4 +37,8 @@ public class AuthorService {
     public Author findAuthorByName(String name){
         return authorDao.findAuthorByName(name);
     }
+
+    public List<Author> getAuthorBySearchWord(String searchWord){
+        return authorDao.getAuthorBySearchWord(searchWord);
+    }
 }

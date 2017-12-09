@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {Song} from "../song";
-import {SongService} from "../song.service";
+import {songNameTaken, SongService} from "../song.service";
 import {Router} from "@angular/router";
 import {User} from "../../user/user";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-song-list',
@@ -13,24 +14,16 @@ import {User} from "../../user/user";
 export class SongListComponent implements OnInit {
 
   songs:Song[];
+  songSearchForm: FormGroup;
 
   constructor(private router:Router,
               private songService:SongService
   ) { }
 
   ngOnInit() {
-    this.getAllSongs();
-  }
-
-  getAllSongs(){
-    this.songService.getAllSongs().subscribe(
-      songs=>{
-        this.songs=songs;
-      },
-      err=>{
-        console.log(err);
-      }
-    );
+    this.songSearchForm = new FormGroup({
+      searchWord: new FormControl('',[Validators.required]),
+    });
   }
 
   editSongPage(song: Song) {
@@ -43,7 +36,6 @@ export class SongListComponent implements OnInit {
     if (songId > 0) {
       this.songService.deleteSongById(songId).subscribe(
         res => {
-          this.getAllSongs();
           this.router.navigate(['/song']);
           console.log('done');
         }
@@ -52,10 +44,25 @@ export class SongListComponent implements OnInit {
     }
   }
 
-
   redirectSingleSongPage(songId : number) {
     if(songId) {
       this.router.navigate(['/song/songPage', songId]);
     }
   }
+
+  onSubmit() {
+    if (this.songSearchForm.valid) {
+      this.getSongsBySearchWord();
+    }
+  }
+
+    getSongsBySearchWord(){
+      this.songService.getSongsBySearchWord(this.songSearchForm.controls['searchWord'].value).subscribe(
+        songs =>{
+          this.songs = songs},
+        err=>{
+          console.log(err)
+        }
+      );
+    }
 }
