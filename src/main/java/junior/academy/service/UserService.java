@@ -5,7 +5,6 @@ import junior.academy.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -36,20 +35,23 @@ public class UserService {
         userDao.deleteUserById(userId);
     }
 
+    public Optional<User> getUserByUsername(String nickname){
+        return userDao.getUserByUsername(nickname);
+    }
+
+    public Optional<User> getUserByEmail(String email){
+        return userDao.getUserByEmail(email);
+    }
+
     public boolean isUserPresent(long userId) {
         return userDao.getUserById(userId).isPresent();
     }
 
-    public User findUserByName(String nickname){
-        return userDao.findUserByName(nickname);
+    public boolean isUserPresent(String nickname) {
+        return userDao.getUserByUsername(nickname).isPresent();
     }
 
-    public User findUserByEmail(String email){
-        return userDao.findUserByEmail(email);
-    }
-
-    public boolean isUserPresent(String nickname){
-        User user= userDao.findUserByName(nickname);
-        return userDao.getUserById(user.getUserId()).isPresent();
+    public boolean isUserPresentByEmail(String email){
+        return userDao.getUserByEmail(email).isPresent();
     }
 }

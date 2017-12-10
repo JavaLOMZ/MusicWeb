@@ -8,7 +8,6 @@ import junior.academy.service.UserService;
 import junior.academy.util.ErrorCodes;
 import org.apache.commons.validator.routines.EmailValidator;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
@@ -30,7 +29,7 @@ public class UserValidator implements Validator, ErrorCodes {
         User user = (User) object;
 
         ValidationUtils.rejectIfEmptyOrWhitespace(errors,"nickname",EMPTY);
-        boolean isUsernameTaken = (userService.findUserByName(user.getNickname()) != null);
+        boolean isUsernameTaken = (userService.getUserByUsername(user.getNickname()) != null);
         if(isUsernameTaken){
             errors.rejectValue("nickname", USERNAME_TAKEN);
         }

@@ -78,6 +78,34 @@ public class UserControllerTest {
         assertEquals(userController.deleteUserById(anyLong()), new ResponseEntity(HttpStatus.NOT_FOUND));
     }
 
+    @Test
+    public void findUserByUsernameWhenUserExistsTest(){
+        User testUser = getUsersList().get(0);
+        when(userService.isUserPresent(anyString())).thenReturn(true);
+        when(userService.getUserByUsername(anyString())).thenReturn(Optional.ofNullable(testUser));
+        assertEquals(userController.findUserByName(anyString()), new ResponseEntity<>(testUser, HttpStatus.OK));
+    }
+
+    @Test
+    public void findUserByUsernameWhenUserDoesNotExistTest(){
+        when(userService.getUserByUsername(anyString())).thenReturn(null);
+        assertEquals(userController.findUserByName(anyString()), new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
+    @Test
+    public void findUserByEmailWhenUserExistsTest(){
+        User testUser = getUsersList().get(0);
+        when(userService.isUserPresentByEmail(anyString())).thenReturn(true);
+        when(userService.getUserByEmail(anyString())).thenReturn(Optional.ofNullable(testUser));
+        assertEquals(userController.findUserByEmail(anyString()), new ResponseEntity<>(testUser, HttpStatus.OK));
+    }
+
+    @Test
+    public void findUserByEmailWhenUserDoesNotExistTest(){
+        when(userService.getUserByEmail(anyString())).thenReturn(null);
+        assertEquals(userController.findUserByName(anyString()), new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
     public List<User> getUsersList() {
         User user = new User();
         user.setUserId(1);

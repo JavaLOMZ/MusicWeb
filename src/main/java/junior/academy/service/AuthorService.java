@@ -34,8 +34,12 @@ public class AuthorService {
         return authorDao.getAuthorById(authorId).isPresent();
     }
 
-    public Author findAuthorByName(String name){
-        return authorDao.findAuthorByName(name);
+    public boolean isAuthorPresent(String authorName){
+        return authorDao.getAuthorByName(authorName).isPresent();
+    }
+
+    public Optional<Author> getAuthorByName(String name){
+        return authorDao.getAuthorByName(name);
     }
 
     public List<Author> getAuthorBySearchWord(String searchWord){

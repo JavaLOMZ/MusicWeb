@@ -1,6 +1,5 @@
 package junior.academy.controller;
 
-import junior.academy.controller.CommentController;
 import junior.academy.domain.Comment;
 import junior.academy.service.CommentService;
 import junior.academy.service.SongService;
@@ -16,6 +15,7 @@ import org.testng.annotations.Test;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.any;
@@ -112,6 +112,37 @@ public class CommentControllerTest {
         when(songService.isSongPresent(anyLong())).thenReturn(false);
         assertEquals(commentController.getCommentsBySongId(anyLong()),new ResponseEntity<>(any(Comment.class),HttpStatus.NOT_FOUND));
     }
+
+    @Test
+    public void getCommentByUserIdAndSongIdWhenPresentTest(){
+        Comment commentTest = new Comment();
+        when(commentService.getCommentByUserIdAndSongId(anyLong(), anyLong())).thenReturn(Optional.of(commentTest));
+        when(commentService.isCommentPresent(anyLong())).thenReturn(true);
+        assertEquals(commentController.getCommentByUserIdAndSongId(anyLong(), anyLong()), new ResponseEntity<>(commentTest, HttpStatus.OK));
+    }
+
+    @Test
+    public void getCommentByUserIdAndSongIdWhenNotPresentTest(){
+        Comment commentTest = new Comment();
+        when(commentService.getCommentByUserIdAndSongId(anyLong(), anyLong())).thenReturn(Optional.of(commentTest));
+        when(commentService.isCommentPresent(anyLong())).thenReturn(false);
+        assertEquals(commentController.getCommentByUserIdAndSongId(anyLong(), anyLong()), new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
+    @Test
+    public void getCommentsByUsernameWhenPresentTest(){
+        List<Comment> testCommentList = getCommentList();
+        when(userService.isUserPresent(anyString())).thenReturn(true);
+        when(commentService.getCommentsByUserNickname(anyString())).thenReturn(testCommentList);
+        assertEquals(commentController.getCommentsByUserNickname(anyString()), new ResponseEntity<>(testCommentList, HttpStatus.OK));
+    }
+
+    @Test
+    public void getCommentsByUsernameWhenNotPresentTest(){
+        when(userService.isUserPresent(anyString())).thenReturn(false);
+        assertEquals(commentController.getCommentsByUserNickname(anyString()), new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
 
     private List<Comment> getCommentList() {
         Comment comment = new Comment();

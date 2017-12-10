@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
@@ -65,34 +66,27 @@ public class RateController {
     }
 
     @GetMapping("/user/{userId}")
-    public ResponseEntity<List<Rate>> getRatesByUserId(@PathVariable long userId){
-        if(userService.isUserPresent(userId)){
-            return new ResponseEntity<>(rateService.getRatesByUserId(userId),HttpStatus.OK);
-        }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    public List<Rate> getRatesByUserId(@PathVariable long userId){
+            return rateService.getRatesByUserId(userId);
+
     }
 
     @GetMapping("/user/nickname/{nickname}")
-    public ResponseEntity<List<Rate>> getRatesByUserNickname(@PathVariable String nickname){
-        if(userService.isUserPresent(nickname)){
-            return new ResponseEntity<>(rateService.getRatesByUsername(nickname),HttpStatus.OK);
-        }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    public List<Rate> getRatesByUserNickname(@PathVariable String nickname) {
+          return rateService.getRatesByUsername(nickname);
     }
 
     @GetMapping("/song/{songId}")
-    public ResponseEntity<List<Rate>> getRatesBySongId(@PathVariable long songId){
-        if(songService.isSongPresent(songId)){
-            return new ResponseEntity<>(rateService.getRatesBySongId(songId),HttpStatus.OK);
-        }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    public List<Rate> getRatesBySongId(@PathVariable long songId){
+          return rateService.getRatesBySongId(songId);
     }
 
     @GetMapping("/{userId}/{songId}")
     public ResponseEntity<Rate> getRateForUserAndSong(@PathVariable long userId,@PathVariable long songId){
-        if(rateService.getRateForUserAndSong(userId,songId).isPresent()){
-            return new ResponseEntity<>(rateService.getRateForUserAndSong(userId,songId).get(),HttpStatus.OK);
+        Optional<Rate> responseRate = rateService.getRateForUserAndSong(userId, songId);
+        if(rateService.isRatePresent(responseRate.get().getRateId())){
+            return new ResponseEntity<>(responseRate.get(),HttpStatus.OK);
         }
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 }

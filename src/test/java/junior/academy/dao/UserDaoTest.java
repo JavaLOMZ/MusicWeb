@@ -56,6 +56,18 @@ public class UserDaoTest extends EntityDaoTest {
         assertEquals(userDao.getAllUsers().size(), 0);
     }
 
+    @Test
+    public void getUserByUsername(){
+        assertNotNull(userDao.getUserByUsername("Test"));
+        assertEquals(userDao.getUserByUsername("Test").get().getNickname(), "Test");
+    }
+
+    @Test
+    public void getUserByEmail(){
+        assertNotNull(userDao.getUserByEmail("test@test.com"));
+        assertEquals(userDao.getUserByEmail("test@test.com").get().getEmail(), "test@test.com");
+    }
+
     private User getUser() {
         User user = new User();
         user.setNickname("TestUpdate");

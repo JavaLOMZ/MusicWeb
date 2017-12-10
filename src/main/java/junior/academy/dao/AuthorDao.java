@@ -34,10 +34,10 @@ public class AuthorDao {
         sessionFactory.getCurrentSession().delete(getAuthorById(authorId).get());
     }
 
-    public Author findAuthorByName(String name){
+    public Optional<Author> getAuthorByName(String name){
         Query query= sessionFactory.getCurrentSession().createQuery("from Author where name=:name");
         query.setParameter("name",name);
-        return (Author) query.uniqueResult();
+        return Optional.ofNullable((Author) query.uniqueResult());
     }
 
     public List<Author> getAuthorBySearchWord(String searchWord){

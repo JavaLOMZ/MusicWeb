@@ -68,6 +68,28 @@ public class AuthorServiceTest {
         assertEquals(authorService.isAuthorPresent(anyLong()), true);
     }
 
+    @Test
+    public void isAuthorPresentByName(){
+        Author author=getAuthorList().get(0);
+        when(authorDao.getAuthorByName(anyString())).thenReturn(Optional.ofNullable(author));
+        assertEquals(authorService.isAuthorPresent(anyString()), true);
+    }
+
+    @Test
+    public void getAuthorByName(){
+        Optional<Author> authorTest = Optional.ofNullable(authors.get(0));
+        when(authorDao.getAuthorByName(anyString())).thenReturn(authorTest);
+        assertEquals(authorService.getAuthorByName(anyString()), authorTest);
+    }
+
+    @Test
+    public void getAuthorBySearchWord(){
+        List<Author> authorTestList = authors;
+        when(authorDao.getAuthorBySearchWord(anyString())).thenReturn(authorTestList);
+        assertEquals(authorService.getAuthorBySearchWord(anyString()), authorTestList);
+
+    }
+
     private List<Author> getAuthorList() {
         Author author = new Author();
         author.setName("Justin Bieber");

@@ -61,6 +61,22 @@ public class AuthorDaoTest extends EntityDaoTest {
         assertEquals(authorDao.getAllAuthors().size(), 0);
     }
 
+    @Test
+    public void getAuthorByName(){
+        assertNotNull(authorDao.getAuthorByName("Bon Jovi"));
+        assertEquals(authorDao.getAuthorByName("Bon Jovi").get().getName(), "Bon Jovi");
+    }
+
+    @Test
+    public void getAuthorBySearchWord(){
+        //testing when not existing Author's name is typed in
+        assertEquals(authorDao.getAuthorBySearchWord("NotExistingAuthor").size(), 0);
+        //testing when full Author's name is typed in
+        assertEquals(authorDao.getAuthorBySearchWord("Bon Jovi").size(), 1);
+        //testing when only part of Author's name is typed in
+        assertEquals(authorDao.getAuthorBySearchWord("on").size(), 1);
+    }
+
     private Author getAuthor() {
         Author author = new Author();
         author.setName("Snoop Dogg");

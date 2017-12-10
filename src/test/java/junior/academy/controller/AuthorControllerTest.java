@@ -1,6 +1,5 @@
 package junior.academy.controller;
 
-import junior.academy.controller.AuthorController;
 import junior.academy.domain.Author;
 import junior.academy.service.AuthorService;
 import org.mockito.InjectMocks;
@@ -14,6 +13,7 @@ import org.testng.annotations.Test;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.any;
@@ -75,6 +75,29 @@ public class AuthorControllerTest {
     public void deleteAuthorWhenNotPresent() {
         when(authorService.isAuthorPresent(anyLong())).thenReturn(false);
         assertEquals(authorController.deleteAuthorById(anyLong()), new ResponseEntity(HttpStatus.NOT_FOUND));
+    }
+
+    @Test
+    public void getUniqueAuthorByNameWhenPresentTest(){
+        Author authorTest = authors.get(0);
+        when(authorService.getAuthorByName(anyString())).thenReturn(Optional.ofNullable(authorTest));
+        when(authorService.isAuthorPresent(anyString())).thenReturn(true);
+        assertEquals(authorController.getUniqueAuthorByName(anyString()), new ResponseEntity<>(authorTest, HttpStatus.OK));
+    }
+
+    @Test
+    public void getUniqueAuthorByNameWhenNotPresentTest(){
+        Author authorTest = authors.get(0);
+        when(authorService.getAuthorByName(anyString())).thenReturn(Optional.ofNullable(authorTest));
+        when(authorService.isAuthorPresent(anyLong())).thenReturn(false);
+        assertEquals(authorController.getUniqueAuthorByName(anyString()), new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
+    @Test
+    public void getAuthorsBySearchWord(){
+        List<Author> authorListTest = getAuthorList();
+        when(authorService.getAuthorBySearchWord(anyString())).thenReturn(authorListTest);
+        assertEquals(authorController.getAuthorsBySearchWord(anyString()), authorListTest);
     }
 
     private List<Author> getAuthorList() {

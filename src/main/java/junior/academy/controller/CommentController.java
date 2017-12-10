@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 
 @CrossOrigin(origins = "http://localhost:4200")
@@ -89,10 +90,11 @@ public class CommentController {
     }
 
     @GetMapping("/user/{userId}/{songId}")
-    public ResponseEntity<Comment> getRateForUserAndSong(@PathVariable long userId,@PathVariable long songId){
-        if(commentService.getCommentForUserAndSong(userId,songId).isPresent()){
-            return new ResponseEntity<>(commentService.getCommentForUserAndSong(userId,songId).get(),HttpStatus.OK);
+    public ResponseEntity<Comment> getCommentByUserIdAndSongId(@PathVariable long userId, @PathVariable long songId){
+        Optional<Comment> commentResponse = commentService.getCommentByUserIdAndSongId(userId, songId);
+        if(commentService.isCommentPresent(commentResponse.get().getCommentId())){
+            return new ResponseEntity<>(commentService.getCommentByUserIdAndSongId(userId,songId).get(),HttpStatus.OK);
         }
-        return new ResponseEntity<>(HttpStatus.OK);
+        else{ return new ResponseEntity<>(HttpStatus.NOT_FOUND);}
     }
 }

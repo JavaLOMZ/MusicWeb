@@ -1,6 +1,5 @@
 package junior.academy.service;
 
-import junior.academy.dao.UserDao;
 import junior.academy.domain.User;
 import junior.academy.security.JwtUserFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +19,7 @@ public class JwtUserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userService.findUserByName(username);
+        User user = userService.getUserByUsername(username).get();
 
         if (user == null) {
             throw new UsernameNotFoundException(String.format("No user found with username '%s'.", username));

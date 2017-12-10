@@ -6,14 +6,11 @@ import junior.academy.validator.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.Validator;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
-import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:4200")
@@ -61,20 +58,17 @@ public class UserController {
 
     @GetMapping("/nick/{nickname}")
     public ResponseEntity<User> findUserByName(@PathVariable String nickname) {
-        User responseUser = userService.findUserByName(nickname);
-        if (responseUser != null) {
-            return new ResponseEntity<>(responseUser, HttpStatus.OK);
+        if (userService.isUserPresent(nickname)) {
+            return new ResponseEntity<>(userService.getUserByUsername(nickname).get(), HttpStatus.OK);
         } else {
-           return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
     @GetMapping("/email/{email:.+}")
-    public ResponseEntity<User> findUserByEmail(@PathVariable String email){
-        System.out.println(email);
-        User responseUser = userService.findUserByEmail(email);
-        if (responseUser != null) {
-            return new ResponseEntity<>(responseUser, HttpStatus.OK);
+    public ResponseEntity<User> findUserByEmail(@PathVariable String email) {
+        if (userService.isUserPresentByEmail(email)) {
+            return new ResponseEntity<>(userService.getUserByEmail(email).get(), HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
