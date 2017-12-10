@@ -16,9 +16,22 @@
               <button type="button" class="btn btn-primary" (click)="redirectToUserPage()">Redirect to users</button>
             </div>
           </div>
-
         </header>
       </section>
+
+      <div>
+        <form novalidate [formGroup]="authorSearchForm" (ngSubmit)="onSubmit()">
+          <fieldset>
+            <div class="form-group">
+              <label>Search author</label>
+              <input type="text"
+                     class="form-control"
+                     formControlName="searchWord">
+            </div>
+          </fieldset>
+          <button type="submit" class="btn btn-primary"  [disabled]="!authorSearchForm.valid" >Submit</button>
+        </form>
+      </div>
 
       <section class="main">
 

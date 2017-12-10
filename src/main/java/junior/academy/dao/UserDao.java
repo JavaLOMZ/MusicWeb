@@ -35,15 +35,15 @@ public class UserDao {
         sessionFactory.getCurrentSession().delete(getUserById(userId).get());
     }
 
-    public User findUserByName(String nickname){
+    public Optional<User> getUserByUsername(String nickname){
         Query query= sessionFactory.getCurrentSession().createQuery("from User where nickname=:nickname");
         query.setParameter("nickname",nickname);
-        return (User) query.uniqueResult();
+        return Optional.ofNullable((User) query.uniqueResult());
     }
 
-    public User findUserByEmail(String email){
+    public Optional<User> getUserByEmail(String email){
         Query query= sessionFactory.getCurrentSession().createQuery("from User where email=:email");
         query.setParameter("email",email);
-        return (User) query.uniqueResult();
+        return Optional.ofNullable((User) query.uniqueResult());
     }
 }

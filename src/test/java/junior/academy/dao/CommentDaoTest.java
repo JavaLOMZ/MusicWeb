@@ -15,6 +15,7 @@ import org.testng.annotations.Test;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 public class CommentDaoTest extends EntityDaoTest {
@@ -62,16 +63,25 @@ public class CommentDaoTest extends EntityDaoTest {
         assertEquals(commentDao.getAllComments().size(), 0);
     }
 
-    //TODO test nothing
     @Test
     public void getCommentsByUserId(){
         assertEquals(commentDao.getCommentsByUserId(1).size(),1);
     }
 
-    //TODO test nothing
+
     @Test
     public void getCommentsBySongId(){
         assertEquals(commentDao.getCommentsBySongId(1).size(),1);
+    }
+
+    @Test
+    public void getCommentsByUserNickname(){
+       //todo
+    }
+
+    @Test
+    public void getCommentByUserIdAndSongId(){
+        //todo
     }
 
     private Comment getComment() {

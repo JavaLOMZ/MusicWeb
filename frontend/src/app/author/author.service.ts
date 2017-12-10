@@ -45,11 +45,17 @@ export class AuthorService {
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
 
-  getAuthorByName(name: string): Observable<any> {
+  getUniqueAuthorByName(name: string): Observable<any> {
     return this.http.get(this.apiUrl + "/name/" + name, {headers: this.headers})
       .map(this.extractData)
       .catch(this.handleError) as Observable<any>;
   };
+
+  getAuthorsBySearchWord(searchWord: string): Observable<any>{
+    return this, this.http.get(this.apiUrl + '/search/' + searchWord,{headers: this.headers})
+      .map((res: Response) => res.json())
+      .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+  }
 
   handleError(error: any) {
     let errMsg = (error.message) ? error.message :
@@ -66,7 +72,7 @@ export class AuthorService {
   export function authorNameTaken(authorService: AuthorService) {
     return control => new Promise((resolve, reject) => {
       console.log("in validator");
-      authorService.getAuthorByName(control.value).subscribe(data => {
+      authorService.getUniqueAuthorByName(control.value).subscribe(data => {
         console.log(data);
         if (data.authorId) {
           resolve({authorNameTaken: true})

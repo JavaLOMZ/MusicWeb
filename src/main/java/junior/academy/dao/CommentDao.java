@@ -51,7 +51,7 @@ public class CommentDao {
         return query.list();
     }
 
-    public Optional <Comment> getCommentForUserAndSong(long userId, long songId){
+    public Optional <Comment> getCommentByUserIdAndSongId(long userId, long songId){
         Query query=sessionFactory.getCurrentSession().createQuery("from Comment where userId=:userId and songId=:songId");
         query.setParameter("userId",userId);
         query.setParameter("songId",songId);

@@ -1,9 +1,7 @@
 package junior.academy.service;
 
 import junior.academy.dao.CommentDao;
-import junior.academy.dao.UserDao;
 import junior.academy.domain.Comment;
-import junior.academy.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -44,11 +42,6 @@ public class CommentService {
     }
 
     public List<Comment> getCommentsByUserNickname(String nickname){
-        /*you've got here 2 options.
-          commented one is using method which was wrote earlier
-          the second one is using some hibernate new query schema, new for me so check it out*/
-
-//        return commentDao.getCommentsByUserId(userService.findUserByName(nickname).getUserId());
         return commentDao.getCommentsByUserNickname(nickname);
     }
 
@@ -56,8 +49,8 @@ public class CommentService {
         return commentDao.getCommentsBySongId(songId);
     }
 
-    public Optional<Comment> getCommentForUserAndSong(long userId, long songId){
-        return commentDao.getCommentForUserAndSong(userId,songId);
+    public Optional<Comment> getCommentByUserIdAndSongId(long userId, long songId){
+        return commentDao.getCommentByUserIdAndSongId(userId,songId);
     }
 
 }

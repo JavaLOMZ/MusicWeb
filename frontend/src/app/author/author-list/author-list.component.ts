@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {AuthorService} from "../author.service";
 import {Router} from "@angular/router";
 import {Author} from "../author";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-author-list',
@@ -12,23 +13,15 @@ import {Author} from "../author";
 export class AuthorListComponent implements OnInit {
 
   private authors: Author[];
+  authorSearchForm: FormGroup;
 
   constructor(private router:Router,
               private authorService:AuthorService) { }
 
   ngOnInit() {
-    this.getAllAuthors();
-  }
-
-  getAllAuthors() {
-    this.authorService.getAllAuthors().subscribe(
-      authors => {
-        this.authors = authors;
-      },
-      err => {
-        console.log(err);
-      }
-    );
+    this.authorSearchForm = new FormGroup({
+      searchWord: new FormControl('',[Validators.required]),
+    });
   }
 
 
@@ -46,7 +39,6 @@ export class AuthorListComponent implements OnInit {
     if (authorId > 0) {
       this.authorService.deleteAuthorById(authorId).subscribe(
         res => {
-          this.getAllAuthors();
           this.router.navigate(['/author']);
           console.log('done');
         }
@@ -69,6 +61,22 @@ export class AuthorListComponent implements OnInit {
     if (authorId > 0) {
       this.router.navigate(['/song/create', authorId]);
     }
+  }
+
+  onSubmit() {
+    if (this.authorSearchForm.valid) {
+      this.getAuthorBySearchWord();
+    }
+  }
+
+  getAuthorBySearchWord(){
+    this.authorService.getAuthorsBySearchWord(this.authorSearchForm.controls['searchWord'].value).subscribe(
+      authors =>{
+        this.authors = authors},
+      err=>{
+        console.log(err)
+      }
+    );
   }
 
 }

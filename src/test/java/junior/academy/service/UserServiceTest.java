@@ -75,18 +75,31 @@ public class UserServiceTest {
     }
 
     @Test
-    public void findUserByName(){
-        User user=users.get(0);
-        when(userDao.findUserByName(user.getNickname())).thenReturn(user);
-        assertEquals(userService.findUserByName(user.getNickname()),user);
+    public void isUserPresentNickname() {
+        User user = users.get(0);
+        when(userDao.getUserByUsername(anyString())).thenReturn(Optional.of((user)));
+        assertEquals(userService.isUserPresent(user.getNickname()), true);
     }
 
     @Test
-    public void isUserPresentNickname() {
+    public void isUserPresentByEmail() {
         User user = users.get(0);
-        when(userDao.findUserByName(anyString())).thenReturn((user));
-        when(userDao.getUserById(anyLong())).thenReturn(Optional.ofNullable(user));
-        assertEquals(userService.isUserPresent(user.getNickname()), true);
+        when(userDao.getUserByEmail(anyString())).thenReturn(Optional.of((user)));
+        assertEquals(userService.isUserPresentByEmail(user.getEmail()), true);
+    }
+
+    @Test
+    public void findUserByName(){
+        Optional<User> user= Optional.of(users.get(0));
+        when(userDao.getUserByUsername(anyString())).thenReturn(user);
+        assertEquals(userService.getUserByUsername(anyString()),user);
+    }
+
+    @Test
+    public void getUserByEmail(){
+        Optional<User> user= Optional.of(users.get(0));
+        when(userDao.getUserByEmail(anyString())).thenReturn(user);
+        assertEquals(userService.getUserByEmail(anyString()), user);
     }
 
     public List<User> getUserList() {

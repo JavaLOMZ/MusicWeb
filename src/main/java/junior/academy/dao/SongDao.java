@@ -70,9 +70,17 @@ public class SongDao {
         return (Song)query.uniqueResult();
     }
 
-    public Song findSongByName(String songName){
+    public Song findUniqueSongByName(String songName){
         Query query=sessionFactory.getCurrentSession().createQuery("from Song where songName=:songName");
         query.setParameter("songName",songName);
         return (Song)query.uniqueResult();
     }
+
+    public List<Song> getSongBySearchWord(String searchWord){
+        Query query=sessionFactory.getCurrentSession().createQuery("from Song where songName like :searchWord");
+        query.setParameter("searchWord","%"+searchWord+"%");
+        return query.list();
+    }
+
+
 }

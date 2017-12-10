@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import java.util.*;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Service
 public class SongService {
@@ -114,6 +113,10 @@ public class SongService {
     }
 
     public Song findSongByName(String songName){
-        return songDao.findSongByName(songName);
+        return songDao.findUniqueSongByName(songName);
+    }
+
+    public List<Song> getSongBySearchWord(String searchWord){
+        return songDao.getSongBySearchWord(searchWord);
     }
 }

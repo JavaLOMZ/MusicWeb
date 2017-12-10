@@ -57,12 +57,16 @@ public class AuthorController {
     }
 
     @GetMapping("/name/{name}")
-    public ResponseEntity<Author> findAuthorByName(@PathVariable String name) {
-        Author responseAuthor = authorService.findAuthorByName(name);
-        if (responseAuthor != null) {
-            return new ResponseEntity<>(responseAuthor, HttpStatus.OK);
+    public ResponseEntity<Author> getUniqueAuthorByName(@PathVariable String name) {
+        if (authorService.isAuthorPresent(name)) {
+            return new ResponseEntity<>(authorService.getAuthorByName(name).get(), HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+    }
+
+    @GetMapping("/search/{searchWord}")
+    public List<Author> getAuthorsBySearchWord(@PathVariable String searchWord) {
+        return authorService.getAuthorBySearchWord(searchWord);
     }
 }
