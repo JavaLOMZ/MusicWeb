@@ -22,9 +22,9 @@ public class UserDao {
 
     }
 
-    public List<User> getAllUsers() {
-        return sessionFactory.getCurrentSession().createQuery("from User").list();
-    }
+//    public List<User> getAllUsers() {
+//        return sessionFactory.getCurrentSession().createQuery("from User").list();
+//    }
 
     public void createOrUpdateUser(User user) {
         sessionFactory.getCurrentSession().saveOrUpdate(user);
