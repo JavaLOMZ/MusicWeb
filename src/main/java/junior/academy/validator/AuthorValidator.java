@@ -24,7 +24,7 @@ public class AuthorValidator implements Validator, ErrorCodes {
     @Override
     public void validate(Object object, Errors errors) {
         Author author = (Author) object;
-        boolean isAuthorNameTaken = (authorService.getAuthorByName(author.getName()) != null);
+        boolean isAuthorNameTaken = (authorService.getAuthorByName(author.getName()).isPresent());
 
         if(isAuthorNameTaken){
             errors.rejectValue("name", NAME_TAKEN);

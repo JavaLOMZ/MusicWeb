@@ -1,5 +1,6 @@
 package junior.academy.service;
 
+import junior.academy.dao.DefaultDao;
 import junior.academy.dao.UserDao;
 import junior.academy.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,14 +17,22 @@ public class UserService {
     UserDao userDao;
 
     @Autowired
+    DefaultDao defaultDao;
+
+    @Autowired
     PasswordEncoder passwordEncoder;
 
     public Optional<User> getUserById(long userId) {
         return userDao.getUserById(userId);
     }
 
-    public List<User> getAllUsers() {
-        return userDao.getAllUsers();
+//    public List<User> getAllUsers() {
+//        return userDao.getAllUsers();
+//    }
+
+    public List<User>getAllUsers(){
+        System.out.println(defaultDao.getAll(User.class).size());
+        return defaultDao.getAll(User.class);
     }
 
     public void createOrUpdateUser(User user) {

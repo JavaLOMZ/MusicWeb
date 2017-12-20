@@ -47,11 +47,11 @@ public class UserServiceTest {
         verify(userDao, atLeastOnce()).createOrUpdateUser(user);
     }
 
-    @Test
-    public void getAllUsers() {
-        when(userDao.getAllUsers()).thenReturn(users);
-        assertEquals(userService.getAllUsers().size(), 1);
-    }
+//    @Test
+//    public void getAllUsers() {
+//        when(userDao.getAllUsers()).thenReturn(users);
+//        assertEquals(userService.getAllUsers().size(), 1);
+//    }
 
     @Test
     public void deleteUserById() {

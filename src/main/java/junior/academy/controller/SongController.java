@@ -4,6 +4,7 @@ package junior.academy.controller;
 import junior.academy.domain.MusicGenre;
 import junior.academy.domain.Song;
 import junior.academy.service.AuthorService;
+import junior.academy.service.RandomSongService;
 import junior.academy.service.RateService;
 import junior.academy.service.SongService;
 import junior.academy.validator.SongValidator;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
 
 @CrossOrigin(origins = "http://localhost:4200")
@@ -31,6 +33,9 @@ public class SongController {
 
     @Autowired
     RateService rateService;
+
+    @Autowired
+    RandomSongService randomSongService;
 
     @Autowired
     SongValidator songValidator;
@@ -91,12 +96,7 @@ public class SongController {
 
     @GetMapping("/user/recommendedSongs/{userId}")
     public List<Song> getRandomSongsByUserPreferences(@PathVariable long userId){
-        return songService.getRandomSongs(userId);
-    }
-
-    @GetMapping("/user/mostRated/{userId}")
-    public MusicGenre getMostRatedMusicGenre(@PathVariable long userId){
-        return songService.getMostRatedMusicGenre(userId);
+        return randomSongService.getRandomSongs(userId);
     }
 
     @GetMapping("/songName/{songName}/{authorId}")
@@ -110,7 +110,6 @@ public class SongController {
         }
     }
 
-    //probably will be nice to song/author browser
     @GetMapping("/songName/{songName}")
     public ResponseEntity<Song> findSongByName(@PathVariable String songName){
         Song responseSong=songService.findSongByName(songName);
@@ -125,6 +124,13 @@ public class SongController {
     @GetMapping("/search/{searchWord}")
     public List<Song> getSongBySearchWord(@PathVariable String searchWord){
         return songService.getSongBySearchWord(searchWord);
+    }
+
+
+    //is it used anywhere xD?
+    @GetMapping("/user/mostRated/{userId}")
+    public MusicGenre getMostRatedMusicGenre(@PathVariable long userId){
+        return songService.getMostRatedMusicGenre(userId);
     }
 
 }

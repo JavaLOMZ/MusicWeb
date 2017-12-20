@@ -39,7 +39,7 @@ public class SongValidator implements Validator, ErrorCodes{
         if(song.getReleaseYear()> LocalDate.now().getYear()){
             errors.rejectValue("releaseYear",SONG_TOO_YOUNG);
         }
-        if(!song.getYouTubeLink().contains("https://www.youtube.com/watch?v=")){
+        if(!song.getYouTubeLink().contains("https://www.youtube.com/watch?v=") && song.getYouTubeLink().length()>0){
            errors.rejectValue("youTubeLink",BAD_YOUTUBE_LINK);
         }
 

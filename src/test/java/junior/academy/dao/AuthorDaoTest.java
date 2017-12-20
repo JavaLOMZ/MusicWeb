@@ -29,37 +29,37 @@ public class AuthorDaoTest extends EntityDaoTest {
 
     }
 
-    @Test
-    public void getAllAuthors() {
-        assertEquals(authorDao.getAllAuthors().size(), 1);
-    }
+//    @Test
+//    public void getAllAuthors() {
+//        assertEquals(authorDao.getAllAuthors().size(), 1);
+//    }
 
-    @Test
-    public void getAuthorById() {
-        assertNotNull(authorDao.getAuthorById(1));
-        assertTrue(authorDao.getAuthorById(1).get().getName().equals("Bon Jovi"));
-    }
-
-    @Test
-    public void createAuthor() {
-        Author author = getAuthor();
-        authorDao.createOrUpdateAuthor(author);
-        assertEquals(authorDao.getAllAuthors().size(), 2);
-    }
-
-    @Test
-    public void updateAuthor() {
-        Author authorTest = authorDao.getAuthorById(1).get();
-        authorTest.setName("2pac");
-        authorDao.createOrUpdateAuthor(authorTest);
-        assertTrue(authorDao.getAuthorById(1).get().getName().equals("2pac"));
-    }
-
-    @Test
-    public void deleteAuthor() {
-        authorDao.deleteAuthorById(1);
-        assertEquals(authorDao.getAllAuthors().size(), 0);
-    }
+//    @Test
+//    public void getAuthorById() {
+//        assertNotNull(authorDao.getAuthorById(1));
+//        assertTrue(authorDao.getAuthorById(1).get().getName().equals("Bon Jovi"));
+//    }
+//
+//    @Test
+//    public void createAuthor() {
+//        Author author = getAuthor();
+//        authorDao.createOrUpdateAuthor(author);
+//        assertEquals(authorDao.getAllAuthors().size(), 2);
+//    }
+//
+//    @Test
+//    public void updateAuthor() {
+//        Author authorTest = authorDao.getAuthorById(1).get();
+//        authorTest.setName("2pac");
+//        authorDao.createOrUpdateAuthor(authorTest);
+//        assertTrue(authorDao.getAuthorById(1).get().getName().equals("2pac"));
+//    }
+//
+//    @Test
+//    public void deleteAuthor() {
+//        authorDao.deleteAuthorById(1);
+//        assertEquals(authorDao.getAllAuthors().size(), 0);
+//    }
 
     @Test
     public void getAuthorByName(){

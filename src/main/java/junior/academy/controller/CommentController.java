@@ -92,9 +92,7 @@ public class CommentController {
     @GetMapping("/user/{userId}/{songId}")
     public ResponseEntity<Comment> getCommentByUserIdAndSongId(@PathVariable long userId, @PathVariable long songId){
         Optional<Comment> commentResponse = commentService.getCommentByUserIdAndSongId(userId, songId);
-        if(commentService.isCommentPresent(commentResponse.get().getCommentId())){
-            return new ResponseEntity<>(commentService.getCommentByUserIdAndSongId(userId,songId).get(),HttpStatus.OK);
-        }
-        else{ return new ResponseEntity<>(HttpStatus.NOT_FOUND);}
+        return commentResponse.map(comment -> new ResponseEntity<>(comment, HttpStatus.OK)).
+                orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 }

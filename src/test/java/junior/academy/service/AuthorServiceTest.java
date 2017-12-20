@@ -33,40 +33,40 @@ public class AuthorServiceTest {
         MockitoAnnotations.initMocks(this);
         authors = getAuthorList();
     }
-
-    @Test
-    public void createOrUpdateAuthor() {
-        doNothing().when(authorDao).createOrUpdateAuthor((any(Author.class)));
-        authorService.createOrUpdateAuthor(any(Author.class));
-        verify(authorDao, atLeastOnce()).createOrUpdateAuthor(any(Author.class));
-    }
-
-    @Test
-    public void getAllAuthors() {
-        when(authorDao.getAllAuthors()).thenReturn(authors);
-        assertEquals(authorService.getAllAuthors(), authors);
-    }
-
-    @Test
-    public void deleteAuthorById() {
-        doNothing().when(authorDao).deleteAuthorById(anyLong());
-        authorService.deleteAuthorById(anyLong());
-        verify(authorDao, atLeastOnce()).deleteAuthorById(anyLong());
-    }
-
-    @Test
-    public void getAuthorById() {
-        Author author = authors.get(0);
-        when(authorDao.getAuthorById(anyLong())).thenReturn(Optional.ofNullable(author));
-        assertEquals(authorService.getAuthorById(anyLong()), Optional.of(author));
-    }
-
-    @Test
-    public void isAuthorPresent(){
-        Author author=getAuthorList().get(0);
-        when(authorDao.getAuthorById(anyLong())).thenReturn(Optional.ofNullable(author));
-        assertEquals(authorService.isAuthorPresent(anyLong()), true);
-    }
+//
+//    @Test
+//    public void createOrUpdateAuthor() {
+//        doNothing().when(authorDao).createOrUpdateAuthor((any(Author.class)));
+//        authorService.createOrUpdateAuthor(any(Author.class));
+//        verify(authorDao, atLeastOnce()).createOrUpdateAuthor(any(Author.class));
+//    }
+//
+//    @Test
+//    public void getAllAuthors() {
+//        when(authorDao.getAllAuthors()).thenReturn(authors);
+//        assertEquals(authorService.getAllAuthors(), authors);
+//    }
+//
+//    @Test
+//    public void deleteAuthorById() {
+//        doNothing().when(authorDao).deleteAuthorById(anyLong());
+//        authorService.deleteAuthorById(anyLong());
+//        verify(authorDao, atLeastOnce()).deleteAuthorById(anyLong());
+//    }
+//
+//    @Test
+//    public void getAuthorById() {
+//        Author author = authors.get(0);
+//        when(authorDao.getAuthorById(anyLong())).thenReturn(Optional.ofNullable(author));
+//        assertEquals(authorService.getAuthorById(anyLong()), Optional.of(author));
+//    }
+//
+//    @Test
+//    public void isAuthorPresent(){
+//        Author author=getAuthorList().get(0);
+//        when(authorDao.getAuthorById(anyLong())).thenReturn(Optional.ofNullable(author));
+//        assertEquals(authorService.isAuthorPresent(anyLong()), true);
+//    }
 
     @Test
     public void isAuthorPresentByName(){

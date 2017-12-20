@@ -1,8 +1,10 @@
 <div class="container">
   <div class="row">
     <div class="col">
-      <iframe width="560" height="315" [src]='sanitizer.bypassSecurityTrustResourceUrl(song?.youTubeLink)' frameborder="0" allowfullscreen></iframe>
-      <section>
+      <tr *ngIf="song?.youTubeLink.length!=0">
+        <iframe width="560" height="315" [src]='sanitizer.bypassSecurityTrustResourceUrl(song?.youTubeLink)' frameborder="0" allowfullscreen></iframe>
+      </tr>
+        <section>
         <table class="table">
           <thead>
           <tr>
