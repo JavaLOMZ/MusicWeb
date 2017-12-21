@@ -13,6 +13,8 @@ import static org.testng.Assert.*;
 
 import org.testng.annotations.Test;
 
+import java.util.List;
+
 public class SongDaoTest extends EntityDaoTest {
 
     @Autowired
@@ -28,7 +30,7 @@ public class SongDaoTest extends EntityDaoTest {
 
     @Test
     public void getAllSongs() {
-        assertEquals(songDao.getAllSongs().size(), 1);
+        assertEquals(songDao.getAllSongs().size(), 3);
     }
 
     @Test
@@ -41,7 +43,7 @@ public class SongDaoTest extends EntityDaoTest {
     public void createSong() {
         Song song = getSong();
         songDao.createOrUpdateSong(song);
-        assertEquals(songDao.getAllSongs().size(), 2);
+        assertEquals(songDao.getAllSongs().size(), 4);
     }
 
     @Test
@@ -55,10 +57,9 @@ public class SongDaoTest extends EntityDaoTest {
     @Test
     public void deleteSong() {
         songDao.deleteSongById(1);
-        assertEquals(songDao.getAllSongs().size(), 0);
+        assertEquals(songDao.getAllSongs().size(), 2);
     }
 
-    //TODO test nothing
     @Test
     public void getSongsByAuthorId(){
         assertEquals(songDao.getSongsByAuthorId(anyLong()).size(),0);
@@ -67,7 +68,6 @@ public class SongDaoTest extends EntityDaoTest {
     private Song getSong() {
         Song song = new Song();
         song.setSongName("TestSongName");
-//        song.setMusicGenre("TestMusicGenre");
         song.setMusicGenre(MusicGenre.HIPHOP);
 
         song.setYouTubeLink("YoutubeLink");

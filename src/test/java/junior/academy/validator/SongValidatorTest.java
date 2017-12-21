@@ -4,15 +4,12 @@ package junior.academy.validator;
 import junior.academy.domain.Author;
 import junior.academy.domain.MusicGenre;
 import junior.academy.domain.Song;
-import junior.academy.service.AuthorService;
 import junior.academy.service.SongService;
 import junior.academy.util.ErrorCodes;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.Errors;
@@ -51,7 +48,7 @@ public class SongValidatorTest implements ErrorCodes{
     @Test
     public void shouldFailValidationDueToEmptySongName(){
         prepareForTest(null,MUSIC_GENRE,RELEASE_YEAR,YOUTUBE_LINK,AUTHOR);
-        when(songService.findSongByNameAndAuthor(anyString(),anyLong())).thenReturn(null);
+        when(songService.getUniqueSongByNameAndAuthor(anyString(),anyLong())).thenReturn(null);
         songValidator.validate(song,errors);
         assertSingleError(EMPTY);
 
@@ -61,7 +58,7 @@ public class SongValidatorTest implements ErrorCodes{
     public void shouldFailValidationDueToTooShortSongName(){
         String TOO_SHORT_SONGNAME="s";
         prepareForTest(TOO_SHORT_SONGNAME,MUSIC_GENRE,RELEASE_YEAR,YOUTUBE_LINK,AUTHOR);
-        when(songService.findSongByNameAndAuthor(anyString(),anyLong())).thenReturn(null);
+        when(songService.getUniqueSongByNameAndAuthor(anyString(),anyLong())).thenReturn(null);
         songValidator.validate(song,errors);
         assertSingleError(NOT_ENOUGH_CHARACTERS);
 
@@ -75,7 +72,7 @@ public class SongValidatorTest implements ErrorCodes{
         }
         String TOO_LONG_SONGNAME=stringBuilder.toString();
         prepareForTest(TOO_LONG_SONGNAME,MUSIC_GENRE,RELEASE_YEAR,YOUTUBE_LINK,AUTHOR);
-        when(songService.findSongByNameAndAuthor(anyString(),anyLong())).thenReturn(null);
+        when(songService.getUniqueSongByNameAndAuthor(anyString(),anyLong())).thenReturn(null);
         songValidator.validate(song,errors);
         assertSingleError(TOO_MANY_CHARACTERS);
     }
@@ -84,7 +81,7 @@ public class SongValidatorTest implements ErrorCodes{
     public void shouldFailValidationDueToTooHighReleaseYear(){
         int TOO_HIGH_YEAR=3000;
         prepareForTest(SONGNAME,MUSIC_GENRE,TOO_HIGH_YEAR,YOUTUBE_LINK,AUTHOR);
-        when(songService.findSongByNameAndAuthor(anyString(),anyLong())).thenReturn(null);
+        when(songService.getUniqueSongByNameAndAuthor(anyString(),anyLong())).thenReturn(null);
         songValidator.validate(song,errors);
         assertSingleError(SONG_TOO_YOUNG);
     }
@@ -93,7 +90,7 @@ public class SongValidatorTest implements ErrorCodes{
     public void shouldFailValidationDueToWrongYouTubeLinkPattern(){
         String WRONG_YOUTUBE_LINK="asdasdasd";
         prepareForTest(SONGNAME,MUSIC_GENRE,RELEASE_YEAR,WRONG_YOUTUBE_LINK,AUTHOR);
-        when(songService.findSongByNameAndAuthor(anyString(),anyLong())).thenReturn(null);
+        when(songService.getUniqueSongByNameAndAuthor(anyString(),anyLong())).thenReturn(null);
         songValidator.validate(song,errors);
         assertSingleError(BAD_YOUTUBE_LINK);
     }
@@ -101,7 +98,7 @@ public class SongValidatorTest implements ErrorCodes{
     @Test
     public void shouldFailValidationDueToTheSameSongNameForAuthor(){
         prepareForTest(SONGNAME,MUSIC_GENRE,RELEASE_YEAR,YOUTUBE_LINK,AUTHOR);
-        when(songService.findSongByNameAndAuthor(anyString(),anyLong())).thenReturn(new Song());
+        when(songService.getUniqueSongByNameAndAuthor(anyString(),anyLong())).thenReturn(java.util.Optional.of(new Song()));
         songValidator.validate(song,errors);
         assertSingleError(SONGNAME_TAKEN);
     }

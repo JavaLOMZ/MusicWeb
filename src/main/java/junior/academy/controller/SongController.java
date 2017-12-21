@@ -17,8 +17,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
-import java.util.Set;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
@@ -100,21 +98,10 @@ public class SongController {
     }
 
     @GetMapping("/songName/{songName}/{authorId}")
-    public ResponseEntity<Song> findSongByNameAndAuthor(@PathVariable String songName, @PathVariable long authorId){
-        Song responseSong=songService.findSongByNameAndAuthor(songName,authorId);
-        if(responseSong!=null){
-            return new ResponseEntity<>(responseSong,HttpStatus.OK);
-        }
-        else{
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-    }
-
-    @GetMapping("/songName/{songName}")
-    public ResponseEntity<Song> findSongByName(@PathVariable String songName){
-        Song responseSong=songService.findSongByName(songName);
-        if(responseSong!=null){
-            return new ResponseEntity<>(responseSong,HttpStatus.OK);
+    public ResponseEntity<Song> getSongByNameAndAuthor(@PathVariable String songName, @PathVariable long authorId){
+        Song responseSong=songService.getUniqueSongByNameAndAuthor(songName,authorId).get();
+        if(songService.isSongPresent(songName, authorId)){
+            return new ResponseEntity<>(responseSong, HttpStatus.OK);
         }
         else{
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -124,13 +111,6 @@ public class SongController {
     @GetMapping("/search/{searchWord}")
     public List<Song> getSongBySearchWord(@PathVariable String searchWord){
         return songService.getSongBySearchWord(searchWord);
-    }
-
-
-    //is it used anywhere xD?
-    @GetMapping("/user/mostRated/{userId}")
-    public MusicGenre getMostRatedMusicGenre(@PathVariable long userId){
-        return songService.getMostRatedMusicGenre(userId);
     }
 
 }

@@ -44,12 +44,6 @@ public class SongDao {
         return query.list();
     }
 
-    public List<Song> getNotRatedSongs(long userId){
-        Query query=sessionFactory.getCurrentSession().createQuery("select song from Rate as rate right join rate.song song with rate.user.userId=:userId where rate.rateValue is null");
-        query.setParameter("userId", userId);
-        return query.list();
-    }
-
     public List<Song> getNotRatedSongs(long userId, MusicGenre musicGenre){
         Query query=sessionFactory.getCurrentSession().createQuery("select song from Rate as rate right join rate.song song with rate.user.userId=:userId where rate.rateValue is null and rate.song.musicGenre=:musicGenre");
         query.setParameter("userId", userId);
@@ -63,17 +57,11 @@ public class SongDao {
         return query.list();
     }
 
-    public Song findSongByNameAndAuthor(String songName, long authorId){
+    public Optional<Song> getUniqueSongByNameAndAuthor(String songName, long authorId){
         Query query=sessionFactory.getCurrentSession().createQuery("from Song where songName=:songName and authorId=:authorId");
         query.setParameter("songName",songName);
         query.setParameter("authorId",authorId);
-        return (Song)query.uniqueResult();
-    }
-
-    public Song findUniqueSongByName(String songName){
-        Query query=sessionFactory.getCurrentSession().createQuery("from Song where songName=:songName");
-        query.setParameter("songName",songName);
-        return (Song)query.uniqueResult();
+        return (Optional<Song>) query.uniqueResult();
     }
 
     public List<Song> getSongBySearchWord(String searchWord){

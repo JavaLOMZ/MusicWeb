@@ -2,11 +2,12 @@ package junior.academy.controller;
 
 import junior.academy.domain.Author;
 import junior.academy.domain.MusicGenre;
-import junior.academy.domain.Rate;
 import junior.academy.domain.Song;
 import junior.academy.service.AuthorService;
+import junior.academy.service.RandomSongService;
 import junior.academy.service.RateService;
 import junior.academy.service.SongService;
+import org.junit.Assert;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -21,7 +22,6 @@ import static org.mockito.Matchers.anyLong;
 import static org.mockito.Mockito.*;
 import static org.testng.Assert.assertEquals;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -31,6 +31,9 @@ public class SongControllerTest {
 
     @Mock
     SongService songService;
+
+    @Mock
+    RandomSongService randomSongService;
 
     @Mock
     AuthorService authorService;
@@ -126,6 +129,36 @@ public class SongControllerTest {
         ArrayList<MusicGenre>musicGenres=new ArrayList<>(Arrays.asList(MusicGenre.values()));
         when(songService.getMusicGenreTypes()).thenReturn(musicGenres);
         assertEquals(songController.getMusicGenreTypes(),musicGenres);
+    }
+
+    @Test
+    public void getSongsBySearchWord(){
+        List<Song> songsListTest = songs;
+        when(songService.getSongBySearchWord(anyString())).thenReturn(songsListTest);
+        assertEquals(songController.getSongBySearchWord((anyString())), songsListTest);
+    }
+
+    @Test
+    public void getRandomSongsByPreference(){
+        List<Song> songListTest = songs;
+        when(randomSongService.getRandomSongs(anyLong())).thenReturn(songListTest);
+        assertEquals(songController.getRandomSongsByUserPreferences(anyLong()), songListTest);
+    }
+
+    @Test
+    public void getUniqueSongByNameAndAuthorWhenPresent(){
+        Song songTest = songs.get(0);
+        when(songService.getUniqueSongByNameAndAuthor(anyString(), anyLong())).thenReturn(Optional.ofNullable(songTest));
+        when(songService.isSongPresent(anyString(), anyLong())).thenReturn(true);
+        assertEquals(songController.getSongByNameAndAuthor(anyString(), anyLong()), new ResponseEntity<>(songTest, HttpStatus.OK));
+    }
+
+    @Test
+    public void getUniqueSongByNameAndAuthorWhenNotPresent(){
+        Song songTest = songs.get(0);
+        when(songService.getUniqueSongByNameAndAuthor(anyString(), anyLong())).thenReturn(Optional.ofNullable(songTest));
+        when(songService.isSongPresent(anyString(), anyLong())).thenReturn(false);
+        Assert.assertEquals(songController.getSongByNameAndAuthor(anyString(), anyLong()), new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     public List<Song> getSongList() {

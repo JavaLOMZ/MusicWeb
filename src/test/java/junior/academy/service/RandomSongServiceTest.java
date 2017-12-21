@@ -45,8 +45,8 @@ public class RandomSongServiceTest {
         double totalPreferenceValue = preferenceMap.values().stream().mapToInt(integer -> integer).sum();
         for (MusicGenre musicGenre : preferenceMap.keySet()) {
             List<Song>musicGenreUnratedSongs=songsForMusicGenre(musicGenre);
-            when(songService.getNotRatedSongs(userId,String.valueOf(musicGenre))).thenReturn(musicGenreUnratedSongs);
-            List<Song> currentGenreNotRatedSongList = songService.getNotRatedSongs(userId, String.valueOf(musicGenre));
+            when(songService.getNotRatedSongs(userId,musicGenre)).thenReturn(musicGenreUnratedSongs);
+            List<Song> currentGenreNotRatedSongList = songService.getNotRatedSongs(userId, musicGenre);
             Collections.shuffle(currentGenreNotRatedSongList);
             double numberOfSongs = (preferenceMap.get(musicGenre).doubleValue() / totalPreferenceValue * NUMBER_OF_RECOMMENDED_SONGS);
             for (int i = 0; i < numberOfSongs && randomSongs.size() < NUMBER_OF_RECOMMENDED_SONGS && currentGenreNotRatedSongList.size() > i; i++) {

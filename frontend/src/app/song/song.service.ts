@@ -74,12 +74,6 @@ export class SongService {
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
 
-  getSongByName(songName: string): Observable<any> {
-    return this, this.http.get(this.apiUrl + '/songName/' + songName,{headers: this.headers})
-      .map((res: Response) => res.json())
-      .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
-  }
-
   getSongsBySearchWord(searchWord: string): Observable<any>{
     return this, this.http.get(this.apiUrl + '/search/' + searchWord,{headers: this.headers})
       .map((res: Response) => res.json())
