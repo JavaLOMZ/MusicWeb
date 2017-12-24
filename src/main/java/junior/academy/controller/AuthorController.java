@@ -69,4 +69,19 @@ public class AuthorController {
     public List<Author> getAuthorsBySearchWord(@PathVariable String searchWord) {
         return authorService.getAuthorBySearchWord(searchWord);
     }
+
+    @GetMapping("/sortedByName")
+    public List<Author> getAllAuthorsSortedByName() {
+        return authorService.getAllAuthorsSortedByName();
+    }
+
+    @GetMapping("/sortedByYearOfBirth")
+    public List<Author> getAllAuthorsSortedByYearOfBirth() {
+        return authorService.getAllAuthorsSortedByYearOfBirth();
+    }
+
+    @GetMapping("/sortedByCountryOfOrigin")
+    public List<Author> getAllAuthorsSortedByCountryOfOrigin() {
+        return authorService.getAllAuthorsSortedByCountryOfOrigin();
+    }
 }

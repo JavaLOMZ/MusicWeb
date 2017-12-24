@@ -57,6 +57,24 @@ export class AuthorService {
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
 
+  getAllAuthorsSortedByName(): Observable<Author[]> {
+    return this.http.get(this.apiUrl+'/sortedByName', {headers: this.headers})
+      .map((res: Response) => res.json())
+      .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+  }
+
+  getAllAuthorsSortedByYearOfBirth(): Observable<Author[]> {
+    return this.http.get(this.apiUrl+'/sortedByYearOfBirth', {headers: this.headers})
+      .map((res: Response) => res.json())
+      .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+  }
+
+  getAllAuthorsSortedByCountryOfOrigin(): Observable<Author[]> {
+    return this.http.get(this.apiUrl+'/sortedByCountryOfOrigin', {headers: this.headers})
+      .map((res: Response) => res.json())
+      .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+  }
+
   handleError(error: any) {
     let errMsg = (error.message) ? error.message :
       error.status ? `${error.status} - ${error.statusText}` : 'Server error';

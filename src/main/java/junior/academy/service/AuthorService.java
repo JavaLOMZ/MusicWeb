@@ -6,8 +6,7 @@ import junior.academy.domain.Author;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class AuthorService {
@@ -18,9 +17,6 @@ public class AuthorService {
     @Autowired
     DefaultDao defaultDao;
 
-//    public Optional<Author> getAuthorById(long authorId){
-//        return authorDao.getAuthorById(authorId);
-//    }
 
     public Optional<Author>getAuthorById(long authorId){
         return defaultDao.getById(Author.class,authorId);
@@ -37,25 +33,10 @@ public class AuthorService {
     public void deleteAuthorById(long authorId){
         defaultDao.deleteById(Author.class,authorId);
     }
+
     public boolean isAuthorPresent(long authorId){
         return defaultDao.getById(Author.class,authorId).isPresent();
     }
-
-//    public List<Author> getAllAuthors(){
-//        return authorDao.getAllAuthors();
-//    }
-
-//    public void createOrUpdateAuthor(Author author){
-//        authorDao.createOrUpdateAuthor(author);
-//    }
-
-//    public void deleteAuthorById(long authorId){
-//        authorDao.deleteAuthorById(authorId);
-//    }
-
-//    public boolean isAuthorPresent(long authorId){
-//        return authorDao.getAuthorById(authorId).isPresent();
-//    }
 
     public boolean isAuthorPresent(String authorName){
         return authorDao.getAuthorByName(authorName).isPresent();
@@ -67,5 +48,23 @@ public class AuthorService {
 
     public List<Author> getAuthorBySearchWord(String searchWord){
         return authorDao.getAuthorBySearchWord(searchWord);
+    }
+
+    public List<Author> getAllAuthorsSortedByName(){
+        List<Author>authorsSortedByName=defaultDao.getAll(Author.class);
+        authorsSortedByName.sort(Comparator.comparing(Author::getName));
+        return authorsSortedByName;
+    }
+
+    public List<Author> getAllAuthorsSortedByYearOfBirth(){
+        List<Author>authorsSortedByName=defaultDao.getAll(Author.class);
+        authorsSortedByName.sort(Comparator.comparing(Author::getYearOfBirth));
+        return authorsSortedByName;
+    }
+
+    public List<Author> getAllAuthorsSortedByCountryOfOrigin(){
+        List<Author>authorsSortedByName=defaultDao.getAll(Author.class);
+        authorsSortedByName.sort(Comparator.comparing(Author::getCountryOfOrigin));
+        return authorsSortedByName;
     }
 }

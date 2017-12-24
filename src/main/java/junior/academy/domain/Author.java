@@ -80,11 +80,12 @@ public class Author {
         this.songs = songs;
     }
 
-    public void deleteSongFromList(Song song){
-        songs.remove(song);
-    }
-
-    public void addSongToList(Song song){
-
+    @Override
+    public String toString() {
+        return "Author{" +
+                "name='" + name + '\'' +
+                ", yearOfBirth=" + yearOfBirth +
+                ", countryOfOrigin='" + countryOfOrigin + '\'' +
+                '}';
     }
 }
