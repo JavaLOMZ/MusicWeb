@@ -31,7 +31,6 @@ public class UserService {
 //    }
 
     public List<User>getAllUsers(){
-        System.out.println(defaultDao.getAll(User.class).size());
         return defaultDao.getAll(User.class);
     }
 

@@ -44,7 +44,7 @@ public class SongValidator implements Validator, ErrorCodes{
         }
 
 
-        if(songService.findSongByNameAndAuthor(song.getSongName(),song.getAuthor().getAuthorId())!=null){
+        if(songService.getUniqueSongByNameAndAuthor(song.getSongName(),song.getAuthor().getAuthorId())!=null){
             errors.rejectValue("songName",SONGNAME_TAKEN);
         }
     }

@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dataset>
     <song songId="1" songName="TestSong"  musicGenre="HIPHOP" releaseYear="1900" youTubeLink="www.youtube.com/test"/>
+    <song songId="2" songName="TestSong"  musicGenre="POP" releaseYear="2000" youTubeLink="www.youtube.com/test"/>
+    <song songId="3" songName="TestSong"  musicGenre="JAZZ" releaseYear="2017" youTubeLink="www.youtube.com/test"/>
 </dataset>

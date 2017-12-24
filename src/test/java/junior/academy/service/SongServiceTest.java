@@ -5,7 +5,6 @@ import junior.academy.dao.SongDao;
 import junior.academy.domain.Author;
 import junior.academy.domain.MusicGenre;
 import junior.academy.domain.Song;
-import junior.academy.domain.User;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -66,10 +65,17 @@ public class SongServiceTest {
     }
 
     @Test
-    public void isSongPresent(){
-        Song song=getSongList().get(0);
+    public void isSongPresentById(){
+        Song song=songs.get(0);
         when(songDao.getSongById(anyLong())).thenReturn(Optional.ofNullable(song));
         assertEquals(songService.isSongPresent(anyLong()),true);
+    }
+
+    @Test
+    public void isSongPresentByNameAndAuthorId(){
+        Song song=songs.get(0);
+        when(songDao.getUniqueSongByNameAndAuthor(anyString(), anyLong())).thenReturn(Optional.ofNullable(song));
+        assertEquals(songService.isSongPresent(anyString(),anyLong()),true);
     }
 
     @Test
@@ -84,6 +90,33 @@ public class SongServiceTest {
         assertEquals(songService.getMusicGenreTypes(),new ArrayList<>(Arrays.asList(MusicGenre.values())));
     }
 
+    @Test
+    public void getNotRatedSongs(){
+        List<Song> testSongs = songs;
+        when(songDao.getNotRatedSongs(anyLong(), any(MusicGenre.class))).thenReturn(songs);
+        assertEquals(songService.getNotRatedSongs(anyLong(), any(MusicGenre.class)), testSongs);
+    }
+
+    @Test
+    public void getRatedSongs(){
+        List<Song> testSongs = songs;
+        when(songDao.getRatedSongs(anyLong())).thenReturn(songs);
+        assertEquals(songService.getRatedSongs(anyLong()), testSongs);
+    }
+
+    @Test
+    public void getUniqueSongByNameAndAuthorId(){
+        Optional<Song> testSong = Optional.ofNullable(songs.get(0));
+        when(songDao.getUniqueSongByNameAndAuthor(anyString(), anyLong())).thenReturn(testSong);
+        assertEquals(songService.getUniqueSongByNameAndAuthor(anyString(), anyLong()), testSong);
+    }
+
+    @Test
+    public void getSongBySearchWord(){
+        List<Song> testSongList = songs;
+        when(songDao.getSongBySearchWord(anyString())).thenReturn(testSongList);
+        assertEquals(songService.getSongBySearchWord(anyString()), testSongList);
+    }
 
     public List<Song> getSongList(){
         Song song=new Song();
