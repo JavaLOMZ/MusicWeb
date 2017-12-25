@@ -63,14 +63,32 @@ export class AuthorService {
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
 
+  getAllAuthorsSortedByNameReversed(): Observable<Author[]> {
+    return this.http.get(this.apiUrl+'/sortedByNameReversed', {headers: this.headers})
+      .map((res: Response) => res.json())
+      .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+  }
+
   getAllAuthorsSortedByYearOfBirth(): Observable<Author[]> {
     return this.http.get(this.apiUrl+'/sortedByYearOfBirth', {headers: this.headers})
       .map((res: Response) => res.json())
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
 
+  getAllAuthorsSortedByYearOfBirthReversed(): Observable<Author[]> {
+    return this.http.get(this.apiUrl+'/sortedByYearOfBirthReversed', {headers: this.headers})
+      .map((res: Response) => res.json())
+      .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+  }
+
   getAllAuthorsSortedByCountryOfOrigin(): Observable<Author[]> {
     return this.http.get(this.apiUrl+'/sortedByCountryOfOrigin', {headers: this.headers})
+      .map((res: Response) => res.json())
+      .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+  }
+
+  getAllAuthorsSortedByCountryOfOriginReversed(): Observable<Author[]> {
+    return this.http.get(this.apiUrl+'/sortedByCountryOfOriginReversed', {headers: this.headers})
       .map((res: Response) => res.json())
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }

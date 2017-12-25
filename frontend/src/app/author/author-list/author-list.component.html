@@ -34,20 +34,22 @@
       </div>
 
       <section class="main">
-
         <table class="table">
           <thead>
           <tr>
-            <th>#</th>
-            <th>Name</th>
-            <th>YearOfBirth</th>
-            <th>CountryOfOrigin</th>
+            <!--<th>#</th>-->
+            <th *ngIf="sortedByName==false"><button class="button" (click)="getAllAuthorsSortedByName()">Name</button></th>
+            <th *ngIf="sortedByName==true"><button class="button" (click)="getAllAuthorsSortedByNameReversed()">Name</button></th>
+            <th *ngIf="sortedByYearOfBirth==false"><button class="button" (click)="getAllAuthorsSortedByYearOfBirth()">YearOfBirth</button></th>
+            <th *ngIf="sortedByYearOfBirth==true"><button class="button" (click)="getAllAuthorsSortedByYearOfBirthReversed()">YearOfBirth</button></th>
+            <th *ngIf="sortedByCountry==false"><button class="button" (click)="getAllAuthorsSortedByCountryOfOrigin()">CountryOfOrigin</button></th>
+            <th *ngIf="sortedByCountry==true"><button class="button" (click)="getAllAuthorsSortedByCountryOfOriginReversed()">CountryOfOrigin</button></th>
             <th></th>
           </tr>
           </thead>
           <tbody>
           <tr *ngFor="let author of authors">
-            <th scope="row">{{author.authorId}}</th>
+            <!--<th scope="row">{{author.authorId}}</th>-->
             <td><button type="button" class="btn-primary" (click)="redirectToSingleAuthorPage(author.authorId)">{{author.name}}</button></td>
             <td>{{author.yearOfBirth}}</td>
             <td>{{author.countryOfOrigin}}</td>

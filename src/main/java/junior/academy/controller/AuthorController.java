@@ -75,13 +75,28 @@ public class AuthorController {
         return authorService.getAllAuthorsSortedByName();
     }
 
+    @GetMapping("/sortedByNameReversed")
+    public List<Author> getAllAuthorsSortedByNameReversed() {
+        return authorService.getAllAuthorsSortedByNameReversed();
+    }
+
     @GetMapping("/sortedByYearOfBirth")
     public List<Author> getAllAuthorsSortedByYearOfBirth() {
         return authorService.getAllAuthorsSortedByYearOfBirth();
     }
 
+    @GetMapping("/sortedByYearOfBirthReversed")
+    public List<Author> getAllAuthorsSortedByYearOfBirthReversed() {
+        return authorService.getAllAuthorsSortedByYearOfBirthReversed();
+    }
+
     @GetMapping("/sortedByCountryOfOrigin")
     public List<Author> getAllAuthorsSortedByCountryOfOrigin() {
         return authorService.getAllAuthorsSortedByCountryOfOrigin();
+    }
+
+    @GetMapping("/sortedByCountryOfOriginReversed")
+    public List<Author> getAllAuthorsSortedByCountryOfOriginReversed() {
+        return authorService.getAllAuthorsSortedByCountryOfOriginReversed();
     }
 }

@@ -56,15 +56,33 @@ public class AuthorService {
         return authorsSortedByName;
     }
 
+    public List<Author> getAllAuthorsSortedByNameReversed(){
+        List<Author>authorsSortedByName=defaultDao.getAll(Author.class);
+        authorsSortedByName.sort(Comparator.comparing(Author::getName).reversed());
+        return authorsSortedByName;
+    }
+
     public List<Author> getAllAuthorsSortedByYearOfBirth(){
         List<Author>authorsSortedByName=defaultDao.getAll(Author.class);
         authorsSortedByName.sort(Comparator.comparing(Author::getYearOfBirth));
         return authorsSortedByName;
     }
 
+    public List<Author> getAllAuthorsSortedByYearOfBirthReversed(){
+        List<Author>authorsSortedByName=defaultDao.getAll(Author.class);
+        authorsSortedByName.sort(Comparator.comparing(Author::getYearOfBirth).reversed());
+        return authorsSortedByName;
+    }
+
     public List<Author> getAllAuthorsSortedByCountryOfOrigin(){
         List<Author>authorsSortedByName=defaultDao.getAll(Author.class);
         authorsSortedByName.sort(Comparator.comparing(Author::getCountryOfOrigin));
+        return authorsSortedByName;
+    }
+
+    public List<Author> getAllAuthorsSortedByCountryOfOriginReversed(){
+        List<Author>authorsSortedByName=defaultDao.getAll(Author.class);
+        authorsSortedByName.sort(Comparator.comparing(Author::getCountryOfOrigin).reversed());
         return authorsSortedByName;
     }
 }
