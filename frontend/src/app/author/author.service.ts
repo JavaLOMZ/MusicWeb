@@ -57,38 +57,38 @@ export class AuthorService {
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
 
-  getAllAuthorsSortedByName(): Observable<Author[]> {
-    return this.http.get(this.apiUrl+'/sortedByName', {headers: this.headers})
+  getAllAuthorsSortedByName(searchWord: string): Observable<Author[]> {
+    return this.http.get(this.apiUrl+'/sortedByName/'+searchWord, {headers: this.headers})
       .map((res: Response) => res.json())
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
 
-  getAllAuthorsSortedByNameReversed(): Observable<Author[]> {
-    return this.http.get(this.apiUrl+'/sortedByNameReversed', {headers: this.headers})
+  getAllAuthorsSortedByNameReversed(searchWord: string): Observable<Author[]> {
+    return this.http.get(this.apiUrl+'/sortedByNameReversed/'+searchWord, {headers: this.headers})
       .map((res: Response) => res.json())
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
 
-  getAllAuthorsSortedByYearOfBirth(): Observable<Author[]> {
-    return this.http.get(this.apiUrl+'/sortedByYearOfBirth', {headers: this.headers})
+  getAllAuthorsSortedByYearOfBirth(searchWord: string): Observable<Author[]> {
+    return this.http.get(this.apiUrl+'/sortedByYearOfBirth/'+searchWord, {headers: this.headers})
       .map((res: Response) => res.json())
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
 
-  getAllAuthorsSortedByYearOfBirthReversed(): Observable<Author[]> {
-    return this.http.get(this.apiUrl+'/sortedByYearOfBirthReversed', {headers: this.headers})
+  getAllAuthorsSortedByYearOfBirthReversed(searchWord: string): Observable<Author[]> {
+    return this.http.get(this.apiUrl+'/sortedByYearOfBirthReversed/'+searchWord, {headers: this.headers})
       .map((res: Response) => res.json())
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
 
-  getAllAuthorsSortedByCountryOfOrigin(): Observable<Author[]> {
-    return this.http.get(this.apiUrl+'/sortedByCountryOfOrigin', {headers: this.headers})
+  getAllAuthorsSortedByCountryOfOrigin(searchWord: string): Observable<Author[]> {
+    return this.http.get(this.apiUrl+'/sortedByCountryOfOrigin/'+searchWord, {headers: this.headers})
       .map((res: Response) => res.json())
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
 
-  getAllAuthorsSortedByCountryOfOriginReversed(): Observable<Author[]> {
-    return this.http.get(this.apiUrl+'/sortedByCountryOfOriginReversed', {headers: this.headers})
+  getAllAuthorsSortedByCountryOfOriginReversed(searchWord: string): Observable<Author[]> {
+    return this.http.get(this.apiUrl+'/sortedByCountryOfOriginReversed/'+searchWord, {headers: this.headers})
       .map((res: Response) => res.json())
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }

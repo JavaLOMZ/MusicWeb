@@ -12,11 +12,13 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 })
 export class AuthorListComponent implements OnInit {
 
-  private authors: Author[];
+  authors: Author[];
+
   authorSearchForm: FormGroup;
   sortedByName: boolean;
   sortedByYearOfBirth: boolean;
   sortedByCountry: boolean;
+  searchedWord: string;
 
   constructor(private router:Router,
               private authorService:AuthorService) { }
@@ -34,7 +36,8 @@ export class AuthorListComponent implements OnInit {
   getAllAuthors(){
     this.authorService.getAllAuthors().subscribe(
       authors=>{
-        this.authors=authors;
+        this.authors=authors
+        this.searchedWord=null;
       }, err=>{
         console.log(err);
       }
@@ -88,18 +91,18 @@ export class AuthorListComponent implements OnInit {
   getAuthorBySearchWord(){
     this.authorService.getAuthorsBySearchWord(this.authorSearchForm.controls['searchWord'].value).subscribe(
       authors =>{
-        this.authors = authors},
+        this.authors = authors;
+        this.searchedWord=this.authorSearchForm.controls['searchWord'].value},
       err=>{
         console.log(err)
       }
     );
   }
 
-  getAllAuthorsSortedByName(){
-    this.authorService.getAllAuthorsSortedByName().subscribe(
+  getAllAuthorsSortedByName(searchedWord: string){
+    this.authorService.getAllAuthorsSortedByName(searchedWord).subscribe(
       authors =>{
         this.sortedByName=true;
-        console.log(this.sortedByName);
         this.authors = authors},
       err=>{
         console.log(err)
@@ -107,11 +110,10 @@ export class AuthorListComponent implements OnInit {
     );
   }
 
-  getAllAuthorsSortedByNameReversed(){
-    this.authorService.getAllAuthorsSortedByNameReversed().subscribe(
+  getAllAuthorsSortedByNameReversed(searchedWord: string){
+    this.authorService.getAllAuthorsSortedByNameReversed(searchedWord).subscribe(
       authors =>{
         this.sortedByName=false;
-        console.log(this.sortedByName);
         this.authors = authors},
       err=>{
         console.log(err)
@@ -119,11 +121,10 @@ export class AuthorListComponent implements OnInit {
     );
   }
 
-  getAllAuthorsSortedByYearOfBirth(){
-    this.authorService.getAllAuthorsSortedByYearOfBirth().subscribe(
+  getAllAuthorsSortedByYearOfBirth(searchedWord: string){
+    this.authorService.getAllAuthorsSortedByYearOfBirth(searchedWord).subscribe(
       authors =>{
         this.sortedByYearOfBirth=true;
-        console.log(this.sortedByYearOfBirth);
         this.authors = authors},
       err=>{
         console.log(err)
@@ -131,11 +132,10 @@ export class AuthorListComponent implements OnInit {
     );
   }
 
-  getAllAuthorsSortedByYearOfBirthReversed(){
-    this.authorService.getAllAuthorsSortedByYearOfBirthReversed().subscribe(
+  getAllAuthorsSortedByYearOfBirthReversed(searchedWord: string){
+    this.authorService.getAllAuthorsSortedByYearOfBirthReversed(searchedWord).subscribe(
       authors =>{
         this.sortedByYearOfBirth=false;
-        console.log(this.sortedByYearOfBirth);
         this.authors = authors},
       err=>{
         console.log(err)
@@ -143,11 +143,10 @@ export class AuthorListComponent implements OnInit {
     );
   }
 
-  getAllAuthorsSortedByCountryOfOrigin(){
-    this.authorService.getAllAuthorsSortedByCountryOfOrigin().subscribe(
+  getAllAuthorsSortedByCountryOfOrigin(searchedWord: string){
+    this.authorService.getAllAuthorsSortedByCountryOfOrigin(searchedWord).subscribe(
       authors =>{
         this.sortedByCountry=true;
-        console.log(this.sortedByCountry);
         this.authors = authors},
       err=>{
         console.log(err)
@@ -155,11 +154,10 @@ export class AuthorListComponent implements OnInit {
     );
   }
 
-  getAllAuthorsSortedByCountryOfOriginReversed(){
-    this.authorService.getAllAuthorsSortedByCountryOfOriginReversed().subscribe(
+  getAllAuthorsSortedByCountryOfOriginReversed(searchedWord: string){
+    this.authorService.getAllAuthorsSortedByCountryOfOriginReversed(searchedWord).subscribe(
       authors =>{
         this.sortedByCountry=false;
-        console.log(this.sortedByCountry);
         this.authors = authors},
       err=>{
         console.log(err)

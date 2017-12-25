@@ -57,6 +57,5 @@ public class RateDao {
         query.setParameter("userId",userId);
         query.setParameter("songId",songId);
         return Optional.ofNullable((Rate)query.uniqueResult());
-
     }
 }

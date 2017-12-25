@@ -5,6 +5,7 @@ import junior.academy.dao.DefaultDao;
 import junior.academy.domain.Author;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
@@ -50,38 +51,45 @@ public class AuthorService {
         return authorDao.getAuthorBySearchWord(searchWord);
     }
 
-    public List<Author> getAllAuthorsSortedByName(){
-        List<Author>authorsSortedByName=defaultDao.getAll(Author.class);
+    public List<Author> getListToSortElements(String searchWord){
+        List<Author>listToSortAuthors;
+        if(searchWord!=null && searchWord.compareTo("undefined")!=0 && searchWord.compareTo("null")!=0) listToSortAuthors=getAuthorBySearchWord(searchWord);
+        else listToSortAuthors=getAllAuthors();
+        return listToSortAuthors;
+    }
+
+    public List<Author> getAllAuthorsSortedByName(String searchWord){
+        List<Author> authorsSortedByName=getListToSortElements(searchWord);
         authorsSortedByName.sort(Comparator.comparing(Author::getName));
         return authorsSortedByName;
     }
 
-    public List<Author> getAllAuthorsSortedByNameReversed(){
-        List<Author>authorsSortedByName=defaultDao.getAll(Author.class);
+    public List<Author> getAllAuthorsSortedByNameReversed(String searchWord){
+        List<Author>authorsSortedByName=getListToSortElements(searchWord);
         authorsSortedByName.sort(Comparator.comparing(Author::getName).reversed());
         return authorsSortedByName;
     }
 
-    public List<Author> getAllAuthorsSortedByYearOfBirth(){
-        List<Author>authorsSortedByName=defaultDao.getAll(Author.class);
+    public List<Author> getAllAuthorsSortedByYearOfBirth(String searchWord){
+        List<Author>authorsSortedByName=getListToSortElements(searchWord);
         authorsSortedByName.sort(Comparator.comparing(Author::getYearOfBirth));
         return authorsSortedByName;
     }
 
-    public List<Author> getAllAuthorsSortedByYearOfBirthReversed(){
-        List<Author>authorsSortedByName=defaultDao.getAll(Author.class);
+    public List<Author> getAllAuthorsSortedByYearOfBirthReversed(String searchWord){
+        List<Author>authorsSortedByName=getListToSortElements(searchWord);
         authorsSortedByName.sort(Comparator.comparing(Author::getYearOfBirth).reversed());
         return authorsSortedByName;
     }
 
-    public List<Author> getAllAuthorsSortedByCountryOfOrigin(){
-        List<Author>authorsSortedByName=defaultDao.getAll(Author.class);
+    public List<Author> getAllAuthorsSortedByCountryOfOrigin(String searchWord){
+        List<Author>authorsSortedByName=getListToSortElements(searchWord);
         authorsSortedByName.sort(Comparator.comparing(Author::getCountryOfOrigin));
         return authorsSortedByName;
     }
 
-    public List<Author> getAllAuthorsSortedByCountryOfOriginReversed(){
-        List<Author>authorsSortedByName=defaultDao.getAll(Author.class);
+    public List<Author> getAllAuthorsSortedByCountryOfOriginReversed(String searchWord){
+        List<Author>authorsSortedByName=getListToSortElements(searchWord);
         authorsSortedByName.sort(Comparator.comparing(Author::getCountryOfOrigin).reversed());
         return authorsSortedByName;
     }

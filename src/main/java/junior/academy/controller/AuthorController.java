@@ -70,33 +70,33 @@ public class AuthorController {
         return authorService.getAuthorBySearchWord(searchWord);
     }
 
-    @GetMapping("/sortedByName")
-    public List<Author> getAllAuthorsSortedByName() {
-        return authorService.getAllAuthorsSortedByName();
+    @GetMapping("/sortedByName/{searchWord}")
+    public List<Author> getAllAuthorsSortedByName(@PathVariable String searchWord) {
+        return authorService.getAllAuthorsSortedByName(searchWord);
     }
 
-    @GetMapping("/sortedByNameReversed")
-    public List<Author> getAllAuthorsSortedByNameReversed() {
-        return authorService.getAllAuthorsSortedByNameReversed();
+    @GetMapping("/sortedByNameReversed/{searchWord}")
+    public List<Author> getAllAuthorsSortedByNameReversed(@PathVariable String searchWord) {
+        return authorService.getAllAuthorsSortedByNameReversed(searchWord);
     }
 
-    @GetMapping("/sortedByYearOfBirth")
-    public List<Author> getAllAuthorsSortedByYearOfBirth() {
-        return authorService.getAllAuthorsSortedByYearOfBirth();
+    @GetMapping("/sortedByYearOfBirth/{searchWord}")
+    public List<Author> getAllAuthorsSortedByYearOfBirth(@PathVariable String searchWord) {
+        return authorService.getAllAuthorsSortedByYearOfBirth(searchWord);
     }
 
-    @GetMapping("/sortedByYearOfBirthReversed")
-    public List<Author> getAllAuthorsSortedByYearOfBirthReversed() {
-        return authorService.getAllAuthorsSortedByYearOfBirthReversed();
+    @GetMapping("/sortedByYearOfBirthReversed/{searchWord}")
+    public List<Author> getAllAuthorsSortedByYearOfBirthReversed(@PathVariable String searchWord) {
+        return authorService.getAllAuthorsSortedByYearOfBirthReversed(searchWord);
     }
 
-    @GetMapping("/sortedByCountryOfOrigin")
-    public List<Author> getAllAuthorsSortedByCountryOfOrigin() {
-        return authorService.getAllAuthorsSortedByCountryOfOrigin();
+    @GetMapping("/sortedByCountryOfOrigin/{searchWord}")
+    public List<Author> getAllAuthorsSortedByCountryOfOrigin(@PathVariable String searchWord) {
+        return authorService.getAllAuthorsSortedByCountryOfOrigin(searchWord);
     }
 
-    @GetMapping("/sortedByCountryOfOriginReversed")
-    public List<Author> getAllAuthorsSortedByCountryOfOriginReversed() {
-        return authorService.getAllAuthorsSortedByCountryOfOriginReversed();
+    @GetMapping("/sortedByCountryOfOriginReversed/{searchWord}")
+    public List<Author> getAllAuthorsSortedByCountryOfOriginReversed(@PathVariable String searchWord) {
+        return authorService.getAllAuthorsSortedByCountryOfOriginReversed(searchWord);
     }
 }
