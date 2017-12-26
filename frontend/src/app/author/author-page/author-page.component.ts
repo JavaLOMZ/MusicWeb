@@ -21,6 +21,7 @@ export class AuthorPageComponent implements OnInit {
 
   songs:Song[];
   private sub:any;
+  averageAuthorRate:number;
 
   constructor(private route: ActivatedRoute,
               private router: Router,
@@ -44,6 +45,7 @@ export class AuthorPageComponent implements OnInit {
     }
 
     this.getAllSongsForAuthor(this.authorId);
+    this.getAverageRateOfAuthorSongs(this.authorId);
   }
 
   getAllSongsForAuthor(authorId:number){
@@ -70,5 +72,15 @@ export class AuthorPageComponent implements OnInit {
     if (authorId > 0) {
       this.router.navigate(['/song/create', authorId]);
     }
+  }
+
+  getAverageRateOfAuthorSongs(authorId:number){
+    this.authorService.getAverageRateOfAuthorSongs(authorId).subscribe(
+      averageAuthorRate=>{
+        this.averageAuthorRate=averageAuthorRate;
+      },err=>{
+        console.log(err);
+      }
+    )
   }
 }

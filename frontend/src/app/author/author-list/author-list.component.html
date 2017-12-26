@@ -34,8 +34,7 @@
           <button type="submit" class="btn btn-primary"  [disabled]="!authorSearchForm.valid" >Submit</button>
         </form>
       </div>
-
-      <section class="main">
+      <section>
         <table class="table">
           <thead>
           <tr>
@@ -49,7 +48,7 @@
           </tr>
           </thead>
           <tbody>
-          <tr *ngFor="let author of authors">
+          <tr *ngFor="let author of authors" >
             <td><button type="button" class="btn-primary" (click)="redirectToSingleAuthorPage(author.authorId)">{{author.name}}</button></td>
             <td>{{author.yearOfBirth}}</td>
             <td>{{author.countryOfOrigin}}</td>
