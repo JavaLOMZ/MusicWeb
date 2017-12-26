@@ -12,8 +12,13 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 })
 export class AuthorListComponent implements OnInit {
 
-  private authors: Author[];
+  authors: Author[];
+
   authorSearchForm: FormGroup;
+  sortedByName: boolean;
+  sortedByYearOfBirth: boolean;
+  sortedByCountry: boolean;
+  searchedWord: string;
 
   constructor(private router:Router,
               private authorService:AuthorService) { }
@@ -22,8 +27,22 @@ export class AuthorListComponent implements OnInit {
     this.authorSearchForm = new FormGroup({
       searchWord: new FormControl('',[Validators.required]),
     });
+    this.getAllAuthors();
+    this.sortedByName=false;
+    this.sortedByYearOfBirth=false;
+    this.sortedByCountry=false;
   }
 
+  getAllAuthors(){
+    this.authorService.getAllAuthors().subscribe(
+      authors=>{
+        this.authors=authors
+        this.searchedWord=null;
+      }, err=>{
+        console.log(err);
+      }
+    )
+  }
 
   redirectNewAuthorPage() {
     this.router.navigate(['/author/create']);
@@ -72,6 +91,18 @@ export class AuthorListComponent implements OnInit {
   getAuthorBySearchWord(){
     this.authorService.getAuthorsBySearchWord(this.authorSearchForm.controls['searchWord'].value).subscribe(
       authors =>{
+        this.authors = authors;
+        this.searchedWord=this.authorSearchForm.controls['searchWord'].value},
+      err=>{
+        console.log(err)
+      }
+    );
+  }
+
+  getAllAuthorsSortedByName(searchedWord: string){
+    this.authorService.getAllAuthorsSortedByName(searchedWord).subscribe(
+      authors =>{
+        this.sortedByName=true;
         this.authors = authors},
       err=>{
         console.log(err)
@@ -79,4 +110,58 @@ export class AuthorListComponent implements OnInit {
     );
   }
 
+  getAllAuthorsSortedByNameReversed(searchedWord: string){
+    this.authorService.getAllAuthorsSortedByNameReversed(searchedWord).subscribe(
+      authors =>{
+        this.sortedByName=false;
+        this.authors = authors},
+      err=>{
+        console.log(err)
+      }
+    );
+  }
+
+  getAllAuthorsSortedByYearOfBirth(searchedWord: string){
+    this.authorService.getAllAuthorsSortedByYearOfBirth(searchedWord).subscribe(
+      authors =>{
+        this.sortedByYearOfBirth=true;
+        this.authors = authors},
+      err=>{
+        console.log(err)
+      }
+    );
+  }
+
+  getAllAuthorsSortedByYearOfBirthReversed(searchedWord: string){
+    this.authorService.getAllAuthorsSortedByYearOfBirthReversed(searchedWord).subscribe(
+      authors =>{
+        this.sortedByYearOfBirth=false;
+        this.authors = authors},
+      err=>{
+        console.log(err)
+      }
+    );
+  }
+
+  getAllAuthorsSortedByCountryOfOrigin(searchedWord: string){
+    this.authorService.getAllAuthorsSortedByCountryOfOrigin(searchedWord).subscribe(
+      authors =>{
+        this.sortedByCountry=true;
+        this.authors = authors},
+      err=>{
+        console.log(err)
+      }
+    );
+  }
+
+  getAllAuthorsSortedByCountryOfOriginReversed(searchedWord: string){
+    this.authorService.getAllAuthorsSortedByCountryOfOriginReversed(searchedWord).subscribe(
+      authors =>{
+        this.sortedByCountry=false;
+        this.authors = authors},
+      err=>{
+        console.log(err)
+      }
+    );
+  }
 }

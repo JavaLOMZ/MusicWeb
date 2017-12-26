@@ -57,6 +57,42 @@ export class AuthorService {
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
 
+  getAllAuthorsSortedByName(searchWord: string): Observable<Author[]> {
+    return this.http.get(this.apiUrl+'/sortedByName/'+searchWord, {headers: this.headers})
+      .map((res: Response) => res.json())
+      .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+  }
+
+  getAllAuthorsSortedByNameReversed(searchWord: string): Observable<Author[]> {
+    return this.http.get(this.apiUrl+'/sortedByNameReversed/'+searchWord, {headers: this.headers})
+      .map((res: Response) => res.json())
+      .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+  }
+
+  getAllAuthorsSortedByYearOfBirth(searchWord: string): Observable<Author[]> {
+    return this.http.get(this.apiUrl+'/sortedByYearOfBirth/'+searchWord, {headers: this.headers})
+      .map((res: Response) => res.json())
+      .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+  }
+
+  getAllAuthorsSortedByYearOfBirthReversed(searchWord: string): Observable<Author[]> {
+    return this.http.get(this.apiUrl+'/sortedByYearOfBirthReversed/'+searchWord, {headers: this.headers})
+      .map((res: Response) => res.json())
+      .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+  }
+
+  getAllAuthorsSortedByCountryOfOrigin(searchWord: string): Observable<Author[]> {
+    return this.http.get(this.apiUrl+'/sortedByCountryOfOrigin/'+searchWord, {headers: this.headers})
+      .map((res: Response) => res.json())
+      .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+  }
+
+  getAllAuthorsSortedByCountryOfOriginReversed(searchWord: string): Observable<Author[]> {
+    return this.http.get(this.apiUrl+'/sortedByCountryOfOriginReversed/'+searchWord, {headers: this.headers})
+      .map((res: Response) => res.json())
+      .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+  }
+
   handleError(error: any) {
     let errMsg = (error.message) ? error.message :
       error.status ? `${error.status} - ${error.statusText}` : 'Server error';
