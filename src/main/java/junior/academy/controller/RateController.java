@@ -85,6 +85,6 @@ public class RateController {
     public ResponseEntity<Rate> getRateForUserAndSong(@PathVariable long userId,@PathVariable long songId){
         Optional<Rate> responseRate = rateService.getRateForUserAndSong(userId, songId);
         return responseRate.map(rate -> new ResponseEntity<>(rate, HttpStatus.OK)).
-                orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+                orElseGet(() -> new ResponseEntity<>(HttpStatus.OK));
     }
 }

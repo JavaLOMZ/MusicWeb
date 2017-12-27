@@ -97,12 +97,17 @@ public class SongController {
         return randomSongService.getRandomSongs(userId);
     }
 
+
+    //todo ta meetoda powoduje blad 500, wystepuje w song.service.ts i sprawd
     @GetMapping("/songName/{songName}/{authorId}")
     public ResponseEntity<Song> getSongByNameAndAuthor(@PathVariable String songName, @PathVariable long authorId){
-        Song responseSong=songService.getUniqueSongByNameAndAuthor(songName,authorId).get();
-        if(songService.isSongPresent(songName, authorId)){
+        if(songService.getUniqueSongByNameAndAuthor(songName,authorId).isPresent()) {
+            Song responseSong = songService.getUniqueSongByNameAndAuthor(songName, authorId).get();
             return new ResponseEntity<>(responseSong, HttpStatus.OK);
         }
+//        if(songService.isSongPresent(songName, authorId)){
+//            return new ResponseEntity<>(responseSong, HttpStatus.OK);
+//        }
         else{
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -113,4 +118,43 @@ public class SongController {
         return songService.getSongBySearchWord(searchWord);
     }
 
+    @GetMapping("/sortedBySongName/{searchWord}")
+    public List<Song> getAllSongsSortedBySongName(@PathVariable String searchWord){
+        return songService.getAllSongsSortedBySongName(searchWord);
+    }
+
+    @GetMapping("/sortedBySongNameReversed/{searchWord}")
+    public List<Song> getAllSongsSortedBySongNameReversed(@PathVariable String searchWord){
+        return songService.getAllSongsSortedBySongNameReversed(searchWord);
+    }
+
+    @GetMapping("/sortedByMusicGenre/{searchWord}")
+    public List<Song> getAllSongsSortedByMusicGenre(@PathVariable String searchWord){
+        return songService.getAllSongsSortedByMusicGenre(searchWord);
+    }
+
+    @GetMapping("/sortedByMusicGenreReversed/{searchWord}")
+    public List<Song> getAllSongsSortedByMusicGenreReversed(@PathVariable String searchWord){
+        return songService.getAllSongsSortedByMusicGenreReversed(searchWord);
+    }
+
+    @GetMapping("/sortedByReleaseYear/{searchWord}")
+    public List<Song> getAllSongsSortedByReleaseYear(@PathVariable String searchWord){
+        return songService.getAllSongsSortedByReleaseYear(searchWord);
+    }
+
+    @GetMapping("/sortedByReleaseYearReversed/{searchWord}")
+    public List<Song> getAllSongsSortedByReleaseYearReversed(@PathVariable String searchWord){
+        return songService.getAllSongsSortedByReleaseYearReversed(searchWord);
+    }
+
+    @GetMapping("/sortedByAuthorName/{searchWord}")
+    public List<Song> getAllSongsSortedByAuthorName(@PathVariable String searchWord){
+        return songService.getAllSongsSortedByAuthorName(searchWord);
+    }
+
+    @GetMapping("/sortedByAuthorNameReversed/{searchWord}")
+    public List<Song> getAllSongsSortedByAuthorNameReversed(@PathVariable String searchWord){
+        return songService.getAllSongsSortedByAuthorNameReversed(searchWord);
+    }
 }

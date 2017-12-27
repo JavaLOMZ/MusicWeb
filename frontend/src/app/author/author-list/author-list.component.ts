@@ -97,7 +97,8 @@ export class AuthorListComponent implements OnInit {
     this.authorService.getAuthorsBySearchWord(this.authorSearchForm.controls['searchWord'].value).subscribe(
       authors =>{
         this.authors = authors;
-        this.searchedWord=this.authorSearchForm.controls['searchWord'].value},
+        this.searchedWord=this.authorSearchForm.controls['searchWord'].value
+      },
       err=>{
         console.log(err)
       }

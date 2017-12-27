@@ -8,11 +8,13 @@ import {CommentOur} from "../../comment/comment";
 import {RateService} from "../../rate/rate.service";
 import {Rate} from "../../rate/rate";
 import {AuthenticationService} from "../../authentication.service";
+import {SongService} from "../../song/song.service";
+import {Song} from "../../song/song";
 @Component({
   selector: 'app-user-page',
   templateUrl: './user-page.component.html',
   styleUrls: ['./user-page.component.css'],
-  providers:[UserService, CommentService, RateService]
+  providers:[UserService, CommentService, RateService, SongService]
 })
 export class UserPageComponent implements OnInit {
 
@@ -22,6 +24,8 @@ export class UserPageComponent implements OnInit {
 
   rates:Rate[];
   comments:CommentOur[];
+  songs:Song[];
+  songName: string;
 
   private sub:any;
 
@@ -30,6 +34,7 @@ export class UserPageComponent implements OnInit {
               private router: Router,
               private userService: UserService,
               private rateService: RateService,
+              private songService: SongService,
               private commentService: CommentService) { }
 
   ngOnInit() {
@@ -48,9 +53,9 @@ export class UserPageComponent implements OnInit {
       );
     }
 
-    //todo method which will get songs to combine them with Comments like Comment -> SongName not only songId
     this.getAllRatesFromUserNickname(this.username);
     this.getAllCommentsFromUserNickname(this.username);
+    this.getAllSongs();
   }
 
 
@@ -86,5 +91,21 @@ export class UserPageComponent implements OnInit {
 
   redirectToUserList(){
     this.router.navigate(['/user'])
+  }
+
+  getAllSongs() {
+    this.songService.getAllSongs().subscribe(
+      songs => {
+        this.songs = songs
+      },
+      err => {
+        console.log(err)
+      }
+    );
+  }
+
+  getSongName(songId:number){
+    this.songName=this.songs.find(x=>x.songId===songId).songName;
+    return this.songName;
   }
 }

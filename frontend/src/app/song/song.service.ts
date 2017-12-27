@@ -80,6 +80,54 @@ export class SongService {
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
 
+  getAllSongsSortedBySongName(searchWord: string): Observable<any>{
+    return this, this.http.get(this.apiUrl + '/sortedBySongName/' + searchWord,{headers: this.headers})
+      .map((res: Response) => res.json())
+      .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+  }
+
+  getAllSongsSortedBySongNameReversed(searchWord: string): Observable<any>{
+    return this, this.http.get(this.apiUrl + '/sortedBySongNameReversed/' + searchWord,{headers: this.headers})
+      .map((res: Response) => res.json())
+      .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+  }
+
+  getAllSongsSortedByMusicGenre(searchWord: string): Observable<any>{
+    return this, this.http.get(this.apiUrl + '/sortedByMusicGenre/' + searchWord,{headers: this.headers})
+      .map((res: Response) => res.json())
+      .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+  }
+
+  getAllSongsSortedByMusicGenreReversed(searchWord: string): Observable<any>{
+    return this, this.http.get(this.apiUrl + '/sortedByMusicGenreReversed/' + searchWord,{headers: this.headers})
+      .map((res: Response) => res.json())
+      .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+  }
+
+  getAllSongsSortedByReleaseYear(searchWord: string): Observable<any>{
+    return this, this.http.get(this.apiUrl + '/sortedByReleaseYear/' + searchWord,{headers: this.headers})
+      .map((res: Response) => res.json())
+      .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+  }
+
+  getAllSongsSortedByReleaseYearReversed(searchWord: string): Observable<any>{
+    return this, this.http.get(this.apiUrl + '/sortedByReleaseYearReversed/' + searchWord,{headers: this.headers})
+      .map((res: Response) => res.json())
+      .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+  }
+
+  getAllSongsSortedByAuthorName(searchWord: string): Observable<any>{
+    return this, this.http.get(this.apiUrl + '/sortedByAuthorName/' + searchWord,{headers: this.headers})
+      .map((res: Response) => res.json())
+      .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+  }
+
+  getAllSongsSortedByAuthorNameReversed(searchWord: string): Observable<any>{
+    return this, this.http.get(this.apiUrl + '/sortedByAuthorNameReversed/' + searchWord,{headers: this.headers})
+      .map((res: Response) => res.json())
+      .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+  }
+
   handleError(error: any) {
     let errMsg = (error.message) ? error.message :
       error.status ? `${error.status} - ${error.statusText}` : 'Server error';

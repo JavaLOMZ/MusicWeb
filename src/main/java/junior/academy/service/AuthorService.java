@@ -76,33 +76,33 @@ public class AuthorService {
     }
 
     public List<Author> getAllAuthorsSortedByNameReversed(String searchWord){
-        List<Author>authorsSortedByName=getListToSortElements(searchWord);
-        authorsSortedByName.sort(Comparator.comparing(Author::getName).reversed());
-        return authorsSortedByName;
+        List<Author>authorsSortedByNameReversed=getListToSortElements(searchWord);
+        authorsSortedByNameReversed.sort(Comparator.comparing(Author::getName).reversed());
+        return authorsSortedByNameReversed;
     }
 
     public List<Author> getAllAuthorsSortedByYearOfBirth(String searchWord){
-        List<Author>authorsSortedByName=getListToSortElements(searchWord);
-        authorsSortedByName.sort(Comparator.comparing(Author::getYearOfBirth));
-        return authorsSortedByName;
+        List<Author>authorsSortedYearOfBirth=getListToSortElements(searchWord);
+        authorsSortedYearOfBirth.sort(Comparator.comparing(Author::getYearOfBirth));
+        return authorsSortedYearOfBirth;
     }
 
     public List<Author> getAllAuthorsSortedByYearOfBirthReversed(String searchWord){
-        List<Author>authorsSortedByName=getListToSortElements(searchWord);
-        authorsSortedByName.sort(Comparator.comparing(Author::getYearOfBirth).reversed());
-        return authorsSortedByName;
+        List<Author>authorsSortedByYearOfBirthReversed=getListToSortElements(searchWord);
+        authorsSortedByYearOfBirthReversed.sort(Comparator.comparing(Author::getYearOfBirth).reversed());
+        return authorsSortedByYearOfBirthReversed;
     }
 
     public List<Author> getAllAuthorsSortedByCountryOfOrigin(String searchWord){
-        List<Author>authorsSortedByName=getListToSortElements(searchWord);
-        authorsSortedByName.sort(Comparator.comparing(Author::getCountryOfOrigin));
-        return authorsSortedByName;
+        List<Author>authorsSortedByCountryOfOrigin=getListToSortElements(searchWord);
+        authorsSortedByCountryOfOrigin.sort(Comparator.comparing(Author::getCountryOfOrigin));
+        return authorsSortedByCountryOfOrigin;
     }
 
     public List<Author> getAllAuthorsSortedByCountryOfOriginReversed(String searchWord){
-        List<Author>authorsSortedByName=getListToSortElements(searchWord);
-        authorsSortedByName.sort(Comparator.comparing(Author::getCountryOfOrigin).reversed());
-        return authorsSortedByName;
+        List<Author>authorsSortedByCountryOfOriginReversed=getListToSortElements(searchWord);
+        authorsSortedByCountryOfOriginReversed.sort(Comparator.comparing(Author::getCountryOfOrigin).reversed());
+        return authorsSortedByCountryOfOriginReversed;
     }
 
     public double getAverageRateOfAuthorSongs(long authorId){

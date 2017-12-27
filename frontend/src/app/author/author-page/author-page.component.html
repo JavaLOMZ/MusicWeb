@@ -28,17 +28,15 @@
         <table class="table">
           <thead>
           <tr>
-            <th>#</th>
-            <th>SongName</th>
-            <th>MusicGenre</th>
-            <th>ReleaseYear</th>
-            <th>YouTubeLink</th>
+            <th>Song Name</th>
+            <th>Music Genre</th>
+            <th>Release Year</th>
+            <th>YouTube Link</th>
           </tr>
           </thead>
           <tbody>
           <tr *ngFor="let song of songs">
-            <td><button type="button" class="btn-primary" (click)="redirectToSongPage(song.songId)">{{song.songId}}</button></td>
-            <td>{{song.songName}}</td>
+            <td><button type="button" class="btn-primary" (click)="redirectToSongPage(song.songId)">{{song.songName}}</button></td>
             <td>{{song.musicGenre}}</td>
             <td>{{song.releaseYear}}</td>
             <td>{{song.youTubeLink}}</td>

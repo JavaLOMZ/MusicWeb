@@ -100,6 +100,8 @@ public class AuthorControllerTest {
         assertEquals(authorController.getAuthorsBySearchWord(anyString()), authorListTest);
     }
 
+    //todo test do comparatorow
+
     private List<Author> getAuthorList() {
         Author author = new Author();
         author.setName("Justin Bieber");

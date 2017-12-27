@@ -129,41 +129,41 @@ public class AuthorServiceTest {
 
     @Test
     public void getAllAuthorsSortedByNameReversed(){
-        List<Author> authorsSortedByName=getAuthorBiggerList();
-        when(authorDao.getAuthorBySearchWord(anyString())).thenReturn(authorsSortedByName);
-        authorsSortedByName.sort(Comparator.comparing(Author::getName).reversed());
+        List<Author> authorsSortedByNameReversed=getAuthorBiggerList();
+        when(authorDao.getAuthorBySearchWord(anyString())).thenReturn(authorsSortedByNameReversed);
+        authorsSortedByNameReversed.sort(Comparator.comparing(Author::getName).reversed());
         assertEquals(authorService.getAllAuthorsSortedByNameReversed(anyString()).get(0).getName(),"Justin Bieber");
     }
 
     @Test
     public void getAllAuthorsSortedByYearOfBirth(){
-        List<Author> authorsSortedByName=getAuthorBiggerList();
-        when(authorDao.getAuthorBySearchWord(anyString())).thenReturn(authorsSortedByName);
-        authorsSortedByName.sort(Comparator.comparing(Author::getYearOfBirth));
+        List<Author> authorsSortedYearOfBirth=getAuthorBiggerList();
+        when(authorDao.getAuthorBySearchWord(anyString())).thenReturn(authorsSortedYearOfBirth);
+        authorsSortedYearOfBirth.sort(Comparator.comparing(Author::getYearOfBirth));
         assertEquals(authorService.getAllAuthorsSortedByYearOfBirth(anyString()).get(0).getYearOfBirth(),1);
     }
 
     @Test
     public void getAllAuthorsSortedByYearOfBirthReversed(){
-        List<Author> authorsSortedByName=getAuthorBiggerList();
-        when(authorDao.getAuthorBySearchWord(anyString())).thenReturn(authorsSortedByName);
-        authorsSortedByName.sort(Comparator.comparing(Author::getYearOfBirth).reversed());
+        List<Author> authorsSortedByYearOfBirthReversed=getAuthorBiggerList();
+        when(authorDao.getAuthorBySearchWord(anyString())).thenReturn(authorsSortedByYearOfBirthReversed);
+        authorsSortedByYearOfBirthReversed.sort(Comparator.comparing(Author::getYearOfBirth).reversed());
         assertEquals(authorService.getAllAuthorsSortedByYearOfBirthReversed(anyString()).get(0).getYearOfBirth(),1994);
     }
 
     @Test
     public void getAllAuthorsSortedByCountryOfOrigin(){
-        List<Author> authorsSortedByName=getAuthorBiggerList();
-        when(authorDao.getAuthorBySearchWord(anyString())).thenReturn(authorsSortedByName);
-        authorsSortedByName.sort(Comparator.comparing(Author::getCountryOfOrigin));
+        List<Author> authorsSortedByCountryOfOrigin=getAuthorBiggerList();
+        when(authorDao.getAuthorBySearchWord(anyString())).thenReturn(authorsSortedByCountryOfOrigin);
+        authorsSortedByCountryOfOrigin.sort(Comparator.comparing(Author::getCountryOfOrigin));
         assertEquals(authorService.getAllAuthorsSortedByCountryOfOrigin(anyString()).get(0).getCountryOfOrigin(),"AUSA2");
     }
 
     @Test
     public void getAllAuthorsSortedByCountryOfOriginReversed(){
-        List<Author> authorsSortedByName=getAuthorBiggerList();
-        when(authorDao.getAuthorBySearchWord(anyString())).thenReturn(authorsSortedByName);
-        authorsSortedByName.sort(Comparator.comparing(Author::getCountryOfOrigin).reversed());
+        List<Author> authorsSortedByCountryOfOriginReversed=getAuthorBiggerList();
+        when(authorDao.getAuthorBySearchWord(anyString())).thenReturn(authorsSortedByCountryOfOriginReversed);
+        authorsSortedByCountryOfOriginReversed.sort(Comparator.comparing(Author::getCountryOfOrigin).reversed());
         assertEquals(authorService.getAllAuthorsSortedByCountryOfOriginReversed(anyString()).get(0).getCountryOfOrigin(),"USA");
     }
 
