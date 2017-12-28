@@ -36,13 +36,14 @@ public class SongValidator implements Validator, ErrorCodes{
                 errors.rejectValue("songName", TOO_MANY_CHARACTERS);
             }
         }
+
         if(song.getReleaseYear()> LocalDate.now().getYear()){
             errors.rejectValue("releaseYear",SONG_TOO_YOUNG);
         }
+
         if(!song.getYouTubeLink().contains("https://www.youtube.com/watch?v=") && song.getYouTubeLink().length()>0){
            errors.rejectValue("youTubeLink",BAD_YOUTUBE_LINK);
         }
-
 
         if(songService.getUniqueSongByNameAndAuthor(song.getSongName(),song.getAuthor().getAuthorId())!=null){
             errors.rejectValue("songName",SONGNAME_TAKEN);

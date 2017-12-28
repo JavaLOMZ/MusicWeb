@@ -8,32 +8,32 @@
         <table class="table">
           <thead>
           <tr>
-            <th>Song name</th>
+            <th>Name</th>
             <td>{{song?.songName}}</td>
           </tr>
           <tr>
-            <th>Song email</th>
+            <th>Music Genre</th>
             <td>{{song?.musicGenre}}</td>
           </tr>
           <tr>
-            <th>Song releaseYear</th>
+            <th>Release Year</th>
             <td>{{song?.releaseYear}}</td>
           </tr>
           <tr>
-            <th>Song AuthorId</th>
-            <td><button type="button" class="btn-primary" (click)="redirectToAuthorPage(song?.authorId)">Redirect to author's page</button></td>
+            <th>Author</th>
+            <td><button type="button" class="btn-primary" (click)="redirectToAuthorPage(song?.authorId)">{{getAuthorName(song?.authorId)}}</button></td>
           </tr>
           <tr>
-            <th>Song average rate</th>
+            <th>Song Average Rate</th>
             <td><button class="ssv-big-bold-label"> {{songAverageRate}}</button></td>
           </tr>
           <tr *ngIf="rateOfUser?.rateValue">
-            <th>Your rate</th>
+            <th>Your Rate</th>
             <td><button class="ssv-big-bold-label">  {{rateOfUser?.rateValue}}</button></td>
             <td><button class="ssv-big-bold-label" (click)="redirectToCreateRate(rateOfUser)">Edit rate</button></td>
           </tr>
           <tr *ngIf="commentOfUser?.commentText">
-            <th>Your comment</th>
+            <th>Your Comment</th>
             <td><button class="ssv-big-bold-label">  {{commentOfUser?.commentText}}</button></td>
             <td><button class="ssv-big-bold-label" (click)="redirectToCreateComment(commentOfUser)">Edit comment</button></td>
           </tr>
@@ -44,16 +44,14 @@
         <table class="table">
           <thead>
           <tr>
-            <th>#</th>
-            <th>CommentText</th>
+            <th>Comment</th>
             <th>User</th>
           </tr>
           </thead>
           <tbody>
           <tr *ngFor="let comment of comments">
-            <td>{{comment.commentId}}</td>
             <td>{{comment.commentText}}</td>
-            <td><button type="button" class="btn-primary" (click)="redirectToUserPage(comment.userId)">{{comment.userId}}</button></td>
+            <td><button type="button" class="btn-primary" (click)="redirectToUserPage(comment.userId)">{{getUserName(comment.userId)}}</button></td>
           </tr>
           </tbody>
         </table>

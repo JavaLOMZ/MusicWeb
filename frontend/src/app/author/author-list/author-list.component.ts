@@ -19,6 +19,8 @@ export class AuthorListComponent implements OnInit {
   sortedByYearOfBirth: boolean;
   sortedByCountry: boolean;
   searchedWord: string;
+  averageAuthorRates: Map<Author,number>;
+
 
   constructor(private router:Router,
               private authorService:AuthorService) { }
@@ -31,6 +33,9 @@ export class AuthorListComponent implements OnInit {
     this.sortedByName=false;
     this.sortedByYearOfBirth=false;
     this.sortedByCountry=false;
+
+    //todo how to show it in html?
+    this.getAverageRatesForAllAuthors();
   }
 
   getAllAuthors(){
@@ -92,7 +97,8 @@ export class AuthorListComponent implements OnInit {
     this.authorService.getAuthorsBySearchWord(this.authorSearchForm.controls['searchWord'].value).subscribe(
       authors =>{
         this.authors = authors;
-        this.searchedWord=this.authorSearchForm.controls['searchWord'].value},
+        this.searchedWord=this.authorSearchForm.controls['searchWord'].value
+      },
       err=>{
         console.log(err)
       }
@@ -161,6 +167,18 @@ export class AuthorListComponent implements OnInit {
         this.authors = authors},
       err=>{
         console.log(err)
+      }
+    );
+  }
+
+  //todo how to show it in html?
+  getAverageRatesForAllAuthors() {
+    this.authorService.getAverageRatesForAllAuthors().subscribe(
+      averageAuthorRates=>{
+        this.averageAuthorRates=averageAuthorRates;
+        console.log(averageAuthorRates);
+      }, err=>{
+        console.log(err);
       }
     );
   }

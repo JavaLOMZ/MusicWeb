@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Map;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
@@ -99,4 +100,16 @@ public class AuthorController {
     public List<Author> getAllAuthorsSortedByCountryOfOriginReversed(@PathVariable String searchWord) {
         return authorService.getAllAuthorsSortedByCountryOfOriginReversed(searchWord);
     }
+
+    @GetMapping("/averageRateOfAuthorSongs/{authorId}")
+    public double getAverageRateOfAuthorSongs(@PathVariable long authorId){
+        return authorService.getAverageRateOfAuthorSongs(authorId);
+    }
+
+    //todo how to show it in html?
+    @GetMapping("/averageAuthorRate")
+    public Map<Author,Double> getAverageRatesForAllAuthors(){
+        return authorService.getAverageRatesForAllAuthors();
+    }
+
 }

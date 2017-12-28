@@ -31,23 +31,25 @@
         <table class="table">
           <thead>
           <tr>
-            <th>#</th>
-            <th>SongName</th>
-            <th>MusicGenre</th>
-            <th>ReleaseYear</th>
-            <th>YouTubeLink</th>
-            <th>AuthorId</th>
+            <th *ngIf="sortedBySongName==false"><button class="button" (click)="getAllSongsSortedBySongName(searchedWord)">Name</button></th>
+            <th *ngIf="sortedBySongName==true"><button class="button" (click)="getAllSongsSortedBySongNameReversed(searchedWord)">Name</button></th>
+            <th *ngIf="sortedByMusicGenre==false"><button class="button" (click)="getAllSongsSortedByMusicGenre(searchedWord)">Music Genre</button></th>
+            <th *ngIf="sortedByMusicGenre==true"><button class="button" (click)="getAllSongsSortedByMusicGenreReversed(searchedWord)">Music Genre</button></th>
+            <th *ngIf="sortedByReleaseYear==false"><button class="button" (click)="getAllSongsSortedByReleaseYear(searchedWord)">Release Year</button></th>
+            <th *ngIf="sortedByReleaseYear==true"><button class="button" (click)="getAllSongsSortedByReleaseYearReversed(searchedWord)">Release Year</button></th>
+            <th>YouTube Link</th>
+            <th *ngIf="sortedByAuthorName==false"><button class="button" (click)="getAllSongsSortedByAuthorName(searchedWord)">Author</button></th>
+            <th *ngIf="sortedByAuthorName==true"><button class="button" (click)="getAllSongsSortedByAuthorNameReversed(searchedWord)">Author</button></th>
             <th></th>
           </tr>
           </thead>
           <tbody>
           <tr *ngFor="let song of songs">
-            <th scope="row">{{song.songId}}</th>
             <td><button type="button" class="btn-primary" (click)="redirectSingleSongPage(song.songId)">{{song.songName}}</button></td>
             <td>{{song.musicGenre}}</td>
             <td>{{song.releaseYear}}</td>
             <td>{{song.youTubeLink}}</td>
-            <td>{{song.authorId}}</td>
+            <td><button type="button" class="btn-primary" (click)="redirectToAuthorPage(song.authorId)">{{getAuthorName(song.authorId)}}</button></td>
             <td>
               <button type="button" class="btn btn-success" (click)="editSongPage(song)">Edit</button>
               <button type="button" class="btn btn-danger" (click)="deleteSong(song.songId)">Delete</button>

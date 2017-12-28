@@ -21,16 +21,14 @@
           <table class="table">
             <thead>
             <tr>
-              <th>#</th>
-              <th>CommentText</th>
-              <th>SongId</th>
+              <th>Song</th>
+              <th>Comment Text</th>
             </tr>
             </thead>
             <tbody>
             <tr *ngFor="let comment of comments">
-              <td>{{comment.commentId}}</td>
+              <td><button type="button" class="btn-primary" (click)="redirectToSongPage(comment.songId)">{{getSongName(comment.songId)}}</button></td>
               <td>{{comment.commentText}}</td>
-              <td><button type="button" class="btn-primary" (click)="redirectToSongPage(comment.songId)">{{comment.songId}}</button></td>
             </tr>
             </tbody>
           </table>
@@ -40,16 +38,14 @@
           <table class="table">
             <thead>
             <tr>
-              <th>#</th>
+              <th>Song</th>
               <th>Rate Value</th>
-              <th>Song Id</th>
             </tr>
             </thead>
             <tbody>
             <tr *ngFor="let rate of rates">
-              <td>{{rate.rateId}}</td>
+              <td><button type="button" class="btn-primary" (click)="redirectToSongPage(rate.songId)">{{getSongName(rate.songId)}}</button></td>
               <td>{{rate.rateValue}}</td>
-              <td><button type="button" class="btn-primary" (click)="redirectToSongPage(rate.songId)">{{rate.songId}}</button></td>
             </tr>
             </tbody>
           </table>

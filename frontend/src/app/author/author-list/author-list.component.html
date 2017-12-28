@@ -12,10 +12,7 @@
             </div>
             <div class="col-md-2">
               <button type="button" class="btn btn-primary" (click)="redirectNewAuthorPage()">Add Author</button>
-
-              <button type="button" class="btn btn-primary" (click)="redirectToUserPage()">Redirect to users</button>
-
-              <button *ngIf="searchedWord" type="button" class="btn btn-primary" (click)="getAllAuthors()">Show all users</button>
+              <button *ngIf="searchedWord" type="button" class="btn btn-primary" (click)="getAllAuthors()">Show All Authors</button>
             </div>
           </div>
         </header>
@@ -34,8 +31,7 @@
           <button type="submit" class="btn btn-primary"  [disabled]="!authorSearchForm.valid" >Submit</button>
         </form>
       </div>
-
-      <section class="main">
+      <section>
         <table class="table">
           <thead>
           <tr>
@@ -49,7 +45,7 @@
           </tr>
           </thead>
           <tbody>
-          <tr *ngFor="let author of authors">
+          <tr *ngFor="let author of authors" >
             <td><button type="button" class="btn-primary" (click)="redirectToSingleAuthorPage(author.authorId)">{{author.name}}</button></td>
             <td>{{author.yearOfBirth}}</td>
             <td>{{author.countryOfOrigin}}</td>

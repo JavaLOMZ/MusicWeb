@@ -93,6 +93,6 @@ public class CommentController {
     public ResponseEntity<Comment> getCommentByUserIdAndSongId(@PathVariable long userId, @PathVariable long songId){
         Optional<Comment> commentResponse = commentService.getCommentByUserIdAndSongId(userId, songId);
         return commentResponse.map(comment -> new ResponseEntity<>(comment, HttpStatus.OK)).
-                orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+                orElseGet(() -> new ResponseEntity<>(HttpStatus.OK));
     }
 }

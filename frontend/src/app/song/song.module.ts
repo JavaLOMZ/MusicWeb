@@ -9,6 +9,7 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {RateModule} from "../rate/rate.module";
 import { SongRandomListComponent } from './song-random-list/song-random-list.component';
 import {CommentModule} from "../comment/comment.module";
+import {AuthorModule} from "../author/author.module";
 
 @NgModule({
   imports: [
@@ -17,7 +18,8 @@ import {CommentModule} from "../comment/comment.module";
     FormsModule,
     ReactiveFormsModule,
     RateModule,
-    CommentModule
+    CommentModule,
+    AuthorModule
   ],
   declarations: [SongCreateComponent, SongPageComponent, SongListComponent, SongRandomListComponent]
 })
