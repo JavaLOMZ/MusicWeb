@@ -12,6 +12,7 @@ import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
 import java.time.LocalDate;
+import java.util.Optional;
 
 @Component
 public class SongValidator implements Validator, ErrorCodes{
@@ -41,11 +42,15 @@ public class SongValidator implements Validator, ErrorCodes{
             errors.rejectValue("releaseYear",SONG_TOO_YOUNG);
         }
 
-        if(!song.getYouTubeLink().contains("https://www.youtube.com/watch?v=") && song.getYouTubeLink().length()>0){
+        if(!song.getYouTubeLink().contains("https://www.youtube.com/watch?v=") && song.getYouTubeLink().length()>0 && song.getSongId()==0){
            errors.rejectValue("youTubeLink",BAD_YOUTUBE_LINK);
         }
 
-        if(songService.getUniqueSongByNameAndAuthor(song.getSongName(),song.getAuthor().getAuthorId())!=null){
+        if(!song.getYouTubeLink().contains("https://www.youtube.com/embed/") && song.getYouTubeLink().length()>0 && song.getSongId()!=0){
+            errors.rejectValue("youTubeLink",BAD_YOUTUBE_LINK);
+        }
+
+        if(songService.getUniqueSongByNameAndAuthor(song.getSongName(),song.getAuthor().getAuthorId())!=null && song.getSongId()==0){
             errors.rejectValue("songName",SONGNAME_TAKEN);
         }
     }

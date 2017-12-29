@@ -52,7 +52,7 @@ public class SongService {
         return songDao.getRatedSongs(userId);
     }
 
-    public Optional<Song> getUniqueSongByNameAndAuthor(String songName, long authorId){
+    public Song getUniqueSongByNameAndAuthor(String songName, long authorId){
         return songDao.getUniqueSongByNameAndAuthor(songName,authorId);
     }
 
@@ -62,10 +62,6 @@ public class SongService {
 
     public boolean isSongPresent(long songId) {
         return songDao.getSongById(songId).isPresent();
-    }
-
-    public boolean isSongPresent(String songName, long authorId){
-        return songDao.getUniqueSongByNameAndAuthor(songName, authorId).isPresent();
     }
 
     public List<Song> getListToSortElementsWithSearchWord(String searchWord){

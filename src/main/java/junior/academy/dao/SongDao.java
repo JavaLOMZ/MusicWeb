@@ -57,11 +57,11 @@ public class SongDao {
         return query.list();
     }
 
-    public Optional<Song> getUniqueSongByNameAndAuthor(String songName, long authorId){
+    public Song getUniqueSongByNameAndAuthor(String songName, long authorId){
         Query query=sessionFactory.getCurrentSession().createQuery("from Song where songName=:songName and authorId=:authorId");
         query.setParameter("songName",songName);
         query.setParameter("authorId",authorId);
-        return (Optional<Song>) query.uniqueResult();
+        return (Song) query.uniqueResult();
     }
 
     public List<Song> getSongBySearchWord(String searchWord){

@@ -72,12 +72,6 @@ public class SongServiceTest {
         assertEquals(songService.isSongPresent(anyLong()), true);
     }
 
-    @Test
-    public void isSongPresentByNameAndAuthorId() {
-        Song song = songs.get(0);
-        when(songDao.getUniqueSongByNameAndAuthor(anyString(), anyLong())).thenReturn(Optional.ofNullable(song));
-        assertEquals(songService.isSongPresent(anyString(), anyLong()), true);
-    }
 
     @Test
     public void getCommentsBySongId() {
@@ -107,7 +101,7 @@ public class SongServiceTest {
 
     @Test
     public void getUniqueSongByNameAndAuthorId() {
-        Optional<Song> testSong = Optional.ofNullable(songs.get(0));
+        Song testSong = songs.get(0);
         when(songDao.getUniqueSongByNameAndAuthor(anyString(), anyLong())).thenReturn(testSong);
         assertEquals(songService.getUniqueSongByNameAndAuthor(anyString(), anyLong()), testSong);
     }
