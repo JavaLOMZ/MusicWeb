@@ -30,7 +30,7 @@ public class UserValidator implements Validator, ErrorCodes {
 
         ValidationUtils.rejectIfEmptyOrWhitespace(errors,"nickname",EMPTY);
         boolean isUsernameTaken = (userService.getUserByUsername(user.getNickname()).isPresent());
-        if(isUsernameTaken){
+        if(isUsernameTaken && user.getUserId()==0){
             errors.rejectValue("nickname", USERNAME_TAKEN);
         }
         if(user.getNickname().length()<3){

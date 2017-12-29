@@ -38,10 +38,9 @@ export class SongCreateComponent implements OnInit {
       this.songId = params['songId'],
       this.authorId=params['authorId'];
     });
-    console.log(this.songId);
     if(this.songId) {
       this.songForm = new FormGroup({
-        songName: new FormControl(),//'', [Validators.required, Validators.minLength(2), Validators.maxLength(100)], [songNameTaken(this.songService, this.authorId)]),
+        songName: new FormControl(),
         musicGenre: new FormControl('', Validators.required),
         releaseYear: new FormControl('', [Validators.required, Validators.max(2017)]),
         youTubeLink: new FormControl('', [Validators.pattern(/^((?:https?:)?\/\/)?((?:www|m)\.)?((?:youtube\.com|youtu.be))(\/(?:[\w\-]+\?v=|embed\/|v\/)?)([\w\-]+)(\S+)?$/)]),

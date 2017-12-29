@@ -6,7 +6,7 @@
           <fieldset>
 
             <div class="form-group">
-             <label>SongName:</label>
+             <label>SongName: </label>
               <span style="font-size:35px"><span style="color:blue"><label *ngIf="songId">{{songNameToShow}}</label></span></span>
 
               <input *ngIf="!songId" type="text"
@@ -19,7 +19,7 @@
             </div>
 
             <div class="form-group">
-              <label>MusicGenre</label>
+              <label>MusicGenre: </label>
               <select class="form-control input-lg" formControlName="musicGenre" >
                 <option *ngFor="let musicGenre of musicGenre" [ngValue]="musicGenre">{{musicGenre}}</option>
               </select>
@@ -28,7 +28,7 @@
 
 
             <div class="form-group">
-              <label>ReleaseYear</label>
+              <label>ReleaseYear: </label>
               <input type="number"
                      class="form-control"
                      formControlName="releaseYear">
@@ -37,7 +37,7 @@
             </div>
 
             <div class="form-group">
-              <label>YouTubeLink</label>
+              <label>YouTubeLink: </label>
               <input type="text"
                      class="form-control"
                      formControlName="youTubeLink">
