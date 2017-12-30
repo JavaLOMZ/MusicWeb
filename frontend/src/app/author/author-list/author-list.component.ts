@@ -3,6 +3,7 @@ import {AuthorService} from "../author.service";
 import {Router} from "@angular/router";
 import {Author} from "../author";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {nextTick} from "q";
 
 @Component({
   selector: 'app-author-list',
@@ -19,8 +20,8 @@ export class AuthorListComponent implements OnInit {
   sortedByYearOfBirth: boolean;
   sortedByCountry: boolean;
   searchedWord: string;
-  averageAuthorRates: Map<Author,number>;
-
+  averageAuthorRates: number[];
+  authorRate:number;
 
   constructor(private router:Router,
               private authorService:AuthorService) { }
@@ -33,7 +34,6 @@ export class AuthorListComponent implements OnInit {
     this.sortedByName=false;
     this.sortedByYearOfBirth=false;
     this.sortedByCountry=false;
-
     //todo how to show it in html?
     this.getAverageRatesForAllAuthors();
   }
@@ -171,7 +171,14 @@ export class AuthorListComponent implements OnInit {
     );
   }
 
-  //todo how to show it in html?
+
+
+  //todo te dwie metody daaja mozliwosc uzyskania chamskigo oceny autora obok w tabeli natomiast dobrze by bylo
+  //zrobic wedlug mnie nowy widok, ktory by byl po prostu rankingiem autorow i tak samo z piosenkami
+  //bedzie wtedy mozan to dopasowac, poniewaz jakby sortowac rowniez te oceny to mysle, ze duza roboty
+  //z tymi metodami sortujacymi by byly bo oceny sie wyswietlaja wedlug domyslnego dodawania do bazy danych autorow
+  //mozna zrobic, zeby ssie pokazywaly jako posortowane, a przekazac po prostu metode napisana w javie ktora wysle
+  //obiekty autorow takze posortowane i wsio
   getAverageRatesForAllAuthors() {
     this.authorService.getAverageRatesForAllAuthors().subscribe(
       averageAuthorRates=>{
@@ -181,5 +188,10 @@ export class AuthorListComponent implements OnInit {
         console.log(err);
       }
     );
+  }
+
+  getAuthorRate(){
+    this.authorRate=this.averageAuthorRates.shift();
+    return this.authorRate;
   }
 }

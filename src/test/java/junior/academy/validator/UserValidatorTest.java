@@ -32,6 +32,8 @@ public class UserValidatorTest implements ErrorCodes{
     @InjectMocks
     private UserValidator userValidator;
 
+
+    //todo testy nie dzialaja bo isPresent nie styka tutaj, moznaby zrobic jak w SongControlelr i metode zmienic zeby zamiast Optional dac Song
     @Test
     public void shouldPassUsernameAvailabilityCheck(){
         prepareForTest(NICKNAME,PASSWORD,EMAIL);

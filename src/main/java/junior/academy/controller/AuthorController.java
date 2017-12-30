@@ -107,9 +107,12 @@ public class AuthorController {
     }
 
     //todo how to show it in html?
+//    @GetMapping("/averageAuthorRate")
+//    public Map<Long,Double> getAverageRatesForAllAuthors(){
+//        return authorService.getAverageRatesForAllAuthors();
+//    }
     @GetMapping("/averageAuthorRate")
-    public Map<Author,Double> getAverageRatesForAllAuthors(){
+    public List<Double> getAverageRatesForAllAuthors(){
         return authorService.getAverageRatesForAllAuthors();
     }
-
 }
