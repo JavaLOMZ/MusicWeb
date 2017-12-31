@@ -35,7 +35,7 @@ export class AuthorListComponent implements OnInit {
     this.sortedByYearOfBirth=false;
     this.sortedByCountry=false;
     //todo how to show it in html?
-    this.getAverageRatesForAllAuthors();
+    this.getAverageRatesForAllAuthors(null,null);
   }
 
   getAllAuthors(){
@@ -97,7 +97,8 @@ export class AuthorListComponent implements OnInit {
     this.authorService.getAuthorsBySearchWord(this.authorSearchForm.controls['searchWord'].value).subscribe(
       authors =>{
         this.authors = authors;
-        this.searchedWord=this.authorSearchForm.controls['searchWord'].value
+        this.searchedWord=this.authorSearchForm.controls['searchWord'].value;
+        this.getAverageRatesForAllAuthors(null,this.authorSearchForm.controls['searchWord'].value)
       },
       err=>{
         console.log(err)
@@ -109,6 +110,7 @@ export class AuthorListComponent implements OnInit {
     this.authorService.getAllAuthorsSortedByName(searchedWord).subscribe(
       authors =>{
         this.sortedByName=true;
+        this.getAverageRatesForAllAuthors('name',searchedWord);
         this.authors = authors},
       err=>{
         console.log(err)
@@ -120,6 +122,7 @@ export class AuthorListComponent implements OnInit {
     this.authorService.getAllAuthorsSortedByNameReversed(searchedWord).subscribe(
       authors =>{
         this.sortedByName=false;
+        this.getAverageRatesForAllAuthors('nameReversed',searchedWord);
         this.authors = authors},
       err=>{
         console.log(err)
@@ -131,6 +134,7 @@ export class AuthorListComponent implements OnInit {
     this.authorService.getAllAuthorsSortedByYearOfBirth(searchedWord).subscribe(
       authors =>{
         this.sortedByYearOfBirth=true;
+        this.getAverageRatesForAllAuthors('yearOfBirth',searchedWord);
         this.authors = authors},
       err=>{
         console.log(err)
@@ -141,7 +145,8 @@ export class AuthorListComponent implements OnInit {
   getAllAuthorsSortedByYearOfBirthReversed(searchedWord: string){
     this.authorService.getAllAuthorsSortedByYearOfBirthReversed(searchedWord).subscribe(
       authors =>{
-        this.sortedByYearOfBirth=false;
+        this.sortedByYearOfBirth=false
+        this.getAverageRatesForAllAuthors('yearOfBirthReversed',searchedWord);
         this.authors = authors},
       err=>{
         console.log(err)
@@ -153,6 +158,7 @@ export class AuthorListComponent implements OnInit {
     this.authorService.getAllAuthorsSortedByCountryOfOrigin(searchedWord).subscribe(
       authors =>{
         this.sortedByCountry=true;
+        this.getAverageRatesForAllAuthors('countryOfOrigin',searchedWord);
         this.authors = authors},
       err=>{
         console.log(err)
@@ -164,6 +170,7 @@ export class AuthorListComponent implements OnInit {
     this.authorService.getAllAuthorsSortedByCountryOfOriginReversed(searchedWord).subscribe(
       authors =>{
         this.sortedByCountry=false;
+        this.getAverageRatesForAllAuthors('countryOfOriginReversed',searchedWord);
         this.authors = authors},
       err=>{
         console.log(err)
@@ -179,8 +186,8 @@ export class AuthorListComponent implements OnInit {
   //z tymi metodami sortujacymi by byly bo oceny sie wyswietlaja wedlug domyslnego dodawania do bazy danych autorow
   //mozna zrobic, zeby ssie pokazywaly jako posortowane, a przekazac po prostu metode napisana w javie ktora wysle
   //obiekty autorow takze posortowane i wsio
-  getAverageRatesForAllAuthors() {
-    this.authorService.getAverageRatesForAllAuthors().subscribe(
+  getAverageRatesForAllAuthors(howDoWeSortAuthors:string, searchWord:string) {
+    this.authorService.getAverageRatesForAllAuthors(howDoWeSortAuthors,searchWord).subscribe(
       averageAuthorRates=>{
         this.averageAuthorRates=averageAuthorRates;
         console.log(averageAuthorRates);
