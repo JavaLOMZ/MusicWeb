@@ -104,8 +104,8 @@ export class AuthorService {
   //     .map((res: Response) => res.json())
   //     .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   // }
-  getAverageRatesForAllAuthors():Observable<number[]>{
-    return this.http.get(this.apiUrl+'/averageAuthorRate', {headers: this.headers})
+  getAverageRatesForAllAuthors(howDoWeSortAuthors:string, searchWord:string):Observable<number[]>{
+    return this.http.get(this.apiUrl+'/averageAuthorRate/'+howDoWeSortAuthors+'/'+searchWord, {headers: this.headers})
       .map((res: Response) => res.json())
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }

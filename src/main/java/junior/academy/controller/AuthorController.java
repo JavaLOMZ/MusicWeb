@@ -111,8 +111,8 @@ public class AuthorController {
 //    public Map<Long,Double> getAverageRatesForAllAuthors(){
 //        return authorService.getAverageRatesForAllAuthors();
 //    }
-    @GetMapping("/averageAuthorRate")
-    public List<Double> getAverageRatesForAllAuthors(){
-        return authorService.getAverageRatesForAllAuthors();
+    @GetMapping("/averageAuthorRate/{howDoWeSortAuthors}/{searchWord}")
+    public List<Double> getAverageRatesForAllAuthors(@PathVariable String howDoWeSortAuthors, @PathVariable String searchWord){
+        return authorService.getAverageRatesForAllAuthors(howDoWeSortAuthors,searchWord);
     }
 }

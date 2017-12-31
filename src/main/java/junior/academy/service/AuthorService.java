@@ -30,7 +30,6 @@ public class AuthorService {
     RateService rateService;
 
     public Optional<Author>getAuthorById(long authorId){
-        getAverageRatesForAllAuthors();
         return defaultDao.getById(Author.class,authorId);
     }
 
@@ -105,24 +104,39 @@ public class AuthorService {
         return authorsSortedByCountryOfOriginReversed;
     }
 
-    public double getAverageRateOfAuthorSongs(long authorId){
-        List<Song> authorSongs=songService.getSongsByAuthorId(authorId);
-        double averageRate= authorSongs.stream().mapToDouble(s->rateService.songAverageRate(s.getSongId())).sum();
-        if(averageRate>0) return Math.round(averageRate/authorSongs.size()*100)/100.00;
-        return 0.00;
-    }
 
     //todo how to show it in html?
 //    public Map<Long,Double> getAverageRatesForAllAuthors(){
 //        return getAllAuthors().stream()
 //                .collect(Collectors.toMap(Author::getAuthorId, a->getAverageRateOfAuthorSongs(a.getAuthorId())));
 //    }
-    public List<Double> getAverageRatesForAllAuthors(){
-        List<Author>authorList=getAllAuthors();
+
+
+
+    public List<Double> getAverageRatesForAllAuthors(String howDoWeSortAuthors, String searchWord){
+        List<Author>authorList=listOfAuthorsToGetRates(howDoWeSortAuthors,searchWord);
         List<Double>authorRates=new ArrayList<>();
         for(Author a : authorList){
             authorRates.add(getAverageRateOfAuthorSongs(a.getAuthorId()));
         }
         return authorRates;
+    }
+
+    public List<Author>listOfAuthorsToGetRates(String howDoWeSortAuthors,String searchWord){
+        if(howDoWeSortAuthors.equals("name")) return getAllAuthorsSortedByName(searchWord);
+        if(howDoWeSortAuthors.equals("nameReversed")) return getAllAuthorsSortedByNameReversed(searchWord);
+        if(howDoWeSortAuthors.equals("yearOfBirth")) return getAllAuthorsSortedByYearOfBirth(searchWord);
+        if(howDoWeSortAuthors.equals("yearOfBirthReversed")) return getAllAuthorsSortedByYearOfBirthReversed(searchWord);
+        if(howDoWeSortAuthors.equals("countryOfOrigin")) return getAllAuthorsSortedByCountryOfOrigin(searchWord);
+        if(howDoWeSortAuthors.equals("countryOfOriginReversed")) return getAllAuthorsSortedByCountryOfOriginReversed(searchWord);
+        if(howDoWeSortAuthors.equals("null") && !searchWord.equals("null")) return getAuthorBySearchWord(searchWord);
+        return getAllAuthors();
+    }
+
+    public double getAverageRateOfAuthorSongs(long authorId){
+        List<Song> authorSongs=songService.getSongsByAuthorId(authorId);
+        double averageRate= authorSongs.stream().mapToDouble(s->rateService.songAverageRate(s.getSongId())).sum();
+        if(averageRate>0) return Math.round(averageRate/authorSongs.size()*100)/100.00;
+        return 0.00;
     }
 }
