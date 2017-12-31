@@ -104,6 +104,7 @@ public class AuthorService {
         return authorsSortedByCountryOfOriginReversed;
     }
 
+
     //todo how to show it in html?
 //    public Map<Long,Double> getAverageRatesForAllAuthors(){
 //        return getAllAuthors().stream()
