@@ -23,8 +23,8 @@ export class SongCreateComponent implements OnInit {
   musicGenre: MusicGenre[];
 
   authorId:number;
-
   songForm: FormGroup;
+  songNameToShow:string;
   private sub: any;
 
   constructor(private route: ActivatedRoute,
@@ -38,27 +38,37 @@ export class SongCreateComponent implements OnInit {
       this.songId = params['songId'],
       this.authorId=params['authorId'];
     });
-
-    this.songForm = new FormGroup({
-      songName: new FormControl('', [Validators.required, Validators.minLength(2),Validators.maxLength(100)], [songNameTaken(this.songService,this.authorId)]),
-      musicGenre: new FormControl('', Validators.required),
-      releaseYear: new FormControl('', [Validators.required, Validators.max(2017)]),
-      youTubeLink: new FormControl('', [Validators.pattern(/^((?:https?:)?\/\/)?((?:www|m)\.)?((?:youtube\.com|youtu.be))(\/(?:[\w\-]+\?v=|embed\/|v\/)?)([\w\-]+)(\S+)?$/)]),
-      authorId: new FormControl('', Validators.required)
-    });
-
+    if(this.songId) {
+      this.songForm = new FormGroup({
+        songName: new FormControl(),
+        musicGenre: new FormControl('', Validators.required),
+        releaseYear: new FormControl('', [Validators.required, Validators.max(2017)]),
+        youTubeLink: new FormControl('', [Validators.pattern(/^((?:https?:)?\/\/)?((?:www|m)\.)?((?:youtube\.com|youtu.be))(\/(?:[\w\-]+\?v=|embed\/|v\/)?)([\w\-]+)(\S+)?$/)]),
+        authorId: new FormControl('', Validators.required)
+      });
+    }
+    else{
+      this.songForm = new FormGroup({
+        songName: new FormControl('', [Validators.required, Validators.minLength(2), Validators.maxLength(100)], [songNameTaken(this.songService, this.authorId)]),
+        musicGenre: new FormControl('', Validators.required),
+        releaseYear: new FormControl('', [Validators.required, Validators.max(2017)]),
+        youTubeLink: new FormControl('', [Validators.pattern(/^((?:https?:)?\/\/)?((?:www|m)\.)?((?:youtube\.com|youtu.be))(\/(?:[\w\-]+\?v=|embed\/|v\/)?)([\w\-]+)(\S+)?$/)]),
+        authorId: new FormControl('', Validators.required)
+      });
+    }
 
 
     if (this.songId) {
       this.songService.getSongById(this.songId).subscribe(
         song => {
           this.songId = song.songId;
+          this.songNameToShow=song.songName;
           this.songForm.patchValue({
             songName: song.songName,
             musicGenre: song.musicGenre,
             releaseYear: song.releaseYear,
             youTubeLink: song.youTubeLink,
-            authorId: this.authorId
+            authorId: this.authorId,
           });
         }, error => {
           console.log(error);
@@ -97,8 +107,8 @@ export class SongCreateComponent implements OnInit {
         }
         this.songForm.reset();
         this.router.navigate(['/song']);
-        window.location.reload();
       }
+    window.location.reload();
     }
 
 

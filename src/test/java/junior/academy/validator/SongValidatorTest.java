@@ -95,13 +95,13 @@ public class SongValidatorTest implements ErrorCodes{
         assertSingleError(BAD_YOUTUBE_LINK);
     }
 
-    @Test
-    public void shouldFailValidationDueToTheSameSongNameForAuthor(){
-        prepareForTest(SONGNAME,MUSIC_GENRE,RELEASE_YEAR,YOUTUBE_LINK,AUTHOR);
-        when(songService.getUniqueSongByNameAndAuthor(anyString(),anyLong())).thenReturn(java.util.Optional.of(new Song()));
-        songValidator.validate(song,errors);
-        assertSingleError(SONGNAME_TAKEN);
-    }
+//    @Test
+//    public void shouldFailValidationDueToTheSameSongNameForAuthor(){
+//        prepareForTest(SONGNAME,MUSIC_GENRE,RELEASE_YEAR,YOUTUBE_LINK,AUTHOR);
+//        when(songService.getUniqueSongByNameAndAuthor(anyString(),anyLong())).thenReturn(java.util.Optional.of(new Song()));
+//        songValidator.validate(song,errors);
+//        assertSingleError(SONGNAME_TAKEN);
+//    }
 
 
     private void assertSingleError(String errorCode){

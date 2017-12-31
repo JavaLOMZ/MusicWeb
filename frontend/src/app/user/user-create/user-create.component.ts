@@ -17,6 +17,8 @@ export class UserCreateComponent implements OnInit {
   user: User;
 
   userForm: FormGroup;
+  userNameToShow: string;
+  userEmailToShow:string;
   private sub:any;
 
   constructor(private route: ActivatedRoute,
@@ -28,17 +30,28 @@ export class UserCreateComponent implements OnInit {
       this.userId=params['userId'];
     });
 
-    this.userForm=new FormGroup({
-      nickname: new FormControl('',[Validators.required, Validators.minLength(3), Validators.maxLength(25)], [usernameTaken(this.userService)]),
-      password:new FormControl('',[Validators.required, Validators.minLength(5),Validators.maxLength(12)]),
-      email: new FormControl('',[Validators.required, Validators.email,Validators.pattern (/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)], [emailTaken(this.userService)])
-    });
+    if(this.userId) {
+      this.userForm = new FormGroup({
+        nickname: new FormControl(),
+        password: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(12)]),
+        email: new FormControl()
+      });
+    }
+    else{
+      this.userForm = new FormGroup({
+        nickname: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(25)], [usernameTaken(this.userService)]),
+        password: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(12)]),
+        email: new FormControl('', [Validators.required, Validators.email, Validators.pattern(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)], [emailTaken(this.userService)])
+      });
+    }
 
 
     if(this.userId){
       this.userService.getUserById(this.userId).subscribe(
         user=>{
           this.userId=user.userId;
+          this.userNameToShow=user.nickname;
+          this.userEmailToShow=user.email;
           this.userForm.patchValue({
             nickname: user.nickname,
             password: user.password,

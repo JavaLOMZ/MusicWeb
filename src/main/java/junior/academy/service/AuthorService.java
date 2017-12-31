@@ -113,8 +113,16 @@ public class AuthorService {
     }
 
     //todo how to show it in html?
-    public Map<Author,Double> getAverageRatesForAllAuthors(){
-        return getAllAuthors().stream()
-                .collect(Collectors.toMap(a->a, a->getAverageRateOfAuthorSongs(a.getAuthorId())));
+//    public Map<Long,Double> getAverageRatesForAllAuthors(){
+//        return getAllAuthors().stream()
+//                .collect(Collectors.toMap(Author::getAuthorId, a->getAverageRateOfAuthorSongs(a.getAuthorId())));
+//    }
+    public List<Double> getAverageRatesForAllAuthors(){
+        List<Author>authorList=getAllAuthors();
+        List<Double>authorRates=new ArrayList<>();
+        for(Author a : authorList){
+            authorRates.add(getAverageRateOfAuthorSongs(a.getAuthorId()));
+        }
+        return authorRates;
     }
 }

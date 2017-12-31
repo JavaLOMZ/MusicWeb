@@ -22,12 +22,12 @@ export class CommentService {
       .map((res: Response) => res.json())
       .catch((error: any) => Observable.throw(error.json().error || 'Server Error'));
   }
-  //todo same as delete, edit function in user-page
+
   createOrUpdateComment(comment: CommentOur): Observable<CommentOur> {
     return this.http.post(this.apiUrl, comment, {headers: this.headers})
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
-  //todo i think it ll be nice to delete comments only in user-page view
+
   deleteCommentById(commentId: number): Observable<boolean> {
     return this.http.delete(this.apiUrl + '/' + commentId, {headers: this.headers})
       .map((res: Response) => res.json())

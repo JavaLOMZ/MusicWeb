@@ -99,12 +99,16 @@ export class AuthorService {
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
 
-  getAverageRatesForAllAuthors():Observable<Map<Author,number>>{
-     return this.http.get(this.apiUrl+'/averageAuthorRate', {headers: this.headers})
+  // getAverageRatesForAllAuthors():Observable<Map<number,number>>{
+  //    return this.http.get(this.apiUrl+'/averageAuthorRate', {headers: this.headers})
+  //     .map((res: Response) => res.json())
+  //     .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+  // }
+  getAverageRatesForAllAuthors():Observable<number[]>{
+    return this.http.get(this.apiUrl+'/averageAuthorRate', {headers: this.headers})
       .map((res: Response) => res.json())
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
-
 
   handleError(error: any) {
     let errMsg = (error.message) ? error.message :

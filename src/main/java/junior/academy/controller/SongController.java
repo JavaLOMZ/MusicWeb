@@ -97,17 +97,12 @@ public class SongController {
         return randomSongService.getRandomSongs(userId);
     }
 
-
-    //todo ta meetoda powoduje blad 500, wystepuje w song.service.ts i sprawd
     @GetMapping("/songName/{songName}/{authorId}")
     public ResponseEntity<Song> getSongByNameAndAuthor(@PathVariable String songName, @PathVariable long authorId){
-        if(songService.getUniqueSongByNameAndAuthor(songName,authorId).isPresent()) {
-            Song responseSong = songService.getUniqueSongByNameAndAuthor(songName, authorId).get();
+        if(songService.getUniqueSongByNameAndAuthor(songName,authorId)!=null) {
+            Song responseSong = songService.getUniqueSongByNameAndAuthor(songName, authorId);
             return new ResponseEntity<>(responseSong, HttpStatus.OK);
         }
-//        if(songService.isSongPresent(songName, authorId)){
-//            return new ResponseEntity<>(responseSong, HttpStatus.OK);
-//        }
         else{
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }

@@ -41,6 +41,7 @@
             <th *ngIf="sortedByYearOfBirth==true"><button class="button" (click)="getAllAuthorsSortedByYearOfBirthReversed(searchedWord)">YearOfBirth</button></th>
             <th *ngIf="sortedByCountry==false"><button class="button" (click)="getAllAuthorsSortedByCountryOfOrigin(searchedWord)">CountryOfOrigin</button></th>
             <th *ngIf="sortedByCountry==true"><button class="button" (click)="getAllAuthorsSortedByCountryOfOriginReversed(searchedWord)">CountryOfOrigin</button></th>
+            <th>Author Rate</th>
             <th></th>
           </tr>
           </thead>
@@ -49,6 +50,7 @@
             <td><button type="button" class="btn-primary" (click)="redirectToSingleAuthorPage(author.authorId)">{{author.name}}</button></td>
             <td>{{author.yearOfBirth}}</td>
             <td>{{author.countryOfOrigin}}</td>
+            <td>{{getAuthorRate()}}</td>
             <td>
               <button type="button" class="btn btn-success" (click)="editAuthorPage(author)">Edit</button>
               <button type="button" class="btn-primary" (click)="redirectToSongCreatePage(author.authorId)">Add Song</button>

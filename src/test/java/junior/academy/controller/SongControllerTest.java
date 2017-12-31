@@ -145,21 +145,6 @@ public class SongControllerTest {
         assertEquals(songController.getRandomSongsByUserPreferences(anyLong()), songListTest);
     }
 
-    @Test
-    public void getUniqueSongByNameAndAuthorWhenPresent(){
-        Song songTest = songs.get(0);
-        when(songService.getUniqueSongByNameAndAuthor(anyString(), anyLong())).thenReturn(Optional.ofNullable(songTest));
-        when(songService.isSongPresent(anyString(), anyLong())).thenReturn(true);
-        assertEquals(songController.getSongByNameAndAuthor(anyString(), anyLong()), new ResponseEntity<>(songTest, HttpStatus.OK));
-    }
-
-    @Test
-    public void getUniqueSongByNameAndAuthorWhenNotPresent(){
-        Song songTest = songs.get(0);
-        when(songService.getUniqueSongByNameAndAuthor(anyString(), anyLong())).thenReturn(Optional.ofNullable(songTest));
-        when(songService.isSongPresent(anyString(), anyLong())).thenReturn(false);
-        Assert.assertEquals(songController.getSongByNameAndAuthor(anyString(), anyLong()), new ResponseEntity<>(HttpStatus.NOT_FOUND));
-    }
 
     //todo test do comparatorow
 
