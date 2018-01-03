@@ -93,17 +93,24 @@ export class AuthorService {
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
 
+  getAllAuthorsSortedByAverageRate(searchWord: string): Observable<Author[]> {
+    return this.http.get(this.apiUrl+'/sortedByAverageRate/'+searchWord, {headers: this.headers})
+      .map((res: Response) => res.json())
+      .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+  }
+
+  getAllAuthorsSortedByAverageRateReversed(searchWord: string): Observable<Author[]> {
+    return this.http.get(this.apiUrl+'/sortedByAverageRateReversed/'+searchWord, {headers: this.headers})
+      .map((res: Response) => res.json())
+      .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+  }
+
   getAverageRateOfAuthorSongs(authorId:number):Observable<number>{
     return this.http.get(this.apiUrl+'/averageRateOfAuthorSongs/'+authorId, {headers: this.headers})
       .map((res: Response) => res.json())
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
 
-  // getAverageRatesForAllAuthors():Observable<Map<number,number>>{
-  //    return this.http.get(this.apiUrl+'/averageAuthorRate', {headers: this.headers})
-  //     .map((res: Response) => res.json())
-  //     .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
-  // }
   getAverageRatesForAllAuthors(howDoWeSortAuthors:string, searchWord:string):Observable<number[]>{
     return this.http.get(this.apiUrl+'/averageAuthorRate/'+howDoWeSortAuthors+'/'+searchWord, {headers: this.headers})
       .map((res: Response) => res.json())

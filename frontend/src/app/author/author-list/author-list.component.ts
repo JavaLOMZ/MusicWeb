@@ -19,6 +19,7 @@ export class AuthorListComponent implements OnInit {
   sortedByName: boolean;
   sortedByYearOfBirth: boolean;
   sortedByCountry: boolean;
+  sortedByAverageRate: boolean;
   searchedWord: string;
   averageAuthorRates: number[];
   authorRate:number;
@@ -34,6 +35,7 @@ export class AuthorListComponent implements OnInit {
     this.sortedByName=false;
     this.sortedByYearOfBirth=false;
     this.sortedByCountry=false;
+    this.sortedByAverageRate=false;
     this.getAverageRatesForAllAuthors(null,null);
   }
 
@@ -172,6 +174,32 @@ export class AuthorListComponent implements OnInit {
       }
     );
   }
+
+  getAllAuthorsSortedByAverageRate(searchedWord: string){
+    this.authorService.getAllAuthorsSortedByAverageRate(searchedWord).subscribe(
+      authors =>{
+        this.sortedByAverageRate=true;
+        this.getAverageRatesForAllAuthors('averageRate',searchedWord);
+        this.authors = authors},
+      err=>{
+        console.log(err)
+      }
+    );
+  }
+
+
+  getAllAuthorsSortedByAverageRateReversed(searchedWord: string){
+    this.authorService.getAllAuthorsSortedByAverageRateReversed(searchedWord).subscribe(
+      authors =>{
+        this.sortedByAverageRate=false;
+        this.getAverageRatesForAllAuthors('averageRateReversed',searchedWord);
+        this.authors = authors},
+      err=>{
+        console.log(err)
+      }
+    );
+  }
+
 
   getAverageRatesForAllAuthors(howDoWeSortAuthors:string, searchWord:string) {
     this.authorService.getAverageRatesForAllAuthors(howDoWeSortAuthors,searchWord).subscribe(

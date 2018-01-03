@@ -104,6 +104,44 @@ public class AuthorService {
         return authorsSortedByCountryOfOriginReversed;
     }
 
+    public List<Author> getAllAuthorsSortedByAverageRate(String searchWord){
+        Map<Author,Double>mapOfAuthorsAverageRates=getListToSortElements(searchWord).stream()
+                        .collect(Collectors.toMap(a->a, a->getAverageRateOfAuthorSongs(a.getAuthorId())));
+        return new ArrayList<>(sortByValue(mapOfAuthorsAverageRates).keySet());
+
+    }
+
+    public List<Author> getAllAuthorsSortedByAverageRateReversed(String searchWord){
+        Map<Author,Double>mapOfAuthorsAverageRates=getListToSortElements(searchWord).stream()
+                .collect(Collectors.toMap(a->a, a->getAverageRateOfAuthorSongs(a.getAuthorId())));
+        return new ArrayList<>(sortByValueReversed(mapOfAuthorsAverageRates).keySet());
+
+    }
+
+    public static <K, V extends Comparable<? super V>> Map<K, V> sortByValue(Map<K, V> map) {
+        return map.entrySet()
+                .stream()
+                .sorted(Map.Entry.comparingByValue())
+                .collect(Collectors.toMap(
+                        Map.Entry::getKey,
+                        Map.Entry::getValue,
+                        (e1, e2) -> e1,
+                        LinkedHashMap::new
+                ));
+    }
+
+    public static <K, V extends Comparable<? super V>> Map<K, V> sortByValueReversed(Map<K, V> map) {
+        return map.entrySet()
+                .stream()
+                .sorted(Map.Entry.comparingByValue(Collections.reverseOrder()))
+                .collect(Collectors.toMap(
+                        Map.Entry::getKey,
+                        Map.Entry::getValue,
+                        (e1, e2) -> e1,
+                        LinkedHashMap::new
+                ));
+    }
+
     public List<Double> getAverageRatesForAllAuthors(String howDoWeSortAuthors, String searchWord){
         List<Author>authorList=listOfAuthorsToGetRates(howDoWeSortAuthors,searchWord);
         List<Double>authorRates=new ArrayList<>();
@@ -120,6 +158,8 @@ public class AuthorService {
         if(howDoWeSortAuthors.equals("yearOfBirthReversed")) return getAllAuthorsSortedByYearOfBirthReversed(searchWord);
         if(howDoWeSortAuthors.equals("countryOfOrigin")) return getAllAuthorsSortedByCountryOfOrigin(searchWord);
         if(howDoWeSortAuthors.equals("countryOfOriginReversed")) return getAllAuthorsSortedByCountryOfOriginReversed(searchWord);
+        if(howDoWeSortAuthors.equals("averageRate")) return getAllAuthorsSortedByAverageRate(searchWord);
+        if(howDoWeSortAuthors.equals("averageRateReversed")) return getAllAuthorsSortedByAverageRateReversed(searchWord);
         if(howDoWeSortAuthors.equals("null") && !searchWord.equals("null")) return getAuthorBySearchWord(searchWord);
         return getAllAuthors();
     }
