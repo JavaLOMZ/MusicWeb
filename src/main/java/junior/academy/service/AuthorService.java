@@ -104,15 +104,6 @@ public class AuthorService {
         return authorsSortedByCountryOfOriginReversed;
     }
 
-
-    //todo how to show it in html?
-//    public Map<Long,Double> getAverageRatesForAllAuthors(){
-//        return getAllAuthors().stream()
-//                .collect(Collectors.toMap(Author::getAuthorId, a->getAverageRateOfAuthorSongs(a.getAuthorId())));
-//    }
-
-
-
     public List<Double> getAverageRatesForAllAuthors(String howDoWeSortAuthors, String searchWord){
         List<Author>authorList=listOfAuthorsToGetRates(howDoWeSortAuthors,searchWord);
         List<Double>authorRates=new ArrayList<>();
@@ -135,8 +126,12 @@ public class AuthorService {
 
     public double getAverageRateOfAuthorSongs(long authorId){
         List<Song> authorSongs=songService.getSongsByAuthorId(authorId);
-        double averageRate= authorSongs.stream().mapToDouble(s->rateService.songAverageRate(s.getSongId())).sum();
-        if(averageRate>0) return Math.round(averageRate/authorSongs.size()*100)/100.00;
+        double averageRate= authorSongs.stream()
+                .mapToDouble(s->rateService.songAverageRate(s.getSongId())).sum();
+        long howManyRates= authorSongs.stream()
+                .filter(s->rateService.songAverageRate(s.getSongId())>0.00)
+                .map(s->rateService.getRatesBySongId(s.getSongId())).count();
+        if(averageRate>0) return Math.round(averageRate/howManyRates*100)/100.00;
         return 0.00;
     }
 }

@@ -24,12 +24,12 @@ export class RateService {
       .map((res: Response) => res.json())
       .catch((error: any) => Observable.throw(error.json().error || 'Server Error'));
   }
-  //todo same as delete, edit function in user-page
+
   createOrUpdateRate(rate: Rate): Observable<Rate> {
     return this.http.post(this.apiUrl, rate, {headers: this.headers})
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
-  //todo i think it ll be nice to delete rates only in user-page view
+
   deleteRateById(rateId: number): Observable<boolean> {
     return this.http.delete(this.apiUrl + '/' + rateId, {headers: this.headers})
       .map((res: Response) => res.json())
