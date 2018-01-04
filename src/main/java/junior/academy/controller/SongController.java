@@ -152,4 +152,14 @@ public class SongController {
     public List<Song> getAllSongsSortedByAuthorNameReversed(@PathVariable String searchWord){
         return songService.getAllSongsSortedByAuthorNameReversed(searchWord);
     }
+
+    @GetMapping("/sortedByAverageRate/{searchWord}")
+    public List<Song> getAllSongsSortedByAverageRate(@PathVariable String searchWord){
+        return songService.getAllSongsSortedByAverageRate(searchWord);
+    }
+
+    @GetMapping("/sortedByAverageRateReversed/{searchWord}")
+    public List<Song> getAllSongsSortedByAverageRateReversed(@PathVariable String searchWord){
+        return songService.getAllSongsSortedByAverageRateReversed(searchWord);
+    }
 }

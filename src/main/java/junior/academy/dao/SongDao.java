@@ -69,6 +69,4 @@ public class SongDao {
         query.setParameter("searchWord","%"+searchWord+"%");
         return query.list();
     }
-
-
 }

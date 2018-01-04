@@ -12,7 +12,6 @@ import java.util.*;
 public class SongService {
 
 
-
     @Autowired
     SongDao songDao;
 
@@ -52,11 +51,11 @@ public class SongService {
         return songDao.getRatedSongs(userId);
     }
 
-    public Song getUniqueSongByNameAndAuthor(String songName, long authorId){
-        return songDao.getUniqueSongByNameAndAuthor(songName,authorId);
+    public Song getUniqueSongByNameAndAuthor(String songName, long authorId) {
+        return songDao.getUniqueSongByNameAndAuthor(songName, authorId);
     }
 
-    public List<Song> getSongBySearchWord(String searchWord){
+    public List<Song> getSongBySearchWord(String searchWord) {
         return songDao.getSongBySearchWord(searchWord);
     }
 
@@ -64,59 +63,89 @@ public class SongService {
         return songDao.getSongById(songId).isPresent();
     }
 
-    public List<Song> getListToSortElementsWithSearchWord(String searchWord){
-        List<Song>listToSortSongs;
+    public List<Song> getListToSortElementsWithSearchWord(String searchWord) {
+        List<Song> listToSortSongs;
         if (searchWord != null && searchWord.compareTo("undefined") != 0 && searchWord.compareTo("null") != 0)
             listToSortSongs = getSongBySearchWord(searchWord);
         else listToSortSongs = getAllSongs();
         return listToSortSongs;
     }
 
-    public List<Song> getAllSongsSortedBySongName (String searchWord){
-        List<Song>songsSortedByName=getListToSortElementsWithSearchWord(searchWord);
+    public List<Song> getAllSongsSortedBySongName(String searchWord) {
+        List<Song> songsSortedByName = getListToSortElementsWithSearchWord(searchWord);
         songsSortedByName.sort(Comparator.comparing(Song::getSongName));
         return songsSortedByName;
     }
 
-    public List<Song> getAllSongsSortedBySongNameReversed (String searchWord){
-        List<Song>songsSortedByNameReversed=getListToSortElementsWithSearchWord(searchWord);
+    public List<Song> getAllSongsSortedBySongNameReversed(String searchWord) {
+        List<Song> songsSortedByNameReversed = getListToSortElementsWithSearchWord(searchWord);
         songsSortedByNameReversed.sort(Comparator.comparing(Song::getSongName).reversed());
         return songsSortedByNameReversed;
     }
 
-    public List<Song> getAllSongsSortedByMusicGenre (String searchWord){
-        List<Song>songsSortedByMusicGenre=getListToSortElementsWithSearchWord(searchWord);
+    public List<Song> getAllSongsSortedByMusicGenre(String searchWord) {
+        List<Song> songsSortedByMusicGenre = getListToSortElementsWithSearchWord(searchWord);
         songsSortedByMusicGenre.sort(Comparator.comparing(Song::getMusicGenre));
         return songsSortedByMusicGenre;
     }
 
-    public List<Song> getAllSongsSortedByMusicGenreReversed (String searchWord){
-        List<Song>songsSortedByMusicGenreReversed=getListToSortElementsWithSearchWord(searchWord);
+    public List<Song> getAllSongsSortedByMusicGenreReversed(String searchWord) {
+        List<Song> songsSortedByMusicGenreReversed = getListToSortElementsWithSearchWord(searchWord);
         songsSortedByMusicGenreReversed.sort(Comparator.comparing(Song::getMusicGenre).reversed());
         return songsSortedByMusicGenreReversed;
     }
 
-    public List<Song> getAllSongsSortedByReleaseYear (String searchWord){
-        List<Song>songsSortedByReleaseYear=getListToSortElementsWithSearchWord(searchWord);
+    public List<Song> getAllSongsSortedByReleaseYear(String searchWord) {
+        List<Song> songsSortedByReleaseYear = getListToSortElementsWithSearchWord(searchWord);
         songsSortedByReleaseYear.sort(Comparator.comparing(Song::getReleaseYear));
         return songsSortedByReleaseYear;
     }
 
-    public List<Song> getAllSongsSortedByReleaseYearReversed (String searchWord){
-        List<Song>songsSortedByReleaseYearReversed=getListToSortElementsWithSearchWord(searchWord);
+    public List<Song> getAllSongsSortedByReleaseYearReversed(String searchWord) {
+        List<Song> songsSortedByReleaseYearReversed = getListToSortElementsWithSearchWord(searchWord);
         songsSortedByReleaseYearReversed.sort(Comparator.comparing(Song::getReleaseYear).reversed());
         return songsSortedByReleaseYearReversed;
     }
 
-    public List<Song> getAllSongsSortedByAuthorName (String searchWord){
-        List<Song>songsSortedByAuthorName=getListToSortElementsWithSearchWord(searchWord);
+    public List<Song> getAllSongsSortedByAuthorName(String searchWord) {
+        List<Song> songsSortedByAuthorName = getListToSortElementsWithSearchWord(searchWord);
         songsSortedByAuthorName.sort(Comparator.comparing(song -> song.getAuthor().getName()));
         return songsSortedByAuthorName;
     }
 
-    public List<Song> getAllSongsSortedByAuthorNameReversed (String searchWord){
-        List<Song>songsSortedByAuthorNameReversed=getListToSortElementsWithSearchWord(searchWord);
+    public List<Song> getAllSongsSortedByAuthorNameReversed(String searchWord) {
+        List<Song> songsSortedByAuthorNameReversed = getListToSortElementsWithSearchWord(searchWord);
         songsSortedByAuthorNameReversed.sort((o1, o2) -> o2.getAuthor().getName().compareTo(o1.getAuthor().getName()));
         return songsSortedByAuthorNameReversed;
+    }
+
+
+    //todo temporary method to update all songs MAREK which are without songAverageRate, i've implemented it in method getAllAuthors()
+//    public void updateSongAverageRate(){
+//        List<Song>songs=getAllSongs();
+//        for(Song s:songs){
+//            double averageSongRate=rateService.songAverageRate(s.getSongId());
+//            s.setSongAverageRate(averageSongRate);
+//            songDao.createOrUpdateSong(s);
+//        }
+//
+//    }
+
+    public void updateSongAverageRate(long songId) {
+        Optional<Song> song=getSongById(songId);
+        song.get().setSongAverageRate(rateService.songAverageRate(song.get().getSongId()));
+        songDao.createOrUpdateSong(song.get());
+    }
+
+    public List<Song> getAllSongsSortedByAverageRate(String searchWord) {
+        List<Song> songsSortedByAverageRate = getListToSortElementsWithSearchWord(searchWord);
+        songsSortedByAverageRate.sort(Comparator.comparing(Song::getSongAverageRate));
+        return songsSortedByAverageRate;
+    }
+
+    public List<Song> getAllSongsSortedByAverageRateReversed(String searchWord) {
+        List<Song> songsSortedByAverageRateReversed = getListToSortElementsWithSearchWord(searchWord);
+        songsSortedByAverageRateReversed.sort(Comparator.comparing(Song::getSongAverageRate).reversed());
+        return songsSortedByAverageRateReversed;
     }
 }

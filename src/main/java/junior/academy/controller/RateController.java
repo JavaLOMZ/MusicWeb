@@ -54,6 +54,7 @@ public class RateController {
     @PostMapping
     public void createOrUpdateRate(@RequestBody @Valid Rate rate) {
         rateService.createOrUpdateRate(rate);
+        songService.updateSongAverageRate(rate.getSong().getSongId());
     }
 
     @DeleteMapping("/{rateId}")

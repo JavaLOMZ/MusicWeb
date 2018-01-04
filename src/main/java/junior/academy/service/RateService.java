@@ -17,6 +17,9 @@ public class RateService {
     @Autowired
     RateDao rateDao;
 
+    @Autowired
+    SongService songService;
+
     public Optional<Rate> getRateById(long rateId){
         return rateDao.getRateById(rateId);
     }
@@ -49,6 +52,7 @@ public class RateService {
         return rateDao.getRatesBySongId(songId);
     }
 
+    //todo we can delete this method usage from few places now
     public double songAverageRate(long songId){
         List<Rate>rates=getRatesBySongId(songId);
         return Math.round(rates.stream().mapToDouble(Rate::getRateValue).sum()/rates.size()*100)/100.00;
