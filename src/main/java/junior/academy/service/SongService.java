@@ -1,5 +1,6 @@
 package junior.academy.service;
 
+import junior.academy.dao.DefaultDao;
 import junior.academy.dao.SongDao;
 import junior.academy.domain.MusicGenre;
 import junior.academy.domain.Song;
@@ -16,24 +17,28 @@ public class SongService {
     SongDao songDao;
 
     @Autowired
+    DefaultDao defaultDao;
+
+    @Autowired
     RateService rateService;
 
     public Optional<Song> getSongById(long songId) {
-        return songDao.getSongById(songId);
+        return defaultDao.getById(Song.class,songId);
     }
 
     public List<Song> getAllSongs() {
-        return songDao.getAllSongs();
+        return defaultDao.getAll(Song.class);
     }
 
     public void createOrUpdateSong(Song song) {
         song.setYouTubeLink(song.getYouTubeLink().replace("https://www.youtube.com/watch?v=", "https://www.youtube.com/embed/"));
-        songDao.createOrUpdateSong(song);
+        defaultDao.saveOrUpdate(song);
     }
 
     public void deleteSongById(long songId) {
-        songDao.deleteSongById(songId);
+        defaultDao.deleteById(Song.class,songId);
     }
+
 
     public List<Song> getSongsByAuthorId(long authorId) {
         return songDao.getSongsByAuthorId(authorId);
@@ -60,7 +65,7 @@ public class SongService {
     }
 
     public boolean isSongPresent(long songId) {
-        return songDao.getSongById(songId).isPresent();
+        return defaultDao.getById(Song.class,songId).isPresent();
     }
 
     public List<Song> getListToSortElementsWithSearchWord(String searchWord) {
@@ -134,7 +139,7 @@ public class SongService {
     public void updateSongAverageRate(long songId) {
         Optional<Song> song=getSongById(songId);
         song.get().setSongAverageRate(rateService.songAverageRate(song.get().getSongId()));
-        songDao.createOrUpdateSong(song.get());
+        defaultDao.saveOrUpdate(song.get());
     }
 
     public List<Song> getAllSongsSortedByAverageRate(String searchWord) {

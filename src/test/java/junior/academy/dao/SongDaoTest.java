@@ -29,38 +29,6 @@ public class SongDaoTest extends EntityDaoTest {
     }
 
     @Test
-    public void getAllSongs() {
-        assertEquals(songDao.getAllSongs().size(), 3);
-    }
-
-    @Test
-    public void getSongById() {
-        assertNotNull(songDao.getSongById(1));
-        assertTrue(songDao.getSongById(1).get().getSongName().equals("TestSong"));
-    }
-
-    @Test
-    public void createSong() {
-        Song song = getSong();
-        songDao.createOrUpdateSong(song);
-        assertEquals(songDao.getAllSongs().size(), 4);
-    }
-
-    @Test
-    public void updateSong() {
-        Song songTest = songDao.getSongById(1).get();
-        songTest.setSongName("TestingSong");
-        songDao.createOrUpdateSong(songTest);
-        assertTrue(songDao.getSongById(1).get().getSongName().equals("TestingSong"));
-    }
-
-    @Test
-    public void deleteSong() {
-        songDao.deleteSongById(1);
-        assertEquals(songDao.getAllSongs().size(), 2);
-    }
-
-    @Test
     public void getSongsByAuthorId(){
         assertEquals(songDao.getSongsByAuthorId(anyLong()).size(),0);
     }

@@ -18,22 +18,6 @@ public class AuthorDao {
     @Autowired
     private SessionFactory sessionFactory;
 
-//    public Optional<Author> getAuthorById(long authorId) {
-//        return Optional.ofNullable(sessionFactory.getCurrentSession().get(Author.class, authorId));
-//    }
-
-//    public List<Author> getAllAuthors() {
-//        return sessionFactory.getCurrentSession().createQuery("from Author").list();
-//    }
-
-//    public void createOrUpdateAuthor(Author author) {
-//        sessionFactory.getCurrentSession().saveOrUpdate(author);
-//    }
-
-//    public void deleteAuthorById(long authorId) {
-//        sessionFactory.getCurrentSession().delete(getAuthorById(authorId).get());
-//    }
-
     public Optional<Author> getAuthorByName(String name){
         Query query= sessionFactory.getCurrentSession().createQuery("from Author where name=:name");
         query.setParameter("name",name);
