@@ -23,12 +23,8 @@ public class UserService {
     PasswordEncoder passwordEncoder;
 
     public Optional<User> getUserById(long userId) {
-        return userDao.getUserById(userId);
+        return defaultDao.getById(User.class,userId);
     }
-
-//    public List<User> getAllUsers() {
-//        return userDao.getAllUsers();
-//    }
 
     public List<User>getAllUsers(){
         return defaultDao.getAll(User.class);
@@ -36,11 +32,11 @@ public class UserService {
 
     public void createOrUpdateUser(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        userDao.createOrUpdateUser(user);
+        defaultDao.saveOrUpdate(user);
     }
 
     public void deleteUserById(long userId) {
-        userDao.deleteUserById(userId);
+        defaultDao.deleteById(User.class,userId);
     }
 
     public Optional<User> getUserByUsername(String nickname){
@@ -52,7 +48,7 @@ public class UserService {
     }
 
     public boolean isUserPresent(long userId) {
-        return userDao.getUserById(userId).isPresent();
+        return defaultDao.getById(User.class,userId).isPresent();
     }
 
     public boolean isUserPresent(String nickname) {

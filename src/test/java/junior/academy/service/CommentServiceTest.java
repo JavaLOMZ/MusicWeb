@@ -2,6 +2,7 @@ package junior.academy.service;
 
 
 import junior.academy.dao.CommentDao;
+import junior.academy.dao.DefaultDao;
 import junior.academy.domain.Comment;
 
 import static org.junit.Assert.*;
@@ -22,6 +23,9 @@ public class CommentServiceTest {
     @Mock
     CommentDao commentDao;
 
+    @Mock
+    DefaultDao defaultDao;
+
     @InjectMocks
     CommentService commentService;
 
@@ -36,35 +40,36 @@ public class CommentServiceTest {
 
     @Test
     public void createOrUpdateComment() {
-        doNothing().when(commentDao).createOrUpdateComment((any(Comment.class)));
+        doNothing().when(defaultDao).saveOrUpdate((any(Comment.class)));
         commentService.createOrUpdateComment(any(Comment.class));
-        verify(commentDao, atLeastOnce()).createOrUpdateComment(any(Comment.class));
+        verify(defaultDao, atLeastOnce()).saveOrUpdate(any(Comment.class));
     }
 
     @Test
     public void getAllComments() {
-        when(commentDao.getAllComments()).thenReturn(comments);
+        when(defaultDao.getAll(eq(Comment.class))).thenReturn(comments);
         assertEquals(commentService.getAllComments(), comments);
     }
 
     @Test
     public void deleteCommentById() {
-        doNothing().when(commentDao).deleteCommentById(anyLong());
-        commentService.deleteCommentById(anyLong());
-        verify(commentDao, atLeastOnce()).deleteCommentById(anyLong());
+        long id= comments.get(0).getCommentId();
+        doNothing().when(defaultDao).deleteById(eq(Comment.class),anyLong());
+        commentService.deleteCommentById(id);
+        verify(defaultDao, atLeastOnce()).deleteById(eq(Comment.class),anyLong());
     }
 
     @Test
     public void getCommentById() {
         Comment comment = comments.get(0);
-        when(commentDao.getCommentById(anyLong())).thenReturn(Optional.ofNullable(comment));
-        assertEquals(commentService.getCommentById(anyLong()), Optional.of(comment));
+        when(defaultDao.getById(eq(Comment.class),anyLong())).thenReturn(Optional.ofNullable(comment));
+        assertEquals(commentService.getCommentById(comment.getCommentId()), Optional.of(comment));
     }
 
     @Test
     public void isCommentPresent() {
         Comment comment = comments.get(0);
-        when(commentDao.getCommentById(anyLong())).thenReturn(Optional.ofNullable(comment));
+        when(defaultDao.getById(eq(Comment.class),anyLong())).thenReturn(Optional.ofNullable(comment));
         assertEquals(commentService.isCommentPresent(comment.getCommentId()), true);
     }
 

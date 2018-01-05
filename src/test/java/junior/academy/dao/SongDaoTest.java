@@ -28,6 +28,8 @@ public class SongDaoTest extends EntityDaoTest {
         return new CompositeDataSet(datasets);
     }
 
+    //todo 4 tests missing
+
     @Test
     public void getSongsByAuthorId(){
         assertEquals(songDao.getSongsByAuthorId(anyLong()).size(),0);

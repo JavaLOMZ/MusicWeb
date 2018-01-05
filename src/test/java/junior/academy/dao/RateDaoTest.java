@@ -23,37 +23,7 @@ public class RateDaoTest extends EntityDaoTest {
         return new CompositeDataSet(datasets);
     }
 
-    @Test
-    public void getAllRates() {
-        assertEquals(rateDao.getAllRates().size(), 1);
-    }
-
-    @Test
-    public void getRateById() {
-        assertNotNull(rateDao.getRateById(1));
-        assertTrue(rateDao.getRateById(1).get().getRateValue() == 8);
-    }
-
-    @Test
-    public void createRate() {
-        Rate rate = getRate();
-        rateDao.createOrUpdateRate(rate);
-        assertEquals(rateDao.getAllRates().size(), 2);
-    }
-
-    @Test
-    public void updateRate() {
-        Rate rateTest = rateDao.getRateById(1).get();
-        rateTest.setRateValue(10);
-        rateDao.createOrUpdateRate(rateTest);
-        assertTrue(rateDao.getRateById(1).get().getRateValue() == 10);
-    }
-
-    @Test
-    public void deleteRate() {
-        rateDao.deleteRateById(1);
-        assertEquals(rateDao.getAllRates().size(), 0);
-    }
+    //todo 4 tests missing
 
     private Rate getRate() {
         Rate rate = new Rate();

@@ -31,37 +31,7 @@ public class CommentDaoTest extends EntityDaoTest {
         return new CompositeDataSet(datasets);
     }
 
-    @Test
-    public void getAllComments() {
-        assertEquals(commentDao.getAllComments().size(), 1);
-    }
-
-    @Test
-    public void getCommentById() {
-        assertNotNull(commentDao.getCommentById(1));
-        assertTrue(commentDao.getCommentById(1).get().getCommentText().equals("coolsong"));
-    }
-
-    @Test
-    public void createComment() {
-        Comment comment = getComment();
-        commentDao.createOrUpdateComment(comment);
-        assertEquals(commentDao.getAllComments().size(), 2);
-    }
-
-    @Test
-    public void updateComment() {
-        Comment commentTest = commentDao.getCommentById(1).get();
-        commentTest.setCommentText("badsong");
-        commentDao.createOrUpdateComment(commentTest);
-        assertTrue(commentDao.getCommentById(1).get().getCommentText().equals("badsong"));
-    }
-
-    @Test
-    public void deleteComment() {
-        commentDao.deleteCommentById(1);
-        assertEquals(commentDao.getAllComments().size(), 0);
-    }
+    //todo 4 tests missing
 
     @Test
     public void getCommentsByUserId(){
