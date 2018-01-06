@@ -30,6 +30,9 @@ public class Song {
     @Column(name = "youTubeLink")
     private String youTubeLink;
 
+    @Column(name = "songAverageRate")
+    private double songAverageRate;
+
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
     @JoinColumn(name = "authorId")
     @JsonUnwrapped
@@ -44,7 +47,9 @@ public class Song {
     @JsonIgnoreProperties({"song", "user"})
     private Set<Comment> comments;
 
-    public Song(){};
+    public Song(){
+        this.songAverageRate=0;
+    }
 
     public Song(String songName, MusicGenre musicGenre, int releaseYear, String youTubeLink, Author author) {
         this.songName = songName;
@@ -119,6 +124,14 @@ public class Song {
         this.songId = songId;
     }
 
+    public double getSongAverageRate() {
+        return songAverageRate;
+    }
+
+    public void setSongAverageRate(double songAverageRate) {
+        this.songAverageRate = songAverageRate;
+    }
+
 
     @Override
     public boolean equals(Object o) {
@@ -127,6 +140,7 @@ public class Song {
         Song song = (Song) o;
         return songId == song.songId &&
                 releaseYear == song.releaseYear &&
+                Double.compare(song.songAverageRate, songAverageRate) == 0 &&
                 Objects.equals(songName, song.songName) &&
                 musicGenre == song.musicGenre &&
                 Objects.equals(youTubeLink, song.youTubeLink);
@@ -134,7 +148,8 @@ public class Song {
 
     @Override
     public int hashCode() {
-        return Objects.hash(songId, songName, musicGenre, releaseYear, youTubeLink);
+
+        return Objects.hash(songId, songName, musicGenre, releaseYear, youTubeLink, songAverageRate);
     }
 
     @Override
@@ -145,8 +160,7 @@ public class Song {
                 ", musicGenre=" + musicGenre +
                 ", releaseYear=" + releaseYear +
                 ", youTubeLink='" + youTubeLink + '\'' +
-                ", author=" + author +
-                ", comments=" + comments +
-                '}';
+                ", songAverageRate=" + songAverageRate +
+                ", author=" + author+'}';
     }
 }

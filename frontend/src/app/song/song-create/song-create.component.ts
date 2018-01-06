@@ -23,6 +23,7 @@ export class SongCreateComponent implements OnInit {
   musicGenre: MusicGenre[];
 
   authorId:number;
+  songAverageRate:number;
   songForm: FormGroup;
   songNameToShow:string;
   private sub: any;
@@ -36,7 +37,8 @@ export class SongCreateComponent implements OnInit {
   ngOnInit() {
     this.sub = this.route.params.subscribe(params => {
       this.songId = params['songId'],
-      this.authorId=params['authorId'];
+      this.authorId=params['authorId'],
+        this.songAverageRate=params['songAverageRate'];
     });
     if(this.songId) {
       this.songForm = new FormGroup({
@@ -94,7 +96,8 @@ export class SongCreateComponent implements OnInit {
             this.songForm.controls['musicGenre'].value,
             this.songForm.controls['releaseYear'].value,
             this.songForm.controls['youTubeLink'].value,
-            this.songForm.controls['authorId'].value);
+            this.songForm.controls['authorId'].value,
+            this.songAverageRate);
           this.songService.createOrUpdateSong(song).subscribe();
         } else {
           let song: Song = new Song(null,
@@ -102,7 +105,8 @@ export class SongCreateComponent implements OnInit {
             this.songForm.controls['musicGenre'].value,
             this.songForm.controls['releaseYear'].value,
             this.songForm.controls['youTubeLink'].value,
-            this.songForm.controls['authorId'].value);
+            this.songForm.controls['authorId'].value,
+            0);
           this.songService.createOrUpdateSong(song).subscribe();
         }
         this.songForm.reset();

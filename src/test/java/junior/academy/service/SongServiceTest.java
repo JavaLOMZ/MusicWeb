@@ -1,6 +1,7 @@
 package junior.academy.service;
 
 
+import junior.academy.dao.DefaultDao;
 import junior.academy.dao.SongDao;
 import junior.academy.domain.Author;
 import junior.academy.domain.MusicGenre;
@@ -23,6 +24,9 @@ public class SongServiceTest {
     @Mock
     SongDao songDao;
 
+    @Mock
+    DefaultDao defaultDao;
+
     @InjectMocks
     SongService songService;
 
@@ -37,39 +41,40 @@ public class SongServiceTest {
 
     @Test
     public void getAllSongs() {
-        when(songDao.getAllSongs()).thenReturn(songs);
+        when(defaultDao.getAll(Song.class)).thenReturn(songs);
         assertEquals(songService.getAllSongs().size(), 2);
     }
 
     @Test
     public void getSongById() {
         Song song = songs.get(0);
-        when(songDao.getSongById(anyLong())).thenReturn(Optional.ofNullable(song));
-        assertEquals(songService.getSongById(anyLong()), Optional.ofNullable(song));
+        when(defaultDao.getById(eq(Song.class),anyLong())).thenReturn(Optional.ofNullable(song));
+        assertEquals(songService.getSongById(song.getSongId()), Optional.ofNullable(song));
 
     }
 
     @Test
     public void createOrUpdateSong() {
         Song song = getSongList().get(0);
-        doNothing().when(songDao).createOrUpdateSong(song);
+        doNothing().when(defaultDao).saveOrUpdate(song);
         song.setYouTubeLink(song.getYouTubeLink().replace("https://www.youtube.com/watch?v=", "https://www.youtube.com/embed/"));
         songService.createOrUpdateSong(song);
-        verify(songDao, atLeastOnce()).createOrUpdateSong(song);
+        verify(defaultDao, atLeastOnce()).saveOrUpdate(song);
     }
 
     @Test
     public void deleteSongById() {
-        doNothing().when(songDao).deleteSongById(anyLong());
-        songService.deleteSongById(anyLong());
-        verify(songDao, atLeastOnce()).deleteSongById(anyLong());
+        long id=songs.get(0).getSongId();
+        doNothing().when(defaultDao).deleteById(eq(Song.class),anyLong());
+        songService.deleteSongById(id);
+        verify(defaultDao, atLeastOnce()).deleteById(eq(Song.class),anyLong());
     }
 
     @Test
     public void isSongPresentById() {
         Song song = songs.get(0);
-        when(songDao.getSongById(anyLong())).thenReturn(Optional.ofNullable(song));
-        assertEquals(songService.isSongPresent(anyLong()), true);
+        when(defaultDao.getById(eq(Song.class),anyLong())).thenReturn(Optional.ofNullable(song));
+        assertEquals(songService.isSongPresent(song.getSongId()), true);
     }
 
 
@@ -119,7 +124,7 @@ public class SongServiceTest {
         List<Song> specifiedSongsList = getSongBiggerList();
         String searchWord = null;
         when(songDao.getSongBySearchWord(searchWord)).thenReturn(songs);
-        when(songDao.getAllSongs()).thenReturn(specifiedSongsList);
+        when(defaultDao.getAll(Song.class)).thenReturn(specifiedSongsList);
         if (searchWord != null && searchWord.compareTo("undefined") != 0 && searchWord.compareTo("null") != 0)
             listToSortSongs = songService.getSongBySearchWord(searchWord);
         else listToSortSongs = songService.getAllSongs();

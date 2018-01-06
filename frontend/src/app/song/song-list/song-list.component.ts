@@ -23,6 +23,7 @@ export class SongListComponent implements OnInit {
   sortedByMusicGenre:boolean;
   sortedByReleaseYear: boolean;
   sortedByAuthorName: boolean;
+  sortedByAverageRate: boolean;
 
 
   authors: Author[];
@@ -42,6 +43,7 @@ export class SongListComponent implements OnInit {
     this.sortedByMusicGenre=false;
     this.sortedByReleaseYear=false;
     this.sortedByAuthorName=false;
+    this.sortedByAverageRate=false;
   }
 
   getAllSongs() {
@@ -201,6 +203,28 @@ export class SongListComponent implements OnInit {
       songs=>{
         this.songs=songs;
         this.sortedByAuthorName=false;
+      },err=>{
+        console.log(err)
+      }
+    )
+  }
+
+  getAllSongsSortedByAverageRate(searchedWord:string){
+    this.songService.getAllSongsSortedByAverageRate(searchedWord).subscribe(
+      songs=>{
+        this.songs=songs;
+        this.sortedByAverageRate=true;
+      },err=>{
+        console.log(err)
+      }
+    )
+  }
+
+  getAllSongsSortedByAverageRateReversed(searchedWord:string){
+    this.songService.getAllSongsSortedByAverageRateReversed(searchedWord).subscribe(
+      songs=>{
+        this.songs=songs;
+        this.sortedByAverageRate=false;
       },err=>{
         console.log(err)
       }

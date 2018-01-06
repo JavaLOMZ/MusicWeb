@@ -1,6 +1,7 @@
 package junior.academy.service;
 
 import junior.academy.dao.CommentDao;
+import junior.academy.dao.DefaultDao;
 import junior.academy.domain.Comment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,26 +16,29 @@ public class CommentService {
     CommentDao commentDao;
 
     @Autowired
+    DefaultDao defaultDao;
+
+    @Autowired
     UserService userService;
 
     public Optional<Comment> getCommentById(long commentId){
-        return commentDao.getCommentById(commentId);
+        return defaultDao.getById(Comment.class,commentId);
     }
 
     public List<Comment> getAllComments(){
-        return commentDao.getAllComments();
+        return defaultDao.getAll(Comment.class);
     }
 
     public void createOrUpdateComment(Comment comment){
-        commentDao.createOrUpdateComment(comment);
+        defaultDao.saveOrUpdate(comment);
     }
 
     public void deleteCommentById(long commentId){
-        commentDao.deleteCommentById(commentId);
+        defaultDao.deleteById(Comment.class,commentId);
     }
 
     public boolean isCommentPresent(long commentId){
-        return commentDao.getCommentById(commentId).isPresent();
+        return defaultDao.getById(Comment.class,commentId).isPresent();
     }
 
     public List<Comment> getCommentsByUserId(long userId){

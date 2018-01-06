@@ -1,6 +1,7 @@
 package junior.academy.service;
 
 
+import junior.academy.dao.DefaultDao;
 import junior.academy.dao.RateDao;
 import junior.academy.domain.Rate;
 
@@ -21,6 +22,9 @@ public class RateServiceTest {
     @Mock
     RateDao rateDao;
 
+    @Mock
+    DefaultDao defaultDao;
+
     @InjectMocks
     RateService rateService;
 
@@ -35,35 +39,36 @@ public class RateServiceTest {
 
     @Test
     public void createOrUpdateRate() {
-        doNothing().when(rateDao).createOrUpdateRate((any(Rate.class)));
+        doNothing().when(defaultDao).saveOrUpdate((any(Rate.class)));
         rateService.createOrUpdateRate(any(Rate.class));
-        verify(rateDao, atLeastOnce()).createOrUpdateRate(any(Rate.class));
+        verify(defaultDao, atLeastOnce()).saveOrUpdate(any(Rate.class));
     }
 
     @Test
     public void getAllRates() {
-        when(rateDao.getAllRates()).thenReturn(rates);
+        when(defaultDao.getAll(Rate.class)).thenReturn(rates);
         assertEquals(rateService.getAllRates(), rates);
     }
 
     @Test
     public void deleteRateById() {
-        doNothing().when(rateDao).deleteRateById(anyLong());
-        rateService.deleteRateById(anyLong());
-        verify(rateDao, atLeastOnce()).deleteRateById(anyLong());
+        long id=rates.get(0).getRateId();
+        doNothing().when(defaultDao).deleteById(eq(Rate.class),anyLong());
+        rateService.deleteRateById(id);
+        verify(defaultDao, atLeastOnce()).deleteById(eq(Rate.class),anyLong());
     }
 
     @Test
     public void getRateById() {
         Rate rate = rates.get(0);
-        when(rateDao.getRateById(anyLong())).thenReturn(Optional.ofNullable(rate));
-        assertEquals(rateService.getRateById(anyLong()), Optional.of(rate));
+        when(defaultDao.getById(eq(Rate.class),anyLong())).thenReturn(Optional.ofNullable(rate));
+        assertEquals(rateService.getRateById(rate.getRateId()), Optional.of(rate));
     }
 
     @Test
     public void isRatePresent() {
         Rate rate = rates.get(0);
-        when(rateDao.getRateById(anyLong())).thenReturn(Optional.ofNullable(rate));
+        when(defaultDao.getById(eq(Rate.class),anyLong())).thenReturn(Optional.ofNullable(rate));
         assertEquals(rateService.isRatePresent(rate.getRateId()), true);
     }
 

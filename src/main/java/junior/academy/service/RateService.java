@@ -1,5 +1,6 @@
 package junior.academy.service;
 
+import junior.academy.dao.DefaultDao;
 import junior.academy.dao.RateDao;
 import junior.academy.domain.Rate;
 import junior.academy.domain.Rate;
@@ -17,24 +18,30 @@ public class RateService {
     @Autowired
     RateDao rateDao;
 
+    @Autowired
+    DefaultDao defaultDao;
+
+    @Autowired
+    SongService songService;
+
     public Optional<Rate> getRateById(long rateId){
-        return rateDao.getRateById(rateId);
+        return defaultDao.getById(Rate.class,rateId);
     }
 
     public List<Rate> getAllRates(){
-        return rateDao.getAllRates();
+        return defaultDao.getAll(Rate.class);
     }
 
     public void createOrUpdateRate(Rate rate){
-        rateDao.createOrUpdateRate(rate);
+        defaultDao.saveOrUpdate(rate);
     }
 
     public void deleteRateById(long rateId){
-        rateDao.deleteRateById(rateId);
+        defaultDao.deleteById(Rate.class,rateId);
     }
 
     public boolean isRatePresent(long rateId){
-        return rateDao.getRateById(rateId).isPresent();
+        return defaultDao.getById(Rate.class,rateId).isPresent();
     }
 
     public List<Rate> getRatesByUserId(long userId){
@@ -49,6 +56,7 @@ public class RateService {
         return rateDao.getRatesBySongId(songId);
     }
 
+    //todo we can delete this method usage from few places now
     public double songAverageRate(long songId){
         List<Rate>rates=getRatesBySongId(songId);
         return Math.round(rates.stream().mapToDouble(Rate::getRateValue).sum()/rates.size()*100)/100.00;

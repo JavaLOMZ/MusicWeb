@@ -46,8 +46,10 @@ public class SongValidator implements Validator, ErrorCodes{
            errors.rejectValue("youTubeLink",BAD_YOUTUBE_LINK);
         }
 
-        if(!song.getYouTubeLink().contains("https://www.youtube.com/embed/") && song.getYouTubeLink().length()>0 && song.getSongId()!=0){
-            errors.rejectValue("youTubeLink",BAD_YOUTUBE_LINK);
+        if(!song.getYouTubeLink().contains("https://www.youtube.com/watch?v=")) {
+            if (!song.getYouTubeLink().contains("https://www.youtube.com/embed/") && song.getYouTubeLink().length() > 0 && song.getSongId() != 0) {
+                errors.rejectValue("youTubeLink", BAD_YOUTUBE_LINK);
+            }
         }
 
         if(songService.getUniqueSongByNameAndAuthor(song.getSongName(),song.getAuthor().getAuthorId())!=null && song.getSongId()==0){

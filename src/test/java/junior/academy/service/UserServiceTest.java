@@ -1,6 +1,7 @@
 package junior.academy.service;
 
 
+import junior.academy.dao.DefaultDao;
 import junior.academy.dao.UserDao;
 import junior.academy.domain.User;
 
@@ -24,6 +25,9 @@ public class UserServiceTest {
     UserDao userDao;
 
     @Mock
+    DefaultDao defaultDao;
+
+    @Mock
     PasswordEncoder passwordEncoder;
 
     @InjectMocks
@@ -41,36 +45,37 @@ public class UserServiceTest {
     @Test
     public void createOrUpdateUser() {
         User user=users.get(0);
-        doNothing().when(userDao).createOrUpdateUser((any(User.class)));
+        doNothing().when(defaultDao).saveOrUpdate((any(User.class)));
         when(passwordEncoder.encode(user.getPassword())).thenReturn(anyString());
         userService.createOrUpdateUser(user);
-        verify(userDao, atLeastOnce()).createOrUpdateUser(user);
+        verify(defaultDao, atLeastOnce()).saveOrUpdate(user);
     }
 
-//    @Test
-//    public void getAllUsers() {
-//        when(userDao.getAllUsers()).thenReturn(users);
-//        assertEquals(userService.getAllUsers().size(), 1);
-//    }
+    @Test
+    public void getAllUsers() {
+        when(defaultDao.getAll(User.class)).thenReturn(users);
+        assertEquals(userService.getAllUsers().size(), 1);
+    }
 
     @Test
     public void deleteUserById() {
-        doNothing().when(userDao).deleteUserById(anyLong());
-        userService.deleteUserById(anyLong());
-        verify(userDao, atLeastOnce()).deleteUserById(anyLong());
+        long id = users.get(0).getUserId();
+        doNothing().when(defaultDao).deleteById(eq(User.class),anyLong());
+        userService.deleteUserById(id);
+        verify(defaultDao, atLeastOnce()).deleteById(eq(User.class),anyLong());
     }
 
     @Test
     public void getUserById() {
         User user = users.get(0);
-        when(userDao.getUserById(anyLong())).thenReturn(Optional.ofNullable(user));
-        assertEquals(userService.getUserById(anyLong()), Optional.of(user));
+        when(defaultDao.getById(eq(User.class),anyLong())).thenReturn(Optional.ofNullable(user));
+        assertEquals(userService.getUserById(user.getUserId()), Optional.of(user));
     }
 
     @Test
     public void isUserPresent() {
         User user = users.get(0);
-        when(userDao.getUserById(anyLong())).thenReturn(Optional.ofNullable(user));
+        when(defaultDao.getById(eq(User.class),anyLong())).thenReturn(Optional.ofNullable(user));
         assertEquals(userService.isUserPresent(user.getUserId()), true);
     }
 

@@ -23,39 +23,6 @@ public class UserDaoTest extends EntityDaoTest {
         return new CompositeDataSet(datasets);
     }
 
-//    @Test
-//    public void getAllusers() {
-//        assertEquals(userDao.getAllUsers().size(), 1);
-//    }
-
-    @Test
-    public void getUserById() {
-        assertNotNull(userDao.getUserById(1));
-        assertEquals(userDao.getUserById(1).get().getNickname(), "Test");
-    }
-
-//    @Test
-//    public void createUser() {
-//        User user = getUser();
-//        userDao.createOrUpdateUser(user);
-//        assertEquals(userDao.getAllUsers().size(), 2);
-//    }
-
-
-    @Test
-    public void updateUser() {
-        User user = userDao.getUserById(1).get();
-        user.setNickname("TestingNickname");
-        userDao.createOrUpdateUser(user);
-        assertEquals(userDao.getUserById(1).get().getNickname(), "TestingNickname");
-    }
-
-//    @Test
-//    public void deleteUser() {
-//        userDao.deleteUserById(1);
-//        assertEquals(userDao.getAllUsers().size(), 0);
-//    }
-
     @Test
     public void getUserByUsername(){
         assertNotNull(userDao.getUserByUsername("Test"));

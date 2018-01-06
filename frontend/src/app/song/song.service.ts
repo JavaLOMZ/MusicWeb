@@ -128,6 +128,18 @@ export class SongService {
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
 
+  getAllSongsSortedByAverageRate(searchWord: string): Observable<any>{
+    return this, this.http.get(this.apiUrl + '/sortedByAverageRate/' + searchWord,{headers: this.headers})
+      .map((res: Response) => res.json())
+      .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+  }
+
+  getAllSongsSortedByAverageRateReversed(searchWord: string): Observable<any>{
+    return this, this.http.get(this.apiUrl + '/sortedByAverageRateReversed/' + searchWord,{headers: this.headers})
+      .map((res: Response) => res.json())
+      .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+  }
+
   handleError(error: any) {
     let errMsg = (error.message) ? error.message :
       error.status ? `${error.status} - ${error.statusText}` : 'Server error';

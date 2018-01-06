@@ -31,6 +31,8 @@
         <table class="table">
           <thead>
           <tr>
+            <th *ngIf="sortedByAverageRate==false"><button class="button" (click)="getAllSongsSortedByAverageRate(searchedWord)">Song Average Rate</button></th>
+            <th *ngIf="sortedByAverageRate==true"><button class="button" (click)="getAllSongsSortedByAverageRateReversed(searchedWord)">Song Average Rate</button></th>
             <th *ngIf="sortedBySongName==false"><button class="button" (click)="getAllSongsSortedBySongName(searchedWord)">Name</button></th>
             <th *ngIf="sortedBySongName==true"><button class="button" (click)="getAllSongsSortedBySongNameReversed(searchedWord)">Name</button></th>
             <th *ngIf="sortedByMusicGenre==false"><button class="button" (click)="getAllSongsSortedByMusicGenre(searchedWord)">Music Genre</button></th>
@@ -45,6 +47,7 @@
           </thead>
           <tbody>
           <tr *ngFor="let song of songs">
+            <td>{{song.songAverageRate}}</td>
             <td><button type="button" class="btn-primary" (click)="redirectSingleSongPage(song.songId)">{{song.songName}}</button></td>
             <td>{{song.musicGenre}}</td>
             <td>{{song.releaseYear}}</td>

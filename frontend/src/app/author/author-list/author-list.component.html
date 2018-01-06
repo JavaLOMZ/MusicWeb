@@ -35,22 +35,23 @@
         <table class="table">
           <thead>
           <tr>
+            <th *ngIf="sortedByAverageRate==false"><button class="button" (click)="getAllAuthorsSortedByAverageRate(searchedWord)">Author Rate</button></th>
+            <th *ngIf="sortedByAverageRate==true"><button class="button" (click)="getAllAuthorsSortedByAverageRateReversed(searchedWord)">Author Rate</button></th>
             <th *ngIf="sortedByName==false"><button class="button" (click)="getAllAuthorsSortedByName(searchedWord)">Name</button></th>
             <th *ngIf="sortedByName==true"><button class="button" (click)="getAllAuthorsSortedByNameReversed(searchedWord)">Name</button></th>
-            <th *ngIf="sortedByYearOfBirth==false"><button class="button" (click)="getAllAuthorsSortedByYearOfBirth(searchedWord)">YearOfBirth</button></th>
-            <th *ngIf="sortedByYearOfBirth==true"><button class="button" (click)="getAllAuthorsSortedByYearOfBirthReversed(searchedWord)">YearOfBirth</button></th>
-            <th *ngIf="sortedByCountry==false"><button class="button" (click)="getAllAuthorsSortedByCountryOfOrigin(searchedWord)">CountryOfOrigin</button></th>
-            <th *ngIf="sortedByCountry==true"><button class="button" (click)="getAllAuthorsSortedByCountryOfOriginReversed(searchedWord)">CountryOfOrigin</button></th>
-            <th>Author Rate</th>
+            <th *ngIf="sortedByYearOfBirth==false"><button class="button" (click)="getAllAuthorsSortedByYearOfBirth(searchedWord)">Year Of Birth</button></th>
+            <th *ngIf="sortedByYearOfBirth==true"><button class="button" (click)="getAllAuthorsSortedByYearOfBirthReversed(searchedWord)">Year Of Birth</button></th>
+            <th *ngIf="sortedByCountry==false"><button class="button" (click)="getAllAuthorsSortedByCountryOfOrigin(searchedWord)">Country Of Origin</button></th>
+            <th *ngIf="sortedByCountry==true"><button class="button" (click)="getAllAuthorsSortedByCountryOfOriginReversed(searchedWord)">Country Of Origin</button></th>
             <th></th>
           </tr>
           </thead>
           <tbody>
           <tr *ngFor="let author of authors" >
+            <td>{{getAuthorRate()}}</td>
             <td><button type="button" class="btn-primary" (click)="redirectToSingleAuthorPage(author.authorId)">{{author.name}}</button></td>
             <td>{{author.yearOfBirth}}</td>
             <td>{{author.countryOfOrigin}}</td>
-            <td>{{getAuthorRate()}}</td>
             <td>
               <button type="button" class="btn btn-success" (click)="editAuthorPage(author)">Edit</button>
               <button type="button" class="btn-primary" (click)="redirectToSongCreatePage(author.authorId)">Add Song</button>

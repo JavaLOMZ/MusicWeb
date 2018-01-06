@@ -101,16 +101,21 @@ public class AuthorController {
         return authorService.getAllAuthorsSortedByCountryOfOriginReversed(searchWord);
     }
 
+    @GetMapping("/sortedByAverageRate/{searchWord}")
+    public List<Author> getAllAuthorsSortedByAverageRate(@PathVariable String searchWord) {
+        return authorService.getAllAuthorsSortedByAverageRate(searchWord);
+    }
+
+    @GetMapping("/sortedByAverageRateReversed/{searchWord}")
+    public List<Author> getAllAuthorsSortedByAverageRateReversed(@PathVariable String searchWord) {
+        return authorService.getAllAuthorsSortedByAverageRateReversed(searchWord);
+    }
+
     @GetMapping("/averageRateOfAuthorSongs/{authorId}")
     public double getAverageRateOfAuthorSongs(@PathVariable long authorId){
         return authorService.getAverageRateOfAuthorSongs(authorId);
     }
 
-    //todo how to show it in html?
-//    @GetMapping("/averageAuthorRate")
-//    public Map<Long,Double> getAverageRatesForAllAuthors(){
-//        return authorService.getAverageRatesForAllAuthors();
-//    }
     @GetMapping("/averageAuthorRate/{howDoWeSortAuthors}/{searchWord}")
     public List<Double> getAverageRatesForAllAuthors(@PathVariable String howDoWeSortAuthors, @PathVariable String searchWord){
         return authorService.getAverageRatesForAllAuthors(howDoWeSortAuthors,searchWord);

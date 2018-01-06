@@ -19,6 +19,7 @@ export class AuthorListComponent implements OnInit {
   sortedByName: boolean;
   sortedByYearOfBirth: boolean;
   sortedByCountry: boolean;
+  sortedByAverageRate: boolean;
   searchedWord: string;
   averageAuthorRates: number[];
   authorRate:number;
@@ -34,7 +35,7 @@ export class AuthorListComponent implements OnInit {
     this.sortedByName=false;
     this.sortedByYearOfBirth=false;
     this.sortedByCountry=false;
-    //todo how to show it in html?
+    this.sortedByAverageRate=false;
     this.getAverageRatesForAllAuthors(null,null);
   }
 
@@ -75,10 +76,6 @@ export class AuthorListComponent implements OnInit {
     if(authorId) {
       this.router.navigate(['/author/authorPage', authorId]);
     }
-  }
-
-  redirectToUserPage(){
-    this.router.navigate(['/user']);
   }
 
   redirectToSongCreatePage(authorId:number) {
@@ -178,14 +175,32 @@ export class AuthorListComponent implements OnInit {
     );
   }
 
+  getAllAuthorsSortedByAverageRate(searchedWord: string){
+    this.authorService.getAllAuthorsSortedByAverageRate(searchedWord).subscribe(
+      authors =>{
+        this.sortedByAverageRate=true;
+        this.getAverageRatesForAllAuthors('averageRate',searchedWord);
+        this.authors = authors},
+      err=>{
+        console.log(err)
+      }
+    );
+  }
 
 
-  //todo te dwie metody daaja mozliwosc uzyskania chamskigo oceny autora obok w tabeli natomiast dobrze by bylo
-  //zrobic wedlug mnie nowy widok, ktory by byl po prostu rankingiem autorow i tak samo z piosenkami
-  //bedzie wtedy mozan to dopasowac, poniewaz jakby sortowac rowniez te oceny to mysle, ze duza roboty
-  //z tymi metodami sortujacymi by byly bo oceny sie wyswietlaja wedlug domyslnego dodawania do bazy danych autorow
-  //mozna zrobic, zeby ssie pokazywaly jako posortowane, a przekazac po prostu metode napisana w javie ktora wysle
-  //obiekty autorow takze posortowane i wsio
+  getAllAuthorsSortedByAverageRateReversed(searchedWord: string){
+    this.authorService.getAllAuthorsSortedByAverageRateReversed(searchedWord).subscribe(
+      authors =>{
+        this.sortedByAverageRate=false;
+        this.getAverageRatesForAllAuthors('averageRateReversed',searchedWord);
+        this.authors = authors},
+      err=>{
+        console.log(err)
+      }
+    );
+  }
+
+
   getAverageRatesForAllAuthors(howDoWeSortAuthors:string, searchWord:string) {
     this.authorService.getAverageRatesForAllAuthors(howDoWeSortAuthors,searchWord).subscribe(
       averageAuthorRates=>{

@@ -55,7 +55,7 @@ public class AuthorServiceTest {
     @Test
     public void deleteAuthorById() {
         long id=authors.get(0).getAuthorId();
-        doNothing().when(defaultDao).deleteById(Mockito.eq(Author.class),anyLong());
+        doNothing().when(defaultDao).deleteById(eq(Author.class),anyLong());
         authorService.deleteAuthorById(id);
         verify(defaultDao, atLeastOnce()).deleteById(eq(Author.class),anyLong());
     }
