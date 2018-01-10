@@ -41,6 +41,7 @@ export class SongRandomListComponent implements OnInit {
         this.songService.getRandomSongsByUserPreferences(this.userId).subscribe(
           songs=>{
             this.songs=songs;
+            console.log(songs);
           },err=>{
             console.log(err);
           }

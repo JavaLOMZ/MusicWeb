@@ -13,6 +13,8 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
+import java.util.Optional;
+
 @Component
 public class UserValidator implements Validator, ErrorCodes {
 
@@ -29,9 +31,11 @@ public class UserValidator implements Validator, ErrorCodes {
         User user = (User) object;
 
         ValidationUtils.rejectIfEmptyOrWhitespace(errors,"nickname",EMPTY);
-        boolean isUsernameTaken = (userService.getUserByUsername(user.getNickname()).isPresent());
-        if(isUsernameTaken && user.getUserId()==0){
+        if(userService.getUserByUsername(user.getNickname())!=null && user.getUserId()==0){
             errors.rejectValue("nickname", USERNAME_TAKEN);
+        }
+        if(userService.getUserByEmail(user.getEmail())!=null && user.getUserId()==0){
+            errors.rejectValue("nickname", EMAIL_TAKEN);
         }
         if(user.getNickname().length()<3){
             errors.rejectValue("nickname",NOT_ENOUGH_CHARACTERS);

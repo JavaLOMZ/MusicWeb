@@ -39,23 +39,15 @@ public class UserService {
         defaultDao.deleteById(User.class,userId);
     }
 
-    public Optional<User> getUserByUsername(String nickname){
+    public User getUserByUsername(String nickname){
         return userDao.getUserByUsername(nickname);
     }
 
-    public Optional<User> getUserByEmail(String email){
+    public User getUserByEmail(String email){
         return userDao.getUserByEmail(email);
     }
 
     public boolean isUserPresent(long userId) {
         return defaultDao.getById(User.class,userId).isPresent();
-    }
-
-    public boolean isUserPresent(String nickname) {
-        return userDao.getUserByUsername(nickname).isPresent();
-    }
-
-    public boolean isUserPresentByEmail(String email){
-        return userDao.getUserByEmail(email).isPresent();
     }
 }

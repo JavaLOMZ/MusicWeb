@@ -111,20 +111,6 @@ public class SongControllerTest {
     }
 
     @Test
-    public void songAverageRateWhenPresent(){
-        when(songService.isSongPresent(anyLong())).thenReturn(true);
-        Double x=0.0;
-        when(rateService.songAverageRate(anyLong())).thenReturn(x);
-        assertEquals(songController.songAverageRate(anyLong()),new ResponseEntity<>(x,HttpStatus.OK));
-    }
-
-    @Test
-    public void songAverageRateWhenNotPresent(){
-        when(songService.isSongPresent(anyLong())).thenReturn(false);
-        assertEquals(songController.songAverageRate(anyLong()),new ResponseEntity<>(HttpStatus.NOT_FOUND));
-    }
-
-    @Test
     public void getMusicGenreTypes(){
         ArrayList<MusicGenre>musicGenres=new ArrayList<>(Arrays.asList(MusicGenre.values()));
         when(songService.getMusicGenreTypes()).thenReturn(musicGenres);

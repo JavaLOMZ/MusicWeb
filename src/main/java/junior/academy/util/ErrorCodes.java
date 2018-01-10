@@ -15,4 +15,5 @@ public interface ErrorCodes {
     String USERNAME_TAKEN = "USERNAME_TAKEN";
     String NAME_TAKEN = "NAME_TAKEN";
     String SONGNAME_TAKEN="SONGNAME_TAKEN";
+    String EMAIL_TAKEN="EMAIL_TAKEN";
 }

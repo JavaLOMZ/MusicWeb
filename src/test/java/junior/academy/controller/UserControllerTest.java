@@ -81,29 +81,27 @@ public class UserControllerTest {
     @Test
     public void findUserByUsernameWhenUserExistsTest(){
         User testUser = getUsersList().get(0);
-        when(userService.isUserPresent(anyString())).thenReturn(true);
-        when(userService.getUserByUsername(anyString())).thenReturn(Optional.ofNullable(testUser));
-        assertEquals(userController.findUserByName(anyString()), new ResponseEntity<>(testUser, HttpStatus.OK));
+        when(userService.getUserByUsername(anyString())).thenReturn(testUser);
+        assertEquals(userController.getUserByName(anyString()), new ResponseEntity<>(testUser, HttpStatus.OK));
     }
 
     @Test
     public void findUserByUsernameWhenUserDoesNotExistTest(){
         when(userService.getUserByUsername(anyString())).thenReturn(null);
-        assertEquals(userController.findUserByName(anyString()), new ResponseEntity<>(HttpStatus.NOT_FOUND));
+        assertEquals(userController.getUserByName(anyString()), new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     @Test
     public void findUserByEmailWhenUserExistsTest(){
         User testUser = getUsersList().get(0);
-        when(userService.isUserPresentByEmail(anyString())).thenReturn(true);
-        when(userService.getUserByEmail(anyString())).thenReturn(Optional.ofNullable(testUser));
-        assertEquals(userController.findUserByEmail(anyString()), new ResponseEntity<>(testUser, HttpStatus.OK));
+        when(userService.getUserByEmail(anyString())).thenReturn(testUser);
+        assertEquals(userController.getUserByEmail(anyString()), new ResponseEntity<>(testUser, HttpStatus.OK));
     }
 
     @Test
     public void findUserByEmailWhenUserDoesNotExistTest(){
         when(userService.getUserByEmail(anyString())).thenReturn(null);
-        assertEquals(userController.findUserByName(anyString()), new ResponseEntity<>(HttpStatus.NOT_FOUND));
+        assertEquals(userController.getUserByEmail(anyString()), new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     public List<User> getUsersList() {

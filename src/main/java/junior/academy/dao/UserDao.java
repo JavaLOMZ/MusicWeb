@@ -17,15 +17,15 @@ public class UserDao {
     @Autowired
     private SessionFactory sessionFactory;
 
-    public Optional<User> getUserByUsername(String nickname){
+    public User getUserByUsername(String nickname){
         Query query= sessionFactory.getCurrentSession().createQuery("from User where nickname=:nickname");
         query.setParameter("nickname",nickname);
-        return Optional.ofNullable((User) query.uniqueResult());
+        return (User) query.uniqueResult();
     }
 
-    public Optional<User> getUserByEmail(String email){
+    public User getUserByEmail(String email){
         Query query= sessionFactory.getCurrentSession().createQuery("from User where email=:email");
         query.setParameter("email",email);
-        return Optional.ofNullable((User) query.uniqueResult());
+        return (User) query.uniqueResult();
     }
 }

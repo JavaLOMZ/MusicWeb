@@ -14,8 +14,21 @@
 
         </header>
       </section>
+      <section *ngIf="songs?.length==0">
+        <header class="header">
+          <div class="row">
+            <div class="col-md-4">
+              <h2>YOU HAVE TO RATE A FEW SONGS BEFORE WE CAN PERSONALIZE RECOMMENDATIONS FOR YOU</h2>
+              <img src="https://i.imgur.com/xg4TOHO.gif"/>
+            </div>
+            <div class="col-md-6">
 
-      <section class="main">
+            </div>
+          </div>
+
+        </header>
+      </section>
+      <section class="main" *ngIf="songs?.length!=0">
         <table class="table">
           <thead>
           <tr>
