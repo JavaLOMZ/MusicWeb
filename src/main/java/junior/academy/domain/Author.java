@@ -29,6 +29,9 @@ public class Author {
     @Column(name = "countryOfOrigin")
     private String countryOfOrigin;
 
+    @Column(name = "authorAverageRate")
+    private double authorAverageRate;
+
     @OneToMany(mappedBy = "author", fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
     private Set<Song> songs;
 
@@ -80,12 +83,21 @@ public class Author {
         this.songs = songs;
     }
 
+    public double getAuthorAverageRate() {
+        return authorAverageRate;
+    }
+
+    public void setAuthorAverageRat(double authorAverageRate) {
+        this.authorAverageRate = authorAverageRate;
+    }
+
     @Override
     public String toString() {
         return "Author{" +
                 "name='" + name + '\'' +
                 ", yearOfBirth=" + yearOfBirth +
                 ", countryOfOrigin='" + countryOfOrigin + '\'' +
+                ", authorAverageRat=" + authorAverageRate +
                 '}';
     }
 }

@@ -48,7 +48,7 @@
           </thead>
           <tbody>
           <tr *ngFor="let author of authors" >
-            <td>{{getAuthorRate()}}</td>
+            <td>{{author.authorAverageRate}}</td>
             <td><button type="button" class="btn-primary" (click)="redirectToSingleAuthorPage(author.authorId)">{{author.name}}</button></td>
             <td>{{author.yearOfBirth}}</td>
             <td>{{author.countryOfOrigin}}</td>

@@ -21,8 +21,6 @@ export class AuthorListComponent implements OnInit {
   sortedByCountry: boolean;
   sortedByAverageRate: boolean;
   searchedWord: string;
-  averageAuthorRates: number[];
-  authorRate:number;
 
   constructor(private router:Router,
               private authorService:AuthorService) { }
@@ -36,7 +34,6 @@ export class AuthorListComponent implements OnInit {
     this.sortedByYearOfBirth=false;
     this.sortedByCountry=false;
     this.sortedByAverageRate=false;
-    this.getAverageRatesForAllAuthors(null,null);
   }
 
   getAllAuthors(){
@@ -95,7 +92,6 @@ export class AuthorListComponent implements OnInit {
       authors =>{
         this.authors = authors;
         this.searchedWord=this.authorSearchForm.controls['searchWord'].value;
-        this.getAverageRatesForAllAuthors(null,this.authorSearchForm.controls['searchWord'].value)
       },
       err=>{
         console.log(err)
@@ -107,7 +103,6 @@ export class AuthorListComponent implements OnInit {
     this.authorService.getAllAuthorsSortedByName(searchedWord).subscribe(
       authors =>{
         this.sortedByName=true;
-        this.getAverageRatesForAllAuthors('name',searchedWord);
         this.authors = authors},
       err=>{
         console.log(err)
@@ -119,7 +114,6 @@ export class AuthorListComponent implements OnInit {
     this.authorService.getAllAuthorsSortedByNameReversed(searchedWord).subscribe(
       authors =>{
         this.sortedByName=false;
-        this.getAverageRatesForAllAuthors('nameReversed',searchedWord);
         this.authors = authors},
       err=>{
         console.log(err)
@@ -131,7 +125,6 @@ export class AuthorListComponent implements OnInit {
     this.authorService.getAllAuthorsSortedByYearOfBirth(searchedWord).subscribe(
       authors =>{
         this.sortedByYearOfBirth=true;
-        this.getAverageRatesForAllAuthors('yearOfBirth',searchedWord);
         this.authors = authors},
       err=>{
         console.log(err)
@@ -143,7 +136,6 @@ export class AuthorListComponent implements OnInit {
     this.authorService.getAllAuthorsSortedByYearOfBirthReversed(searchedWord).subscribe(
       authors =>{
         this.sortedByYearOfBirth=false
-        this.getAverageRatesForAllAuthors('yearOfBirthReversed',searchedWord);
         this.authors = authors},
       err=>{
         console.log(err)
@@ -155,7 +147,6 @@ export class AuthorListComponent implements OnInit {
     this.authorService.getAllAuthorsSortedByCountryOfOrigin(searchedWord).subscribe(
       authors =>{
         this.sortedByCountry=true;
-        this.getAverageRatesForAllAuthors('countryOfOrigin',searchedWord);
         this.authors = authors},
       err=>{
         console.log(err)
@@ -167,7 +158,6 @@ export class AuthorListComponent implements OnInit {
     this.authorService.getAllAuthorsSortedByCountryOfOriginReversed(searchedWord).subscribe(
       authors =>{
         this.sortedByCountry=false;
-        this.getAverageRatesForAllAuthors('countryOfOriginReversed',searchedWord);
         this.authors = authors},
       err=>{
         console.log(err)
@@ -179,7 +169,6 @@ export class AuthorListComponent implements OnInit {
     this.authorService.getAllAuthorsSortedByAverageRate(searchedWord).subscribe(
       authors =>{
         this.sortedByAverageRate=true;
-        this.getAverageRatesForAllAuthors('averageRate',searchedWord);
         this.authors = authors},
       err=>{
         console.log(err)
@@ -192,28 +181,10 @@ export class AuthorListComponent implements OnInit {
     this.authorService.getAllAuthorsSortedByAverageRateReversed(searchedWord).subscribe(
       authors =>{
         this.sortedByAverageRate=false;
-        this.getAverageRatesForAllAuthors('averageRateReversed',searchedWord);
         this.authors = authors},
       err=>{
         console.log(err)
       }
     );
-  }
-
-
-  getAverageRatesForAllAuthors(howDoWeSortAuthors:string, searchWord:string) {
-    this.authorService.getAverageRatesForAllAuthors(howDoWeSortAuthors,searchWord).subscribe(
-      averageAuthorRates=>{
-        this.averageAuthorRates=averageAuthorRates;
-        console.log(averageAuthorRates);
-      }, err=>{
-        console.log(err);
-      }
-    );
-  }
-
-  getAuthorRate(){
-    this.authorRate=this.averageAuthorRates.shift();
-    return this.authorRate;
   }
 }

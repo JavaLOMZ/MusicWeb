@@ -16,7 +16,7 @@ export class AuthorCreateComponent implements OnInit {
 
   authorId: number;
   author: Author;
-
+  authorAverageRate:number;
   authorForm: FormGroup;
   private sub:any;
 
@@ -26,7 +26,8 @@ export class AuthorCreateComponent implements OnInit {
 
   ngOnInit() {
     this.sub=this.route.params.subscribe(params=>{
-      this.authorId=params['authorId']
+      this.authorId=params['authorId'],
+        this.authorAverageRate=params['authorAverageRate']
   });
 
     this.authorForm=new FormGroup({
@@ -62,13 +63,15 @@ export class AuthorCreateComponent implements OnInit {
         let author: Author = new Author(this.authorId,
           this.authorForm.controls['name'].value,
           this.authorForm.controls['yearOfBirth'].value,
-          this.authorForm.controls['countryOfOrigin'].value);
+          this.authorForm.controls['countryOfOrigin'].value,
+          this.authorAverageRate);
         this.authorService.createOrUpdateAuthor(author).subscribe();
       }else {
         let author: Author = new Author(null,
           this.authorForm.controls['name'].value,
           this.authorForm.controls['yearOfBirth'].value,
-          this.authorForm.controls['countryOfOrigin'].value);
+          this.authorForm.controls['countryOfOrigin'].value,
+          0);
         this.authorService.createOrUpdateAuthor(author).subscribe();
       }
     }
