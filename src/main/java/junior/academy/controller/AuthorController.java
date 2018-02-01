@@ -110,14 +110,4 @@ public class AuthorController {
     public List<Author> getAllAuthorsSortedByAverageRateReversed(@PathVariable String searchWord) {
         return authorService.getAllAuthorsSortedByAverageRateReversed(searchWord);
     }
-
-    @GetMapping("/averageRateOfAuthorSongs/{authorId}")
-    public double getAverageRateOfAuthorSongs(@PathVariable long authorId){
-        return authorService.getAverageRateOfAuthorSongs(authorId);
-    }
-
-    @GetMapping("/averageAuthorRate/{howDoWeSortAuthors}/{searchWord}")
-    public List<Double> getAverageRatesForAllAuthors(@PathVariable String howDoWeSortAuthors, @PathVariable String searchWord){
-        return authorService.getAverageRatesForAllAuthors(howDoWeSortAuthors,searchWord);
-    }
 }

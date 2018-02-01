@@ -22,6 +22,9 @@ public class SongService {
     @Autowired
     RateService rateService;
 
+    @Autowired
+    AuthorService authorService;
+
     public Optional<Song> getSongById(long songId) {
         return defaultDao.getById(Song.class,songId);
     }
@@ -124,24 +127,6 @@ public class SongService {
         return songsSortedByAuthorNameReversed;
     }
 
-
-    //todo temporary method to update all songs MAREK which are without songAverageRate, i've implemented it in method getAllAuthors()
-//    public void updateSongAverageRate(){
-//        List<Song>songs=getAllSongs();
-//        for(Song s:songs){
-//            double averageSongRate=rateService.songAverageRate(s.getSongId());
-//            s.setSongAverageRate(averageSongRate);
-//            songDao.createOrUpdateSong(s);
-//        }
-//
-//    }
-
-    public void updateSongAverageRate(long songId) {
-        Optional<Song> song=getSongById(songId);
-        song.get().setSongAverageRate(rateService.songAverageRate(song.get().getSongId()));
-        defaultDao.saveOrUpdate(song.get());
-    }
-
     public List<Song> getAllSongsSortedByAverageRate(String searchWord) {
         List<Song> songsSortedByAverageRate = getListToSortElementsWithSearchWord(searchWord);
         songsSortedByAverageRate.sort(Comparator.comparing(Song::getSongAverageRate));
@@ -153,4 +138,22 @@ public class SongService {
         songsSortedByAverageRateReversed.sort(Comparator.comparing(Song::getSongAverageRate).reversed());
         return songsSortedByAverageRateReversed;
     }
+
+    public void updateSongAverageRate(long songId) {
+        Optional<Song> song=getSongById(songId);
+        song.get().setSongAverageRate(rateService.songAverageRate(song.get().getSongId()));
+        defaultDao.saveOrUpdate(song.get());
+        authorService.updateAuthorAverageRate(song.get().getAuthor().getAuthorId());
+    }
+
+    //todo temporary method to update all songs MAREK which are without songAverageRate, THEN DELETE IT
+//    public void updateSongAverageRate(){
+//        List<Song>songs=getAllSongs();
+//        for(Song s:songs){
+//            double averageSongRate=rateService.songAverageRate(s.getSongId());
+//            s.setSongAverageRate(averageSongRate);
+//            songDao.createOrUpdateSong(s);
+//        }
+//
+//    }
 }

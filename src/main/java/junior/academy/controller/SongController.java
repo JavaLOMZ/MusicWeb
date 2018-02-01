@@ -78,14 +78,6 @@ public class SongController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @GetMapping("/songAverageRate/{songId}")
-    public ResponseEntity<Double> songAverageRate(@PathVariable long songId){
-        if(songService.isSongPresent(songId)){
-            return new ResponseEntity<>(rateService.songAverageRate(songId),HttpStatus.OK);
-        }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-    }
-
     @GetMapping("/musicGenre")
     public ArrayList<MusicGenre> getMusicGenreTypes() {
         return songService.getMusicGenreTypes();
@@ -100,8 +92,7 @@ public class SongController {
     @GetMapping("/songName/{songName}/{authorId}")
     public ResponseEntity<Song> getSongByNameAndAuthor(@PathVariable String songName, @PathVariable long authorId){
         if(songService.getUniqueSongByNameAndAuthor(songName,authorId)!=null) {
-            Song responseSong = songService.getUniqueSongByNameAndAuthor(songName, authorId);
-            return new ResponseEntity<>(responseSong, HttpStatus.OK);
+            return new ResponseEntity<>(songService.getUniqueSongByNameAndAuthor(songName, authorId), HttpStatus.OK);
         }
         else{
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

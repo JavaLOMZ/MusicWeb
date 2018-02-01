@@ -1,7 +1,9 @@
 package junior.academy.controller;
 
+import junior.academy.domain.Author;
 import junior.academy.domain.Rate;
 import junior.academy.domain.Rate;
+import junior.academy.service.AuthorService;
 import junior.academy.service.RateService;
 import junior.academy.service.SongService;
 import junior.academy.service.UserService;

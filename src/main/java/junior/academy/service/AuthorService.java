@@ -105,63 +105,15 @@ public class AuthorService {
     }
 
     public List<Author> getAllAuthorsSortedByAverageRate(String searchWord){
-        Map<Author,Double>mapOfAuthorsAverageRates=getListToSortElements(searchWord).stream()
-                        .collect(Collectors.toMap(a->a, a->getAverageRateOfAuthorSongs(a.getAuthorId())));
-        return new ArrayList<>(sortByValue(mapOfAuthorsAverageRates).keySet());
-
+        List<Author>authorsSortedByAverageRate=getListToSortElements(searchWord);
+        authorsSortedByAverageRate.sort(Comparator.comparing(Author::getAuthorAverageRate));
+        return authorsSortedByAverageRate;
     }
 
     public List<Author> getAllAuthorsSortedByAverageRateReversed(String searchWord){
-        Map<Author,Double>mapOfAuthorsAverageRates=getListToSortElements(searchWord).stream()
-                .collect(Collectors.toMap(a->a, a->getAverageRateOfAuthorSongs(a.getAuthorId())));
-        return new ArrayList<>(sortByValueReversed(mapOfAuthorsAverageRates).keySet());
-
-    }
-
-    public static <K, V extends Comparable<? super V>> Map<K, V> sortByValue(Map<K, V> map) {
-        return map.entrySet()
-                .stream()
-                .sorted(Map.Entry.comparingByValue())
-                .collect(Collectors.toMap(
-                        Map.Entry::getKey,
-                        Map.Entry::getValue,
-                        (e1, e2) -> e1,
-                        LinkedHashMap::new
-                ));
-    }
-
-    public static <K, V extends Comparable<? super V>> Map<K, V> sortByValueReversed(Map<K, V> map) {
-        return map.entrySet()
-                .stream()
-                .sorted(Map.Entry.comparingByValue(Collections.reverseOrder()))
-                .collect(Collectors.toMap(
-                        Map.Entry::getKey,
-                        Map.Entry::getValue,
-                        (e1, e2) -> e1,
-                        LinkedHashMap::new
-                ));
-    }
-
-    public List<Double> getAverageRatesForAllAuthors(String howDoWeSortAuthors, String searchWord){
-        List<Author>authorList=listOfAuthorsToGetRates(howDoWeSortAuthors,searchWord);
-        List<Double>authorRates=new ArrayList<>();
-        for(Author a : authorList){
-            authorRates.add(getAverageRateOfAuthorSongs(a.getAuthorId()));
-        }
-        return authorRates;
-    }
-
-    public List<Author>listOfAuthorsToGetRates(String howDoWeSortAuthors,String searchWord){
-        if(howDoWeSortAuthors.equals("name")) return getAllAuthorsSortedByName(searchWord);
-        if(howDoWeSortAuthors.equals("nameReversed")) return getAllAuthorsSortedByNameReversed(searchWord);
-        if(howDoWeSortAuthors.equals("yearOfBirth")) return getAllAuthorsSortedByYearOfBirth(searchWord);
-        if(howDoWeSortAuthors.equals("yearOfBirthReversed")) return getAllAuthorsSortedByYearOfBirthReversed(searchWord);
-        if(howDoWeSortAuthors.equals("countryOfOrigin")) return getAllAuthorsSortedByCountryOfOrigin(searchWord);
-        if(howDoWeSortAuthors.equals("countryOfOriginReversed")) return getAllAuthorsSortedByCountryOfOriginReversed(searchWord);
-        if(howDoWeSortAuthors.equals("averageRate")) return getAllAuthorsSortedByAverageRate(searchWord);
-        if(howDoWeSortAuthors.equals("averageRateReversed")) return getAllAuthorsSortedByAverageRateReversed(searchWord);
-        if(howDoWeSortAuthors.equals("null") && !searchWord.equals("null")) return getAuthorBySearchWord(searchWord);
-        return getAllAuthors();
+        List<Author>authorsSortedByAverageRateReversed=getListToSortElements(searchWord);
+        authorsSortedByAverageRateReversed.sort(Comparator.comparing(Author::getAuthorAverageRate).reversed());
+        return authorsSortedByAverageRateReversed;
     }
 
     public double getAverageRateOfAuthorSongs(long authorId){
@@ -174,4 +126,19 @@ public class AuthorService {
         if(averageRate>0) return Math.round(averageRate/howManyRates*100)/100.00;
         return 0.00;
     }
+
+    public void updateAuthorAverageRate(long authorId){
+        Optional<Author> author=getAuthorById(authorId);
+        author.get().setAuthorAverageRat(getAverageRateOfAuthorSongs(authorId));
+        defaultDao.saveOrUpdate(author.get());
+    }
+
+    //todo temporary method to update all authors MAREK which are without authorAverageRate, THEN DELETE IT
+//    public void updateAuthorAverageRates(){
+//        List<Author>authors=getAllAuthors();
+//        for(Author a:authors){
+//            a.setAuthorAverageRat(getAverageRateOfAuthorSongs(a.getAuthorId()));
+//            defaultDao.saveOrUpdate(a);
+//        }
+//    }
 }

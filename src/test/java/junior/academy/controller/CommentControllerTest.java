@@ -1,6 +1,7 @@
 package junior.academy.controller;
 
 import junior.academy.domain.Comment;
+import junior.academy.domain.User;
 import junior.academy.service.CommentService;
 import junior.academy.service.SongService;
 import junior.academy.service.UserService;
@@ -126,20 +127,20 @@ public class CommentControllerTest {
         Comment commentTest = new Comment();
         when(commentService.getCommentByUserIdAndSongId(anyLong(), anyLong())).thenReturn(Optional.of(commentTest));
         when(commentService.isCommentPresent(anyLong())).thenReturn(false);
-        assertEquals(commentController.getCommentByUserIdAndSongId(anyLong(), anyLong()), new ResponseEntity<>(HttpStatus.NOT_FOUND));
+        assertEquals(commentController.getCommentByUserIdAndSongId(anyLong(), anyLong()), new ResponseEntity<>(commentTest,HttpStatus.OK));
     }
 
     @Test
     public void getCommentsByUsernameWhenPresentTest(){
         List<Comment> testCommentList = getCommentList();
-        when(userService.isUserPresent(anyString())).thenReturn(true);
+        when(userService.getUserByUsername(anyString())).thenReturn(new User());
         when(commentService.getCommentsByUserNickname(anyString())).thenReturn(testCommentList);
         assertEquals(commentController.getCommentsByUserNickname(anyString()), new ResponseEntity<>(testCommentList, HttpStatus.OK));
     }
 
     @Test
     public void getCommentsByUsernameWhenNotPresentTest(){
-        when(userService.isUserPresent(anyString())).thenReturn(false);
+        when(userService.getUserByUsername(anyString())).thenReturn(null);
         assertEquals(commentController.getCommentsByUserNickname(anyString()), new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 

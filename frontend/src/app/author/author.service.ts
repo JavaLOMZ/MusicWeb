@@ -105,18 +105,6 @@ export class AuthorService {
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
 
-  getAverageRateOfAuthorSongs(authorId:number):Observable<number>{
-    return this.http.get(this.apiUrl+'/averageRateOfAuthorSongs/'+authorId, {headers: this.headers})
-      .map((res: Response) => res.json())
-      .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
-  }
-
-  getAverageRatesForAllAuthors(howDoWeSortAuthors:string, searchWord:string):Observable<number[]>{
-    return this.http.get(this.apiUrl+'/averageAuthorRate/'+howDoWeSortAuthors+'/'+searchWord, {headers: this.headers})
-      .map((res: Response) => res.json())
-      .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
-  }
-
   handleError(error: any) {
     let errMsg = (error.message) ? error.message :
       error.status ? `${error.status} - ${error.statusText}` : 'Server error';

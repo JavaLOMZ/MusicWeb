@@ -27,7 +27,6 @@ export class SongPageComponent implements OnInit {
   song: Song;
   comments: CommentOur[];
   user: User;
-  songAverageRate: number;
   userId: number;
   rateOfUser: Rate;
   commentOfUser:CommentOur;
@@ -52,7 +51,6 @@ export class SongPageComponent implements OnInit {
     this.getSongIdFromParam();
     this.getSong();
     this.getAllCommentsForSong(this.songId);
-    this.getSongAverageRate(this.songId);
     this.getRateForUserAndSong(this.songId);
     this.getCommentForUserAndSong(this.songId);
     this.getAllAuthors();
@@ -87,17 +85,6 @@ export class SongPageComponent implements OnInit {
         console.log(err);
       }
     );
-  }
-
-
-  getSongAverageRate(songId: number) {
-    this.songService.getSongAverageRate(songId).subscribe(
-      songAverageRate => {
-        this.songAverageRate = songAverageRate;
-      }, err => {
-        console.log(err);
-      }
-    )
   }
 
   redirectToSongList() {

@@ -11,8 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import static org.mockito.Matchers.anyLong;
 import static org.testng.Assert.*;
 
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SongDaoTest extends EntityDaoTest {
@@ -32,15 +34,20 @@ public class SongDaoTest extends EntityDaoTest {
 
     @Test
     public void getSongsByAuthorId(){
-        assertEquals(songDao.getSongsByAuthorId(anyLong()).size(),0);
+        assertEquals(songDao.getSongsByAuthorId(1).size(),1);
     }
 
-    private Song getSong() {
+    private List<Song> getSong() {
+        List<Song> songs=new ArrayList<>();
         Song song = new Song();
         song.setSongName("TestSongName");
         song.setMusicGenre(MusicGenre.HIPHOP);
-
         song.setYouTubeLink("YoutubeLink");
-        return song;
+        song.setSongAverageRate(0);
+        Author author=new Author();
+        author.setAuthorId(1);
+        song.setAuthor(author);
+        songs.add(song);
+        return songs;
     }
 }
