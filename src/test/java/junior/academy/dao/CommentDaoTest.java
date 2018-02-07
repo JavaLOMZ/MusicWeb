@@ -33,16 +33,16 @@ public class CommentDaoTest extends EntityDaoTest {
 
     //todo 4 tests missing
 
-    @Test
-    public void getCommentsByUserId(){
-        assertEquals(commentDao.getCommentsByUserId(1).size(),1);
-    }
+//    @Test
+//    public void getCommentsByUserId(){
+//        assertEquals(commentDao.getCommentsByUserId(1).size(),1);
+//    }
 
 
-    @Test
-    public void getCommentsBySongId(){
-        assertEquals(commentDao.getCommentsBySongId(1).size(),1);
-    }
+//    @Test
+//    public void getCommentsBySongId(){
+//        assertEquals(commentDao.getCommentsBySongId(1).size(),1);
+//    }
 
     @Test
     public void getCommentsByUserNickname(){

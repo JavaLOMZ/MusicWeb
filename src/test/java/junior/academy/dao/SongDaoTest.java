@@ -32,10 +32,10 @@ public class SongDaoTest extends EntityDaoTest {
 
     //todo 4 tests missing
 
-    @Test
-    public void getSongsByAuthorId(){
-        assertEquals(songDao.getSongsByAuthorId(1).size(),1);
-    }
+//    @Test
+//    public void getSongsByAuthorId(){
+//        assertEquals(songDao.getSongsByAuthorId(1).size(),1);
+//    }
 
     private List<Song> getSong() {
         List<Song> songs=new ArrayList<>();
