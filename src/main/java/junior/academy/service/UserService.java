@@ -39,11 +39,11 @@ public class UserService {
         defaultDao.deleteById(User.class,userId);
     }
 
-    public User getUserByUsername(String nickname){
-        return userDao.getUserByUsername(nickname);
+    public Optional<User> getUserByUsername(String nickname){
+        return userDao.getUserByNickname(nickname);
     }
 
-    public User getUserByEmail(String email){
+    public Optional<User> getUserByEmail(String email){
         return userDao.getUserByEmail(email);
     }
 

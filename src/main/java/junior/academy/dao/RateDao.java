@@ -24,7 +24,7 @@ public class RateDao {
         return query.list();
     }
 
-    public List<Rate> getRatesByUsername(String nickname) {
+    public List<Rate> getRatesByNickname(String nickname) {
         Query query=sessionFactory.getCurrentSession().createQuery("select rate from Rate as rate join rate.user user where user.nickname=:nickname");
         query.setParameter("nickname", nickname);
         return query.list();

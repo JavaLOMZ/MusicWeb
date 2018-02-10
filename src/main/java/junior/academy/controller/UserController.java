@@ -58,8 +58,8 @@ public class UserController {
 
     @GetMapping("/nick/{nickname}")
     public ResponseEntity<User> getUserByName(@PathVariable String nickname) {
-        if (userService.getUserByUsername(nickname)!=null) {
-            return new ResponseEntity<>(userService.getUserByUsername(nickname), HttpStatus.OK);
+        if (userService.getUserByUsername(nickname).isPresent()) {
+            return new ResponseEntity<>(userService.getUserByUsername(nickname).get(), HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -67,9 +67,9 @@ public class UserController {
 
     @GetMapping("/email/{email:.+}")
     public ResponseEntity<User> getUserByEmail(@PathVariable String email) {
-        if (userService.getUserByEmail(email)!=null) {
-            return new ResponseEntity<>(userService.getUserByEmail(email), HttpStatus.OK);
-        } else {
+        if (userService.getUserByEmail(email).isPresent())
+            return new ResponseEntity<>(userService.getUserByEmail(email).get(), HttpStatus.OK);
+        else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
