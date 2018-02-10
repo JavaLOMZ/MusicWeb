@@ -133,7 +133,7 @@ public class CommentControllerTest {
     @Test
     public void getCommentsByUsernameWhenPresentTest(){
         List<Comment> testCommentList = getCommentList();
-        when(userService.getUserByUsername(anyString())).thenReturn(new User());
+        when(userService.getUserByUsername(anyString())).thenReturn(Optional.of(new User()));
         when(commentService.getCommentsByUserNickname(anyString())).thenReturn(testCommentList);
         assertEquals(commentController.getCommentsByUserNickname(anyString()), new ResponseEntity<>(testCommentList, HttpStatus.OK));
     }

@@ -1,45 +1,45 @@
 package junior.academy.dao;
 
+import junior.academy.config.HibernateTestConfig;
 import junior.academy.domain.User;
-import org.dbunit.dataset.CompositeDataSet;
-import org.dbunit.dataset.IDataSet;
-import org.dbunit.dataset.xml.FlatXmlDataSet;
+import org.hibernate.SessionFactory;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import static org.testng.Assert.*;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Transactional;
 
-import org.testng.annotations.Test;
+import static org.junit.Assert.*;
 
-public class UserDaoTest extends EntityDaoTest {
+@RunWith(SpringRunner.class)
+@SpringBootTest(classes = {HibernateTestConfig.class})
+@Transactional
+public class UserDaoTest extends ClassPropertiesSetUp {
 
     @Autowired
     UserDao userDao;
 
-    @Override
-    protected IDataSet getDataSet() throws Exception {
-        IDataSet[] datasets = new IDataSet[]{
-                new FlatXmlDataSet(this.getClass().getClassLoader().getResourceAsStream("User.xml"))
-        };
-        return new CompositeDataSet(datasets);
+    @Before
+    public void beforeTest() {
+        super.userSetUp();
+        addUserToDatabaseAndFlushSession();
     }
 
     @Test
-    public void getUserByUsername(){
-        assertNotNull(userDao.getUserByUsername("Test"));
-        assertEquals(userDao.getUserByUsername("Test").getNickname(), "Test");
+    public void getUserByNickname() {
+        assertTrue(userDao.getUserByNickname(TEST_USER_NICKNAME).isPresent());
     }
 
     @Test
-    public void getUserByEmail(){
-        assertNotNull(userDao.getUserByEmail("test@test.com"));
-        assertEquals(userDao.getUserByEmail("test@test.com").getEmail(), "test@test.com");
+    public void getUserByEmail() {
+        assertTrue(userDao.getUserByEmail(TEST_USER_EMAIL).isPresent());
     }
 
-    private User getUser() {
-        User user = new User();
-        user.setNickname("TestUpdate");
-        user.setEmail("test@test.com");
-        user.setPassword("test");
-        return user;
+    private void addUserToDatabaseAndFlushSession() {
+        defaultDao.saveOrUpdate(user);
+        flushCurrentSession();
     }
 }

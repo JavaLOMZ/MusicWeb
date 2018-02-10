@@ -1,64 +1,68 @@
 package junior.academy.dao;
 
+import junior.academy.config.HibernateTestConfig;
 import junior.academy.domain.Comment;
 import junior.academy.domain.Song;
 import junior.academy.domain.User;
-import org.dbunit.dataset.CompositeDataSet;
-import org.dbunit.dataset.IDataSet;
-import org.dbunit.dataset.xml.FlatXmlDataSet;
+import org.hibernate.SessionFactory;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import static org.mockito.Matchers.anyLong;
-import static org.testng.Assert.*;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Transactional;
 
-import org.testng.annotations.Test;
+import static org.junit.Assert.*;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
-
-public class CommentDaoTest extends EntityDaoTest {
+@RunWith(SpringRunner.class)
+@SpringBootTest(classes = {HibernateTestConfig.class})
+@Transactional
+public class CommentDaoTest extends ClassPropertiesSetUp {
 
     @Autowired
     CommentDao commentDao;
 
-    @Override
-    protected IDataSet getDataSet() throws Exception {
-        IDataSet[] datasets = new IDataSet[]{
-                new FlatXmlDataSet(this.getClass().getClassLoader().getResourceAsStream("Comment.xml"))
-        };
-        return new CompositeDataSet(datasets);
-    }
+    private long userId;
+    private long songId;
 
-    //todo 4 tests missing
-
-//    @Test
-//    public void getCommentsByUserId(){
-//        assertEquals(commentDao.getCommentsByUserId(1).size(),1);
-//    }
-
-
-//    @Test
-//    public void getCommentsBySongId(){
-//        assertEquals(commentDao.getCommentsBySongId(1).size(),1);
-//    }
-
-    @Test
-    public void getCommentsByUserNickname(){
-       //todo
+    @Before
+    public void beforeTest() {
+        super.commentSetUp();
+        super.userSetUp();
+        song = songSetUp();
+        comment.setUser(super.user);
+        comment.setSong(super.song);
+        addDomainClassesToDatabaseAndFlushSession();
     }
 
     @Test
-    public void getCommentByUserIdAndSongId(){
-        //todo
+    public void getCommentByUserId() {
+        assertEquals(comment, commentDao.getCommentsByUserId(userId).get(0));
     }
 
-    private Comment getComment() {
-        Comment comment = new Comment();
-        comment.setCommentText(" ");
-        return comment;
+    @Test
+    public void getCommentBySearchWord() {
+        assertEquals(comment, commentDao.getCommentsByUserNickname(user.getNickname()).get(0));
     }
 
+    @Test
+    public void getCommentsBySongId() {
+        assertEquals(comment, commentDao.getCommentsBySongId(songId).get(0));
+    }
 
+    @Test
+    public void getCommentsByUserAndSongId() {
+        assertEquals(comment, commentDao.getCommentByUserIdAndSongId(userId, songId).get());
+    }
+
+    private void addDomainClassesToDatabaseAndFlushSession() {
+        defaultDao.saveOrUpdate(comment);
+        defaultDao.saveOrUpdate(user);
+        userId = user.getUserId();
+        defaultDao.saveOrUpdate(song);
+        songId = song.getSongId();
+        super.flushCurrentSession();
+    }
 }

@@ -3,7 +3,6 @@ package junior.academy.service;
 import junior.academy.dao.DefaultDao;
 import junior.academy.dao.RateDao;
 import junior.academy.domain.Rate;
-import junior.academy.domain.Rate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -49,7 +48,7 @@ public class RateService {
     }
 
     public List<Rate> getRatesByUsername(String username) {
-        return rateDao.getRatesByUsername(username);
+        return rateDao.getRatesByNickname(username);
     }
 
     public List<Rate> getRatesBySongId(long songId){

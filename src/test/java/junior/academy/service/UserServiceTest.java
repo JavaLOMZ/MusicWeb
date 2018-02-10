@@ -82,14 +82,14 @@ public class UserServiceTest {
     @Test
     public void getUserByName(){
         User user= users.get(0);
-        when(userDao.getUserByUsername(anyString())).thenReturn(user);
+        when(userDao.getUserByNickname(anyString())).thenReturn(Optional.ofNullable(user));
         assertEquals(userService.getUserByUsername(anyString()),user);
     }
 
     @Test
     public void getUserByEmail(){
         User user= users.get(0);
-        when(userDao.getUserByEmail(anyString())).thenReturn(user);
+        when(userDao.getUserByEmail(anyString())).thenReturn(Optional.ofNullable(user));
         assertEquals(userService.getUserByEmail(anyString()), user);
     }
 

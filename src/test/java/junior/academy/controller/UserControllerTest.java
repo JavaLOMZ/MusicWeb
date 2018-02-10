@@ -81,7 +81,7 @@ public class UserControllerTest {
     @Test
     public void findUserByUsernameWhenUserExistsTest(){
         User testUser = getUsersList().get(0);
-        when(userService.getUserByUsername(anyString())).thenReturn(testUser);
+        when(userService.getUserByUsername(anyString())).thenReturn(Optional.ofNullable(testUser));
         assertEquals(userController.getUserByName(anyString()), new ResponseEntity<>(testUser, HttpStatus.OK));
     }
 
@@ -94,7 +94,7 @@ public class UserControllerTest {
     @Test
     public void findUserByEmailWhenUserExistsTest(){
         User testUser = getUsersList().get(0);
-        when(userService.getUserByEmail(anyString())).thenReturn(testUser);
+        when(userService.getUserByEmail(anyString())).thenReturn(Optional.ofNullable(testUser));
         assertEquals(userController.getUserByEmail(anyString()), new ResponseEntity<>(testUser, HttpStatus.OK));
     }
 

@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -17,15 +16,15 @@ public class UserDao {
     @Autowired
     private SessionFactory sessionFactory;
 
-    public User getUserByUsername(String nickname){
+    public Optional<User> getUserByNickname(String nickname){
         Query query= sessionFactory.getCurrentSession().createQuery("from User where nickname=:nickname");
         query.setParameter("nickname",nickname);
-        return (User) query.uniqueResult();
+        return Optional.ofNullable((User) query.uniqueResult());
     }
 
-    public User getUserByEmail(String email){
+    public Optional<User> getUserByEmail(String email){
         Query query= sessionFactory.getCurrentSession().createQuery("from User where email=:email");
         query.setParameter("email",email);
-        return (User) query.uniqueResult();
+        return Optional.ofNullable((User) query.uniqueResult());
     }
 }

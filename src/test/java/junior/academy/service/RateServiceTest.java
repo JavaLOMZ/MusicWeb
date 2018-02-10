@@ -80,7 +80,7 @@ public class RateServiceTest {
 
     @Test
     public void getRatedByUsername(){
-        when(rateDao.getRatesByUsername(anyString())).thenReturn(rates);
+        when(rateDao.getRatesByNickname(anyString())).thenReturn(rates);
         assertEquals(rateService.getRatesByUsername(anyString()),rates);
     }
 

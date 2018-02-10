@@ -1,33 +1,64 @@
 package junior.academy.dao;
 
-import junior.academy.domain.Rate;
-import org.dbunit.dataset.CompositeDataSet;
-import org.dbunit.dataset.IDataSet;
-import org.dbunit.dataset.xml.FlatXmlDataSet;
+import junior.academy.config.HibernateTestConfig;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import static org.testng.Assert.*;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Transactional;
 
-import org.testng.annotations.Test;
+import static org.junit.Assert.*;
 
-public class RateDaoTest extends EntityDaoTest {
+@RunWith(SpringRunner.class)
+@SpringBootTest(classes = {HibernateTestConfig.class})
+@Transactional
+public class RateDaoTest extends ClassPropertiesSetUp {
+
+    private long songId;
+    private long userId;
 
     @Autowired
     RateDao rateDao;
 
-    @Override
-    protected IDataSet getDataSet() throws Exception {
-        IDataSet[] datasets = new IDataSet[]{
-                new FlatXmlDataSet(this.getClass().getClassLoader().getResourceAsStream("Rate.xml"))
-        };
-        return new CompositeDataSet(datasets);
+    @Before
+    public void beforeTest() {
+        super.rateSetUp();
+        super.userSetUp();
+        song = songSetUp();
+        rate.setUser(super.user);
+        rate.setSong(super.song);
+        addRateToDatabaseAndFlushSession();
     }
 
-    //todo 4 tests missing
+    @Test
+    public void getRatesByUserId() {
+        assertEquals(rate, rateDao.getRatesByUserId(userId).get(0));
+    }
 
-    private Rate getRate() {
-        Rate rate = new Rate();
+    @Test
+    public void getRatesByUserNickname() {
+        assertEquals(rate, rateDao.getRatesByNickname(user.getNickname()).get(0));
+    }
 
-        return rate;
+    @Test
+    public void getRatesBySongId() {
+        assertEquals(rate, rateDao.getRatesBySongId(songId).get(0));
+    }
+
+    @Test
+    public void getRateByUserAndSongId(){
+        assertTrue(rateDao.getRateForUserAndSong(userId, songId).isPresent());
+    }
+
+    private void addRateToDatabaseAndFlushSession() {
+        defaultDao.saveOrUpdate(rate);
+        defaultDao.saveOrUpdate(user);
+        userId = user.getUserId();
+        defaultDao.saveOrUpdate(song);
+        songId = song.getSongId();
+        flushCurrentSession();
     }
 }

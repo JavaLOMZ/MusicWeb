@@ -50,7 +50,7 @@ public class UserValidatorTest implements ErrorCodes{
     @Test
     public void shouldFailUsernameAvailabilityCheck(){
         prepareForTest(NICKNAME,PASSWORD,EMAIL);
-        when(userService.getUserByUsername(anyString())).thenReturn((new User()));
+        when(userService.getUserByUsername(anyString())).thenReturn(java.util.Optional.of((new User())));
         when(userService.getUserByEmail(anyString())).thenReturn(null);
         userValidator.validate(user, errors);
         assertSingleError(USERNAME_TAKEN);
@@ -61,7 +61,7 @@ public class UserValidatorTest implements ErrorCodes{
         String takenEmail="test@test.pl";
         prepareForTest(NICKNAME,PASSWORD,takenEmail);
         when(userService.getUserByUsername(anyString())).thenReturn(null);
-        when(userService.getUserByEmail(anyString())).thenReturn((new User()));
+        when(userService.getUserByEmail(anyString())).thenReturn(java.util.Optional.of((new User())));
         userValidator.validate(user, errors);
         assertSingleError(EMAIL_TAKEN);
     }
