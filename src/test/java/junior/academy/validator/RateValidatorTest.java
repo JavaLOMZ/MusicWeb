@@ -27,13 +27,23 @@ public class RateValidatorTest implements ErrorCodes{
     private Errors errors;
 
     @Mock
-    UserService userService;
+    private UserService userService;
 
     @Mock
-    SongService songService;
+    private SongService songService;
 
     @InjectMocks
     private RateValidator rateValidator;
+
+    @Test
+    public void supportsShouldReturnFalse(){
+        assertEquals(false,rateValidator.supports(Object.class));
+    }
+
+    @Test
+    public void supportsShouldReturnTrue(){
+        assertEquals(true,rateValidator.supports(Rate.class));
+    }
 
     @Test
     public void shouldPassValidation(){

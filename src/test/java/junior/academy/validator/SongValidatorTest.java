@@ -32,11 +32,20 @@ public class SongValidatorTest implements ErrorCodes{
     private Song song;
 
     @Mock
-    SongService songService;
+    private SongService songService;
 
     @InjectMocks
     private SongValidator songValidator;
 
+    @Test
+    public void supportsShouldReturnFalse(){
+        assertEquals(false,songValidator.supports(Object.class));
+    }
+
+    @Test
+    public void supportsShouldReturnTrue(){
+        assertEquals(true,songValidator.supports(Song.class));
+    }
 
     @Test
     public void shouldPassValidation(){

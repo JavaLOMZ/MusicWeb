@@ -1,6 +1,7 @@
 package junior.academy.validator;
 
 import junior.academy.domain.Author;
+import junior.academy.domain.User;
 import junior.academy.service.AuthorService;
 import junior.academy.util.ErrorCodes;
 import org.apache.commons.lang.StringUtils;
@@ -37,62 +38,72 @@ public class AuthorValidatorTest implements ErrorCodes {
     @InjectMocks
     private AuthorValidator authorValidator;
 
-//    @Test
-//    public void shouldPassValidation() {
-//        prepareForTest(NAME_VALID, YEAR_OF_BIRTH_VALID, COUNTRY_VALID);
-//        when(authorService.getAuthorByName(anyString())).thenReturn(null);
-//        authorValidator.validate(author, errors);
-//        assertEquals(0, errors.getErrorCount());
-//    }
-//
-//    @Test
-//    public void shouldFailAuthorNameAvailabilityTest() {
-//        prepareForTest(NAME_VALID, YEAR_OF_BIRTH_VALID, COUNTRY_VALID);
-//        when(authorService.getAuthorByName(anyString())).thenReturn(Optional.of(new Author()));
-//        authorValidator.validate(author, errors);
-//        assertSingleError(NAME_TAKEN);
-//    }
-//
-//    @Test
-//    public void shouldFailEmptyNameTest() {
-//        prepareForTest(EMPTY_FIELD, YEAR_OF_BIRTH_VALID, COUNTRY_VALID);
-//        when(authorService.getAuthorByName(anyString())).thenReturn(null);
-//        authorValidator.validate(author, errors);
-//        assertSingleError(NOT_ENOUGH_CHARACTERS);
-//    }
-//
-//    @Test
-//    public void shouldFailTooLongNameTest() {
-//        prepareForTest(FIELD_WITH_TOO_MANY_CHARACTERS, YEAR_OF_BIRTH_VALID, COUNTRY_VALID);
-//        when(authorService.getAuthorByName(anyString())).thenReturn(null);
-//        authorValidator.validate(author, errors);
-//        assertSingleError(TOO_MANY_CHARACTERS);
-//    }
-//
-//    @Test
-//    public void shouldFailTooBigYearTest() {
-//        final int YEAR_TOO_SMALL = LocalDate.now().getYear() + 1;
-//        prepareForTest(NAME_VALID, YEAR_TOO_SMALL, COUNTRY_VALID);
-//        when(authorService.getAuthorByName(anyString())).thenReturn(null);
-//        authorValidator.validate(author, errors);
-//        assertSingleError(AUTHOR_TOO_YOUNG);
-//    }
-//
-//    @Test
-//    public void shouldFailEmptyCountryOfOriginTest() {
-//        prepareForTest(NAME_VALID, YEAR_OF_BIRTH_VALID, EMPTY_FIELD);
-//        when(authorService.getAuthorByName(anyString())).thenReturn(null);
-//        authorValidator.validate(author, errors);
-//        assertSingleError(NOT_ENOUGH_CHARACTERS);
-//    }
-//
-//    @Test
-//    public void shouldFailTooLongCountryOfOriginTest() {
-//        prepareForTest(FIELD_WITH_TOO_MANY_CHARACTERS, YEAR_OF_BIRTH_VALID, COUNTRY_VALID);
-//        when(authorService.getAuthorByName(anyString())).thenReturn(null);
-//        authorValidator.validate(author, errors);
-//        assertSingleError(TOO_MANY_CHARACTERS);
-//    }
+    @Test
+    public void supportsShouldReturnFalse(){
+        assertEquals(false,authorValidator.supports(Object.class));
+    }
+
+    @Test
+    public void supportsShouldReturnTrue(){
+        assertEquals(true,authorValidator.supports(Author.class));
+    }
+
+    @Test
+    public void shouldPassValidation() {
+        prepareForTest(NAME_VALID, YEAR_OF_BIRTH_VALID, COUNTRY_VALID);
+        when(authorService.getAuthorByName(anyString())).thenReturn(null);
+        authorValidator.validate(author, errors);
+        assertEquals(0, errors.getErrorCount());
+    }
+
+    @Test
+    public void shouldFailAuthorNameAvailabilityTest() {
+        prepareForTest(NAME_VALID, YEAR_OF_BIRTH_VALID, COUNTRY_VALID);
+        when(authorService.getAuthorByName(anyString())).thenReturn(Optional.of(new Author()));
+        authorValidator.validate(author, errors);
+        assertSingleError(NAME_TAKEN);
+    }
+
+    @Test
+    public void shouldFailEmptyNameTest() {
+        prepareForTest(EMPTY_FIELD, YEAR_OF_BIRTH_VALID, COUNTRY_VALID);
+        when(authorService.getAuthorByName(anyString())).thenReturn(null);
+        authorValidator.validate(author, errors);
+        assertSingleError(NOT_ENOUGH_CHARACTERS);
+    }
+
+    @Test
+    public void shouldFailTooLongNameTest() {
+        prepareForTest(FIELD_WITH_TOO_MANY_CHARACTERS, YEAR_OF_BIRTH_VALID, COUNTRY_VALID);
+        when(authorService.getAuthorByName(anyString())).thenReturn(null);
+        authorValidator.validate(author, errors);
+        assertSingleError(TOO_MANY_CHARACTERS);
+    }
+
+    @Test
+    public void shouldFailTooBigYearTest() {
+        final int YEAR_TOO_SMALL = LocalDate.now().getYear() + 1;
+        prepareForTest(NAME_VALID, YEAR_TOO_SMALL, COUNTRY_VALID);
+        when(authorService.getAuthorByName(anyString())).thenReturn(null);
+        authorValidator.validate(author, errors);
+        assertSingleError(AUTHOR_TOO_YOUNG);
+    }
+
+    @Test
+    public void shouldFailEmptyCountryOfOriginTest() {
+        prepareForTest(NAME_VALID, YEAR_OF_BIRTH_VALID, EMPTY_FIELD);
+        when(authorService.getAuthorByName(anyString())).thenReturn(null);
+        authorValidator.validate(author, errors);
+        assertSingleError(NOT_ENOUGH_CHARACTERS);
+    }
+
+    @Test
+    public void shouldFailTooLongCountryOfOriginTest() {
+        prepareForTest(FIELD_WITH_TOO_MANY_CHARACTERS, YEAR_OF_BIRTH_VALID, COUNTRY_VALID);
+        when(authorService.getAuthorByName(anyString())).thenReturn(null);
+        authorValidator.validate(author, errors);
+        assertSingleError(TOO_MANY_CHARACTERS);
+    }
 
     private void assertSingleError(String errorCode) {
         assertEquals(1, errors.getErrorCount());

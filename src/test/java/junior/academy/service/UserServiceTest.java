@@ -81,15 +81,15 @@ public class UserServiceTest {
 
     @Test
     public void getUserByName(){
-        User user= users.get(0);
-        when(userDao.getUserByNickname(anyString())).thenReturn(Optional.ofNullable(user));
+        Optional<User> user= Optional.of(users.get(0));
+        when(userDao.getUserByNickname(anyString())).thenReturn(user);
         assertEquals(userService.getUserByUsername(anyString()),user);
     }
 
     @Test
     public void getUserByEmail(){
-        User user= users.get(0);
-        when(userDao.getUserByEmail(anyString())).thenReturn(Optional.ofNullable(user));
+        Optional<User> user= Optional.of(users.get(0));
+        when(userDao.getUserByEmail(anyString())).thenReturn(user);
         assertEquals(userService.getUserByEmail(anyString()), user);
     }
 

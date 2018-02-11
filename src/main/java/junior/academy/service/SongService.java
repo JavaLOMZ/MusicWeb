@@ -71,14 +71,6 @@ public class SongService {
         return defaultDao.getById(Song.class,songId).isPresent();
     }
 
-    public List<Song> getListToSortElementsWithSearchWord(String searchWord) {
-        List<Song> listToSortSongs;
-        if (searchWord != null && searchWord.compareTo("undefined") != 0 && searchWord.compareTo("null") != 0)
-            listToSortSongs = getSongBySearchWord(searchWord);
-        else listToSortSongs = getAllSongs();
-        return listToSortSongs;
-    }
-
     public List<Song> getAllSongsSortedBySongName(String searchWord) {
         List<Song> songsSortedByName = getListToSortElementsWithSearchWord(searchWord);
         songsSortedByName.sort(Comparator.comparing(Song::getSongName));
@@ -139,21 +131,19 @@ public class SongService {
         return songsSortedByAverageRateReversed;
     }
 
+
+    public List<Song> getListToSortElementsWithSearchWord(String searchWord) {
+        List<Song> listToSortSongs;
+        if (searchWord != null && searchWord.compareTo("undefined") != 0 && searchWord.compareTo("null") != 0)
+            listToSortSongs = getSongBySearchWord(searchWord);
+        else listToSortSongs = getAllSongs();
+        return listToSortSongs;
+    }
+
     public void updateSongAverageRate(long songId) {
         Optional<Song> song=getSongById(songId);
         song.get().setSongAverageRate(rateService.songAverageRate(song.get().getSongId()));
         defaultDao.saveOrUpdate(song.get());
         authorService.updateAuthorAverageRate(song.get().getAuthor().getAuthorId());
     }
-
-    //todo temporary method to update all songs MAREK which are without songAverageRate, THEN DELETE IT
-//    public void updateSongAverageRate(){
-//        List<Song>songs=getAllSongs();
-//        for(Song s:songs){
-//            double averageSongRate=rateService.songAverageRate(s.getSongId());
-//            s.setSongAverageRate(averageSongRate);
-//            songDao.createOrUpdateSong(s);
-//        }
-//
-//    }
 }

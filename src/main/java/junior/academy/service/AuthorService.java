@@ -29,116 +29,108 @@ public class AuthorService {
     @Autowired
     RateService rateService;
 
-    public Optional<Author>getAuthorById(long authorId){
-        return defaultDao.getById(Author.class,authorId);
+    public Optional<Author> getAuthorById(long authorId) {
+        return defaultDao.getById(Author.class, authorId);
     }
 
-    public List<Author> getAllAuthors(){
+    public List<Author> getAllAuthors() {
         return defaultDao.getAll(Author.class);
     }
 
-    public void createOrUpdateAuthor(Author author){
+    public void createOrUpdateAuthor(Author author) {
         defaultDao.saveOrUpdate(author);
     }
 
-    public void deleteAuthorById(long authorId){
-        defaultDao.deleteById(Author.class,authorId);
+    public void deleteAuthorById(long authorId) {
+        defaultDao.deleteById(Author.class, authorId);
     }
 
-    public boolean isAuthorPresent(long authorId){
-        return defaultDao.getById(Author.class,authorId).isPresent();
+    public boolean isAuthorPresent(long authorId) {
+        return defaultDao.getById(Author.class, authorId).isPresent();
     }
 
-    public boolean isAuthorPresent(String authorName){
+    public boolean isAuthorPresent(String authorName) {
         return authorDao.getAuthorByName(authorName).isPresent();
     }
 
-    public Optional<Author> getAuthorByName(String name){
+    public Optional<Author> getAuthorByName(String name) {
         return authorDao.getAuthorByName(name);
     }
 
-    public List<Author> getAuthorBySearchWord(String searchWord){
+    public List<Author> getAuthorBySearchWord(String searchWord) {
         return authorDao.getAuthorBySearchWord(searchWord);
     }
 
-    public List<Author> getListToSortElements(String searchWord){
-        List<Author>listToSortAuthors;
-        if(searchWord!=null && searchWord.compareTo("undefined")!=0 && searchWord.compareTo("null")!=0) listToSortAuthors=getAuthorBySearchWord(searchWord);
-        else listToSortAuthors=getAllAuthors();
+    public List<Author> getListToSortElements(String searchWord) {
+        List<Author> listToSortAuthors;
+        if (searchWord != null && searchWord.compareTo("undefined") != 0 && searchWord.compareTo("null") != 0)
+            listToSortAuthors = getAuthorBySearchWord(searchWord);
+        else listToSortAuthors = getAllAuthors();
         return listToSortAuthors;
     }
 
-    public List<Author> getAllAuthorsSortedByName(String searchWord){
-        List<Author> authorsSortedByName=getListToSortElements(searchWord);
+    public List<Author> getAllAuthorsSortedByName(String searchWord) {
+        List<Author> authorsSortedByName = getListToSortElements(searchWord);
         authorsSortedByName.sort(Comparator.comparing(Author::getName));
         return authorsSortedByName;
     }
 
-    public List<Author> getAllAuthorsSortedByNameReversed(String searchWord){
-        List<Author>authorsSortedByNameReversed=getListToSortElements(searchWord);
+    public List<Author> getAllAuthorsSortedByNameReversed(String searchWord) {
+        List<Author> authorsSortedByNameReversed = getListToSortElements(searchWord);
         authorsSortedByNameReversed.sort(Comparator.comparing(Author::getName).reversed());
         return authorsSortedByNameReversed;
     }
 
-    public List<Author> getAllAuthorsSortedByYearOfBirth(String searchWord){
-        List<Author>authorsSortedYearOfBirth=getListToSortElements(searchWord);
+    public List<Author> getAllAuthorsSortedByYearOfBirth(String searchWord) {
+        List<Author> authorsSortedYearOfBirth = getListToSortElements(searchWord);
         authorsSortedYearOfBirth.sort(Comparator.comparing(Author::getYearOfBirth));
         return authorsSortedYearOfBirth;
     }
 
-    public List<Author> getAllAuthorsSortedByYearOfBirthReversed(String searchWord){
-        List<Author>authorsSortedByYearOfBirthReversed=getListToSortElements(searchWord);
+    public List<Author> getAllAuthorsSortedByYearOfBirthReversed(String searchWord) {
+        List<Author> authorsSortedByYearOfBirthReversed = getListToSortElements(searchWord);
         authorsSortedByYearOfBirthReversed.sort(Comparator.comparing(Author::getYearOfBirth).reversed());
         return authorsSortedByYearOfBirthReversed;
     }
 
-    public List<Author> getAllAuthorsSortedByCountryOfOrigin(String searchWord){
-        List<Author>authorsSortedByCountryOfOrigin=getListToSortElements(searchWord);
+    public List<Author> getAllAuthorsSortedByCountryOfOrigin(String searchWord) {
+        List<Author> authorsSortedByCountryOfOrigin = getListToSortElements(searchWord);
         authorsSortedByCountryOfOrigin.sort(Comparator.comparing(Author::getCountryOfOrigin));
         return authorsSortedByCountryOfOrigin;
     }
 
-    public List<Author> getAllAuthorsSortedByCountryOfOriginReversed(String searchWord){
-        List<Author>authorsSortedByCountryOfOriginReversed=getListToSortElements(searchWord);
+    public List<Author> getAllAuthorsSortedByCountryOfOriginReversed(String searchWord) {
+        List<Author> authorsSortedByCountryOfOriginReversed = getListToSortElements(searchWord);
         authorsSortedByCountryOfOriginReversed.sort(Comparator.comparing(Author::getCountryOfOrigin).reversed());
         return authorsSortedByCountryOfOriginReversed;
     }
 
-    public List<Author> getAllAuthorsSortedByAverageRate(String searchWord){
-        List<Author>authorsSortedByAverageRate=getListToSortElements(searchWord);
+    public List<Author> getAllAuthorsSortedByAverageRate(String searchWord) {
+        List<Author> authorsSortedByAverageRate = getListToSortElements(searchWord);
         authorsSortedByAverageRate.sort(Comparator.comparing(Author::getAuthorAverageRate));
         return authorsSortedByAverageRate;
     }
 
-    public List<Author> getAllAuthorsSortedByAverageRateReversed(String searchWord){
-        List<Author>authorsSortedByAverageRateReversed=getListToSortElements(searchWord);
+    public List<Author> getAllAuthorsSortedByAverageRateReversed(String searchWord) {
+        List<Author> authorsSortedByAverageRateReversed = getListToSortElements(searchWord);
         authorsSortedByAverageRateReversed.sort(Comparator.comparing(Author::getAuthorAverageRate).reversed());
         return authorsSortedByAverageRateReversed;
     }
 
-    public double getAverageRateOfAuthorSongs(long authorId){
-        List<Song> authorSongs=songService.getSongsByAuthorId(authorId);
-        double averageRate= authorSongs.stream()
-                .mapToDouble(s->rateService.songAverageRate(s.getSongId())).sum();
-        long howManyRates= authorSongs.stream()
-                .filter(s->rateService.songAverageRate(s.getSongId())>0.00)
-                .map(s->rateService.getRatesBySongId(s.getSongId())).count();
-        if(averageRate>0) return Math.round(averageRate/howManyRates*100)/100.00;
-        return 0.00;
-    }
-
-    public void updateAuthorAverageRate(long authorId){
-        Optional<Author> author=getAuthorById(authorId);
-        author.get().setAuthorAverageRat(getAverageRateOfAuthorSongs(authorId));
+    public void updateAuthorAverageRate(long authorId) {
+        Optional<Author> author = getAuthorById(authorId);
+        author.get().setAuthorAverageRate(getAverageRateOfAuthorSongs(authorId));
         defaultDao.saveOrUpdate(author.get());
     }
 
-    //todo temporary method to update all authors MAREK which are without authorAverageRate, THEN DELETE IT
-//    public void updateAuthorAverageRates(){
-//        List<Author>authors=getAllAuthors();
-//        for(Author a:authors){
-//            a.setAuthorAverageRat(getAverageRateOfAuthorSongs(a.getAuthorId()));
-//            defaultDao.saveOrUpdate(a);
-//        }
-//    }
+    public double getAverageRateOfAuthorSongs(long authorId) {
+        List<Song> authorSongs = songService.getSongsByAuthorId(authorId);
+        double averageRate = authorSongs.stream()
+                .mapToDouble(s -> rateService.songAverageRate(s.getSongId())).sum();
+        long howManyRates = authorSongs.stream()
+                .filter(s -> rateService.songAverageRate(s.getSongId()) > 0.00)
+                .map(s -> rateService.getRatesBySongId(s.getSongId())).count();
+        if (averageRate > 0) return Math.round(averageRate / howManyRates * 100) / 100.00;
+        return 0.00;
+    }
 }
