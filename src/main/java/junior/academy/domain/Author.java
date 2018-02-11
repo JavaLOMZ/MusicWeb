@@ -87,7 +87,7 @@ public class Author {
         return authorAverageRate;
     }
 
-    public void setAuthorAverageRat(double authorAverageRate) {
+    public void setAuthorAverageRate(double authorAverageRate) {
         this.authorAverageRate = authorAverageRate;
     }
 

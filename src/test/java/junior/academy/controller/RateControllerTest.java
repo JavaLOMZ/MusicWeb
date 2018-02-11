@@ -2,6 +2,7 @@ package junior.academy.controller;
 
 import junior.academy.controller.RateController;
 import junior.academy.domain.Rate;
+import junior.academy.domain.Song;
 import junior.academy.service.RateService;
 import junior.academy.service.SongService;
 import junior.academy.service.UserService;
@@ -63,12 +64,14 @@ public class RateControllerTest {
         assertEquals(rateController.getAllRates(), rates);
     }
 
-//    @Test
-//    public void createOrUpdateRate(){
-//        doNothing().when(rateService).createOrUpdateRate((any(Rate.class)));
-//        rateController.createOrUpdateRate(any(Rate.class));
-//        verify(rateService, atLeastOnce()).createOrUpdateRate(any(Rate.class));
-//    }
+    @Test
+    public void createOrUpdateRate(){
+        Rate rate=rates.get(0);
+        doNothing().when(rateService).createOrUpdateRate(any(Rate.class));
+        doNothing().when(songService).updateSongAverageRate(anyLong());
+        rateController.createOrUpdateRate(rate);
+        verify(rateService, atLeastOnce()).createOrUpdateRate(any(Rate.class));
+    }
 
     @Test
     public void deleteRateWhenPresent() {
@@ -123,6 +126,9 @@ public class RateControllerTest {
     private List<Rate> getRateList() {
         Rate rate = new Rate();
 
+        Song song = new Song();
+        song.setSongId(1);
+        rate.setSong(song);
         rates.add(rate);
         return rates;
     }

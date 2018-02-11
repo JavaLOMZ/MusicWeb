@@ -9,6 +9,7 @@ import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
 import java.time.LocalDate;
+import java.util.Optional;
 
 @Component
 public class AuthorValidator implements Validator, ErrorCodes {
@@ -24,9 +25,9 @@ public class AuthorValidator implements Validator, ErrorCodes {
     @Override
     public void validate(Object object, Errors errors) {
         Author author = (Author) object;
-        boolean isAuthorNameTaken = (authorService.getAuthorByName(author.getName()).isPresent());
+        Optional<Author> authorCheck=authorService.getAuthorByName(author.getName());
 
-        if(isAuthorNameTaken){
+        if(authorCheck!=null){
             errors.rejectValue("name", NAME_TAKEN);
         }
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name", NOT_ENOUGH_CHARACTERS);

@@ -6,10 +6,12 @@ import junior.academy.dao.SongDao;
 import junior.academy.domain.Author;
 import junior.academy.domain.MusicGenre;
 import junior.academy.domain.Song;
+import junior.academy.domain.User;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.Spy;
+import org.springframework.test.context.TestPropertySource;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -26,6 +28,12 @@ public class SongServiceTest {
 
     @Mock
     DefaultDao defaultDao;
+
+    @Mock
+    AuthorService authorService;
+
+    @Mock
+    RateService rateService;
 
     @InjectMocks
     SongService songService;
@@ -195,14 +203,45 @@ public class SongServiceTest {
         assertEquals(songService.getAllSongsSortedByAuthorNameReversed(anyString()).get(0).getAuthor().getName(),"lucyfer");
     }
 
+    @Test
+    public void getAllSongsSortedByAverageRate(){
+        List<Song> songsList= getSongBiggerList();
+        when(songDao.getSongBySearchWord(anyString())).thenReturn(songsList);
+        songsList.sort(Comparator.comparing(Song::getSongAverageRate));
+        assertEquals(songService.getAllSongsSortedByAverageRate(anyString()).get(0).getSongAverageRate(),1.0);
+    }
+
+    @Test
+    public void getAllSongsSortedByAverageRateReversed(){
+        List<Song> songsList= getSongBiggerList();
+        when(songDao.getSongBySearchWord(anyString())).thenReturn(songsList);
+        songsList.sort(Comparator.comparing(Song::getSongAverageRate).reversed());
+        assertEquals(songService.getAllSongsSortedByAverageRateReversed(anyString()).get(0).getSongAverageRate(),10.0);
+    }
+
+    @Test
+    public void shouldUpdateSongAverageRate() {
+        Optional<Song> song= Optional.ofNullable(songs.get(0));
+        when(defaultDao.getById(eq(Song.class),anyLong())).thenReturn(song);
+        when(rateService.songAverageRate(song.get().getSongId())).thenReturn(5.00);
+        song.get().setSongAverageRate(rateService.songAverageRate(song.get().getSongId()));
+        assertEquals(song.get().getSongAverageRate(),5.00);
+        doNothing().when(defaultDao).saveOrUpdate((any(Song.class)));
+        doNothing().when(authorService).updateAuthorAverageRate(anyLong());
+        songService.updateSongAverageRate(song.get().getSongId());
+        assertEquals(songService.getSongById(song.get().getSongId()).get().getSongAverageRate(),5.00);
+    }
+
 
     public List<Song> getSongList() {
         Song song = new Song();
+        song.setSongId(1);
         song.setSongName("testSong");
         song.setAuthor(new Author());
         song.setMusicGenre(MusicGenre.HIPHOP);
         song.setReleaseYear(1900);
         song.setYouTubeLink("www.youtube.com/test2");
+        song.setSongAverageRate(3);
         songs.add(song);
         return songs;
     }
@@ -219,6 +258,7 @@ public class SongServiceTest {
         song.setMusicGenre(MusicGenre.HIPHOP);
         song.setReleaseYear(1905);
         song.setYouTubeLink("www.youtube.com/test");
+        song.setSongAverageRate(1);
 
         Song song2 = new Song();
         song2.setSongName("aTestSong");
@@ -226,6 +266,7 @@ public class SongServiceTest {
         song2.setMusicGenre(MusicGenre.ROCK);
         song2.setReleaseYear(1900);
         song2.setYouTubeLink("www.youtube.com/atest");
+        song2.setSongAverageRate(10);
         songList.add(song);
         songList.add(song2);
         return songList;

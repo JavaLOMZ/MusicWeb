@@ -87,7 +87,7 @@ public class UserControllerTest {
 
     @Test
     public void findUserByUsernameWhenUserDoesNotExistTest(){
-        when(userService.getUserByUsername(anyString())).thenReturn(null);
+        when(userService.getUserByUsername(anyString())).thenReturn(Optional.empty());
         assertEquals(userController.getUserByName(anyString()), new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
@@ -100,7 +100,7 @@ public class UserControllerTest {
 
     @Test
     public void findUserByEmailWhenUserDoesNotExistTest(){
-        when(userService.getUserByEmail(anyString())).thenReturn(null);
+        when(userService.getUserByEmail(anyString())).thenReturn(Optional.empty());
         assertEquals(userController.getUserByEmail(anyString()), new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 

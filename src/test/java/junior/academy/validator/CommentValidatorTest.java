@@ -30,13 +30,23 @@ public class CommentValidatorTest implements ErrorCodes{
     private Comment comment;
 
     @Mock
-    UserService userService;
+    private UserService userService;
 
     @Mock
-    SongService songService;
+    private SongService songService;
 
     @InjectMocks
-    CommentValidator commentValidator;
+    private CommentValidator commentValidator;
+
+    @Test
+    public void supportsShouldReturnFalse(){
+        assertEquals(false,commentValidator.supports(Object.class));
+    }
+
+    @Test
+    public void supportsShouldReturnTrue(){
+        assertEquals(true,commentValidator.supports(Comment.class));
+    }
 
     @Test
     public void shouldPassValidation(){
