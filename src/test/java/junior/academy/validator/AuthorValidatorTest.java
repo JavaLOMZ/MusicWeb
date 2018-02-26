@@ -51,7 +51,7 @@ public class AuthorValidatorTest implements ErrorCodes {
     @Test
     public void shouldPassValidation() {
         prepareForTest(NAME_VALID, YEAR_OF_BIRTH_VALID, COUNTRY_VALID);
-        when(authorService.getAuthorByName(anyString())).thenReturn(null);
+        when(authorService.getAuthorByName(anyString())).thenReturn(Optional.empty());
         authorValidator.validate(author, errors);
         assertEquals(0, errors.getErrorCount());
     }
@@ -67,7 +67,7 @@ public class AuthorValidatorTest implements ErrorCodes {
     @Test
     public void shouldFailEmptyNameTest() {
         prepareForTest(EMPTY_FIELD, YEAR_OF_BIRTH_VALID, COUNTRY_VALID);
-        when(authorService.getAuthorByName(anyString())).thenReturn(null);
+        when(authorService.getAuthorByName(anyString())).thenReturn(Optional.empty());
         authorValidator.validate(author, errors);
         assertSingleError(NOT_ENOUGH_CHARACTERS);
     }
@@ -75,7 +75,7 @@ public class AuthorValidatorTest implements ErrorCodes {
     @Test
     public void shouldFailTooLongNameTest() {
         prepareForTest(FIELD_WITH_TOO_MANY_CHARACTERS, YEAR_OF_BIRTH_VALID, COUNTRY_VALID);
-        when(authorService.getAuthorByName(anyString())).thenReturn(null);
+        when(authorService.getAuthorByName(anyString())).thenReturn(Optional.empty());
         authorValidator.validate(author, errors);
         assertSingleError(TOO_MANY_CHARACTERS);
     }
@@ -84,7 +84,7 @@ public class AuthorValidatorTest implements ErrorCodes {
     public void shouldFailTooBigYearTest() {
         final int YEAR_TOO_SMALL = LocalDate.now().getYear() + 1;
         prepareForTest(NAME_VALID, YEAR_TOO_SMALL, COUNTRY_VALID);
-        when(authorService.getAuthorByName(anyString())).thenReturn(null);
+        when(authorService.getAuthorByName(anyString())).thenReturn(Optional.empty());
         authorValidator.validate(author, errors);
         assertSingleError(AUTHOR_TOO_YOUNG);
     }
@@ -92,7 +92,7 @@ public class AuthorValidatorTest implements ErrorCodes {
     @Test
     public void shouldFailEmptyCountryOfOriginTest() {
         prepareForTest(NAME_VALID, YEAR_OF_BIRTH_VALID, EMPTY_FIELD);
-        when(authorService.getAuthorByName(anyString())).thenReturn(null);
+        when(authorService.getAuthorByName(anyString())).thenReturn(Optional.empty());
         authorValidator.validate(author, errors);
         assertSingleError(NOT_ENOUGH_CHARACTERS);
     }
@@ -100,7 +100,7 @@ public class AuthorValidatorTest implements ErrorCodes {
     @Test
     public void shouldFailTooLongCountryOfOriginTest() {
         prepareForTest(FIELD_WITH_TOO_MANY_CHARACTERS, YEAR_OF_BIRTH_VALID, COUNTRY_VALID);
-        when(authorService.getAuthorByName(anyString())).thenReturn(null);
+        when(authorService.getAuthorByName(anyString())).thenReturn(Optional.empty());
         authorValidator.validate(author, errors);
         assertSingleError(TOO_MANY_CHARACTERS);
     }
