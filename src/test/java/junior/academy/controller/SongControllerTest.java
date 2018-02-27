@@ -132,7 +132,7 @@ public class SongControllerTest {
     }
 
 
-    //todo test do comparatorow
+    //todo test do comparatorow mozesz maras zrobic np jakos integracyjne i tam sprawdzic
 
     public List<Song> getSongList() {
         Song song = new Song();

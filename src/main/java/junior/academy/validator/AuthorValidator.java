@@ -11,6 +11,8 @@ import org.springframework.validation.Validator;
 import java.time.LocalDate;
 import java.util.Optional;
 
+import static java.util.Optional.empty;
+
 @Component
 public class AuthorValidator implements Validator, ErrorCodes {
 
@@ -27,7 +29,7 @@ public class AuthorValidator implements Validator, ErrorCodes {
         Author author = (Author) object;
         Optional<Author> authorCheck=authorService.getAuthorByName(author.getName());
 
-        if(authorCheck!=null){
+        if(!authorCheck.equals(empty())){
             errors.rejectValue("name", NAME_TAKEN);
         }
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name", NOT_ENOUGH_CHARACTERS);
