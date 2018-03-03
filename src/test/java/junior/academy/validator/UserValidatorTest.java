@@ -13,6 +13,9 @@ import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.Errors;
 
+import java.util.Optional;
+
+import static java.util.Optional.empty;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.when;
@@ -49,8 +52,8 @@ public class UserValidatorTest implements ErrorCodes{
     @Test
     public void shouldPassUsernameAvailabilityCheck(){
         prepareForTest(NICKNAME,PASSWORD,EMAIL);
-        when(userService.getUserByUsername(anyString())).thenReturn(null);
-        when(userService.getUserByEmail(anyString())).thenReturn(null);
+        when(userService.getUserByUsername(anyString())).thenReturn(empty());
+        when(userService.getUserByEmail(anyString())).thenReturn(empty());
         userValidator.validate(user, errors);
         assertEquals(0,errors.getErrorCount());
     }
@@ -59,7 +62,7 @@ public class UserValidatorTest implements ErrorCodes{
     public void shouldFailUsernameAvailabilityCheck(){
         prepareForTest(NICKNAME,PASSWORD,EMAIL);
         when(userService.getUserByUsername(anyString())).thenReturn(java.util.Optional.of((new User())));
-        when(userService.getUserByEmail(anyString())).thenReturn(null);
+        when(userService.getUserByEmail(anyString())).thenReturn(empty());
         userValidator.validate(user, errors);
         assertSingleError(USERNAME_TAKEN);
     }
@@ -68,7 +71,7 @@ public class UserValidatorTest implements ErrorCodes{
     public void shouldFailEmailAvailabilityCheck(){
         String takenEmail="test@test.pl";
         prepareForTest(NICKNAME,PASSWORD,takenEmail);
-        when(userService.getUserByUsername(anyString())).thenReturn(null);
+        when(userService.getUserByUsername(anyString())).thenReturn(empty());
         when(userService.getUserByEmail(anyString())).thenReturn(java.util.Optional.of((new User())));
         userValidator.validate(user, errors);
         assertSingleError(EMAIL_TAKEN);
@@ -78,8 +81,8 @@ public class UserValidatorTest implements ErrorCodes{
     public void shouldFailValidationDueToTooShortNickname(){
         String TOO_SHORT_NICKNAME = "te";
         prepareForTest(TOO_SHORT_NICKNAME,PASSWORD,EMAIL);
-        when(userService.getUserByUsername(anyString())).thenReturn(null);
-        when(userService.getUserByEmail(anyString())).thenReturn(null);
+        when(userService.getUserByUsername(anyString())).thenReturn(empty());
+        when(userService.getUserByEmail(anyString())).thenReturn(empty());
         userValidator.validate(user,errors);
         assertSingleError(NOT_ENOUGH_CHARACTERS);
     }
@@ -88,8 +91,8 @@ public class UserValidatorTest implements ErrorCodes{
     public void shouldFailValidationDueToTooShortPassword(){
         String TOO_SHORT_PASSWORD = "pass";
         prepareForTest(NICKNAME, TOO_SHORT_PASSWORD,EMAIL);
-        when(userService.getUserByUsername(anyString())).thenReturn(null);
-        when(userService.getUserByEmail(anyString())).thenReturn(null);
+        when(userService.getUserByUsername(anyString())).thenReturn(empty());
+        when(userService.getUserByEmail(anyString())).thenReturn(empty());
         userValidator.validate(user,errors);
         assertSingleError(NOT_ENOUGH_CHARACTERS);
     }
@@ -98,8 +101,8 @@ public class UserValidatorTest implements ErrorCodes{
     public void shouldFailValidationDueToTooBigPassword(){
         String TOO_BIG_PASSWORD = "tobigpassword";
         prepareForTest(NICKNAME, TOO_BIG_PASSWORD,EMAIL);
-        when(userService.getUserByUsername(anyString())).thenReturn(null);
-        when(userService.getUserByEmail(anyString())).thenReturn(null);
+        when(userService.getUserByUsername(anyString())).thenReturn(empty());
+        when(userService.getUserByEmail(anyString())).thenReturn(empty());
         userValidator.validate(user,errors);
         assertSingleError(TOO_MANY_CHARACTERS);
     }
@@ -108,8 +111,8 @@ public class UserValidatorTest implements ErrorCodes{
     public void shouldFailValidationDueToWrongEmailPattern(){
         String WRONG_EMAIL = "test@test";
         prepareForTest(NICKNAME,PASSWORD, WRONG_EMAIL);
-        when(userService.getUserByUsername(anyString())).thenReturn(null);
-        when(userService.getUserByEmail(anyString())).thenReturn(null);
+        when(userService.getUserByUsername(anyString())).thenReturn(empty());
+        when(userService.getUserByEmail(anyString())).thenReturn(empty());
         when(emailValidator.isValid(WRONG_EMAIL)).thenReturn(false);
         userValidator.validate(user,errors);
         assertSingleError(WRONG_EMAIL_PATTERN);

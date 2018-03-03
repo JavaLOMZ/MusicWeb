@@ -15,6 +15,8 @@ import org.springframework.validation.Validator;
 
 import java.util.Optional;
 
+import static java.util.Optional.empty;
+
 @Component
 public class UserValidator implements Validator, ErrorCodes {
 
@@ -30,27 +32,27 @@ public class UserValidator implements Validator, ErrorCodes {
     public void validate(Object object, Errors errors) {
         User user = (User) object;
 
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors,"nickname",EMPTY);
-        if(userService.getUserByUsername(user.getNickname())!=null && user.getUserId()==0){
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "nickname", EMPTY);
+        if (!userService.getUserByUsername(user.getNickname()).equals(empty()) && user.getUserId() == 0) {
             errors.rejectValue("nickname", USERNAME_TAKEN);
         }
-        if(userService.getUserByEmail(user.getEmail())!=null && user.getUserId()==0){
+        if (!userService.getUserByEmail(user.getEmail()).equals(empty()) && user.getUserId() == 0) {
             errors.rejectValue("nickname", EMAIL_TAKEN);
         }
-        if(user.getNickname().length()<3){
-            errors.rejectValue("nickname",NOT_ENOUGH_CHARACTERS);
+        if (user.getNickname().length() < 3) {
+            errors.rejectValue("nickname", NOT_ENOUGH_CHARACTERS);
         }
-        if(user.getNickname().length()>25){
-            errors.rejectValue("nickname",TOO_MANY_CHARACTERS);
+        if (user.getNickname().length() > 25) {
+            errors.rejectValue("nickname", TOO_MANY_CHARACTERS);
         }
-        if(user.getPassword().length()<5){
-            errors.rejectValue("password",NOT_ENOUGH_CHARACTERS);
+        if (user.getPassword().length() < 5) {
+            errors.rejectValue("password", NOT_ENOUGH_CHARACTERS);
         }
-        if(user.getPassword().length()>12){
-            errors.rejectValue("password",TOO_MANY_CHARACTERS);
+        if (user.getPassword().length() > 12) {
+            errors.rejectValue("password", TOO_MANY_CHARACTERS);
         }
-        if(!EmailValidator.getInstance().isValid(user.getEmail())){
-            errors.rejectValue("email",WRONG_EMAIL_PATTERN);
+        if (!EmailValidator.getInstance().isValid(user.getEmail())) {
+            errors.rejectValue("email", WRONG_EMAIL_PATTERN);
         }
     }
 }
